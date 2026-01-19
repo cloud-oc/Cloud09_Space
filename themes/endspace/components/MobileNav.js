@@ -28,6 +28,18 @@ import StackFillIcon from 'remixicon-react/StackFillIcon'
 import Compass3FillIcon from 'remixicon-react/Compass3FillIcon'
 import EarthFillIcon from 'remixicon-react/EarthFillIcon'
 import ProfileFillIcon from 'remixicon-react/ProfileFillIcon'
+// Social Icons (Solid)
+import GithubFillIcon from 'remixicon-react/GithubFillIcon'
+import TwitterFillIcon from 'remixicon-react/TwitterFillIcon'
+import WeiboFillIcon from 'remixicon-react/WeiboFillIcon'
+import BilibiliFillIcon from 'remixicon-react/BilibiliFillIcon'
+import TelegramFillIcon from 'remixicon-react/TelegramFillIcon'
+import InstagramFillIcon from 'remixicon-react/InstagramFillIcon'
+import YoutubeFillIcon from 'remixicon-react/YoutubeFillIcon'
+import LinkedinBoxFillIcon from 'remixicon-react/LinkedinBoxFillIcon'
+import WechatFillIcon from 'remixicon-react/WechatFillIcon'
+import GlobeFillIcon from 'remixicon-react/GlobeFillIcon'
+import MailFillIcon from 'remixicon-react/MailFillIcon'
 
 // Icon mapping (Conceptual Remix Icons)
 const IconComponents = {
@@ -42,16 +54,16 @@ const IconComponents = {
 
 // Social icon mapping
 const SocialIconComponents = {
-  'CONTACT_GITHUB': IconBrandGithub,
-  'CONTACT_TWITTER': IconBrandTwitter,
-  'CONTACT_WEIBO': IconBrandWeibo,
-  'CONTACT_BILIBILI': IconBrandBilibili,
-  'CONTACT_TELEGRAM': IconBrandTelegram,
-  'CONTACT_INSTAGRAM': IconBrandInstagram,
-  'CONTACT_YOUTUBE': IconBrandYoutube,
-  'CONTACT_LINKEDIN': IconBrandLinkedin,
-  'CONTACT_WEHCHAT_PUBLIC': IconBrandWechat,
-  'CONTACT_ZHISHIXINGQIU': IconPlanet
+  'CONTACT_GITHUB': GithubFillIcon,
+  'CONTACT_TWITTER': TwitterFillIcon,
+  'CONTACT_WEIBO': WeiboFillIcon,
+  'CONTACT_BILIBILI': BilibiliFillIcon,
+  'CONTACT_TELEGRAM': TelegramFillIcon,
+  'CONTACT_INSTAGRAM': InstagramFillIcon,
+  'CONTACT_YOUTUBE': YoutubeFillIcon,
+  'CONTACT_LINKEDIN': LinkedinBoxFillIcon,
+  'CONTACT_WEHCHAT_PUBLIC': WechatFillIcon,
+  'CONTACT_ZHISHIXINGQIU': GlobeFillIcon
 }
 
 export const MobileNav = (props) => {
@@ -124,7 +136,7 @@ export const MobileNav = (props) => {
   const renderIcon = (name) => {
     const IconComponent = IconComponents[name]
     if (!IconComponent) return null
-    return <IconComponent size={20} stroke={1.5} className="w-6 text-center" />
+    return <IconComponent size={20} className="w-6 text-center" />
   }
 
   // Render social icon
@@ -134,7 +146,7 @@ export const MobileNav = (props) => {
     }
     const IconComponent = SocialIconComponents[key]
     if (IconComponent) {
-      return <IconComponent size={16} stroke={1.5} />
+      return <IconComponent size={16} />
     }
     return null
   }
@@ -219,7 +231,7 @@ export const MobileNav = (props) => {
                 title={email}
                 className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] hover:text-[var(--endspace-text-primary)] hover:bg-[#d4d4d8] transition-colors"
               >
-                <IconMail size={16} stroke={1.5} />
+                <MailFillIcon size={16} />
               </a>
             )}
             {socialLinks.map(social => {
