@@ -129,12 +129,12 @@ const FloatingControls = ({ toc, ...props }) => {
                 <h3 className="font-bold text-sm uppercase flex items-center gap-2 text-black">
                     {activeTab === 'toc' ? (
                         <>
-                            <IconListTree size={16} className="text-[#FBFB46]" />
+                            <IconListTree size={16} className="text-black" />
                             <span>Table of Contents</span>
                         </>
                     ) : (
                         <>
-                             <IconHistory size={16} className="text-[#FBFB46]" />
+                             <IconHistory size={16} className="text-black" />
                              <span>Recent Logs</span>
                         </>
                     )}
@@ -187,7 +187,7 @@ const FloatingControls = ({ toc, ...props }) => {
                 label="Recent Logs" 
                 active={activeTab === 'logs'}
                 onClick={() => toggleDrawer('logs')}
-                iconClassName="text-gray-500"
+                iconClassName="text-black"
                 iconSize={28}
              />
 

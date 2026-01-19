@@ -48,12 +48,12 @@ export default function ArticleAdjacent({ prev, next }) {
             </div>
             
             {/* Title */}
-            <div className="text-[var(--endspace-text-primary)] font-semibold line-clamp-2 group-hover:text-[var(--endspace-accent-yellow)] transition-colors">
+            <div className="text-[var(--endspace-text-primary)] font-semibold line-clamp-2 transition-colors">
               {prev.title}
             </div>
 
-            {/* Scan Line Effect */}
-            <div className="mt-3 h-px bg-gradient-to-r from-[var(--endspace-accent-cyan)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            {/* Scan Line Effect -> Strong Yellow Line */}
+            <div className="mt-3 h-1 bg-[var(--endspace-accent-yellow)] opacity-0 group-hover:opacity-100 transition-opacity" />
           </SmartLink>
         ) : (
           <div className="endspace-frame p-5 flex items-center justify-center min-h-[100px] opacity-40">
@@ -78,12 +78,12 @@ export default function ArticleAdjacent({ prev, next }) {
             </div>
             
             {/* Title */}
-            <div className="text-[var(--endspace-text-primary)] font-semibold line-clamp-2 text-right group-hover:text-[var(--endspace-accent-yellow)] transition-colors">
+            <div className="text-[var(--endspace-text-primary)] font-semibold line-clamp-2 text-right transition-colors">
               {next.title}
             </div>
 
-            {/* Scan Line Effect */}
-            <div className="mt-3 h-px bg-gradient-to-l from-[var(--endspace-accent-cyan)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            {/* Scan Line Effect -> Strong Yellow Line */}
+            <div className="mt-3 h-1 bg-[var(--endspace-accent-yellow)] opacity-0 group-hover:opacity-100 transition-opacity" />
           </SmartLink>
         ) : (
           <div className="endspace-frame p-5 flex items-center justify-center min-h-[100px] opacity-40">
