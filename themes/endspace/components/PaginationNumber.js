@@ -17,188 +17,78 @@ const PaginationNumber = ({ page, totalPage }) => {
     .replace(/\/$/, '')
     .replace('.html', '')
 
-  const pages = generatePages(pagePrefix, page, currentPage, totalPage)
+  const DoubleCircleBtn = ({ href, disabled, icon: Icon, label }) => {
+    if (disabled) {
+      return (
+        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center p-1 cursor-not-allowed opacity-50">
+           <div className="w-full h-full rounded-full flex items-center justify-center bg-transparent">
+             <Icon size={16} stroke={2} className="text-white/50" />
+           </div>
+        </div>
+      )
+    }
+    return (
+      <SmartLink href={href} legacyBehavior passHref>
+        <a className="w-10 h-10 rounded-full bg-white flex items-center justify-center p-1 cursor-pointer group shadow-lg transition-transform active:scale-95" aria-label={label}>
+          <div className="w-full h-full rounded-full flex items-center justify-center bg-transparent group-hover:bg-[#FBFB46] transition-colors duration-200">
+            <Icon size={16} stroke={2} className="text-black" />
+          </div>
+        </a>
+      </SmartLink>
+    )
+  }
 
   return (
-    <div className="mt-12 py-6 flex flex-col items-center gap-4">
-      {/* Page Info */}
-      <div className="text-xs font-mono text-[var(--endspace-text-muted)] uppercase tracking-wider">
-        PAGE_{currentPage} / {totalPage}_TOTAL
-      </div>
+    <div className="mt-12 py-6 flex flex-col items-center">
+      {/* Dark Pill Container */}
+      <div className="bg-[#2a2a2a] rounded-full px-6 py-3 flex items-center gap-6 shadow-2xl">
+        
+        {/* First Page */}
+        <DoubleCircleBtn 
+          href={{ pathname: `${pagePrefix}/`, query: router.query.s ? { s: router.query.s } : {} }}
+          disabled={currentPage === 1}
+          icon={IconChevronsLeft}
+          label="First Page"
+        />
 
-      {/* Pagination Controls */}
-      <div className="flex items-center gap-2">
-        {/* First Page Button */}
-        <SmartLink
-          href={{
-            pathname: `${pagePrefix}/`,
+        {/* Prev Page */}
+        <DoubleCircleBtn 
+          href={{ 
+            pathname: currentPage - 1 === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${currentPage - 1}`,
             query: router.query.s ? { s: router.query.s } : {}
           }}
-          passHref
-          legacyBehavior>
-          <button
-            className={`w-10 h-10 flex items-center justify-center border border-[var(--endspace-border-base)] font-mono text-sm transition-all ${
-              currentPage === 1
-                ? 'opacity-30 cursor-not-allowed bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)]'
-                : 'bg-[var(--endspace-bg-base)] text-[var(--endspace-text-secondary)] hover:border-blue-400 hover:text-blue-400 hover:bg-[var(--endspace-bg-secondary)]'
-            }`}
-            disabled={currentPage === 1}
-          >
-            <IconChevronsLeft size={14} stroke={1.5} />
-          </button>
-        </SmartLink>
+          disabled={!showPrev}
+          icon={IconChevronLeft}
+          label="Previous Page"
+        />
 
-        {/* Previous Page Button */}
-        <SmartLink
-          href={{
-            pathname:
-              currentPage - 1 === 1
-                ? `${pagePrefix}/`
-                : `${pagePrefix}/page/${currentPage - 1}`,
-            query: router.query.s ? { s: router.query.s } : {}
-          }}
-          passHref
-          legacyBehavior>
-          <button
-            className={`w-10 h-10 flex items-center justify-center border border-[var(--endspace-border-base)] font-mono text-sm transition-all ${
-              !showPrev
-                ? 'opacity-30 cursor-not-allowed bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)]'
-                : 'bg-[var(--endspace-bg-base)] text-[var(--endspace-text-secondary)] hover:border-blue-400 hover:text-blue-400 hover:bg-[var(--endspace-bg-secondary)]'
-            }`}
-            disabled={!showPrev}
-          >
-            <IconChevronLeft size={14} stroke={1.5} />
-          </button>
-        </SmartLink>
-
-        {/* Page Numbers */}
-        <div className="flex items-center gap-1">
-          {pages}
+        {/* Text Display */}
+        <div className="font-mono text-white text-lg tracking-widest min-w-[60px] text-center select-none">
+          {currentPage}/{totalPage}
         </div>
 
-        {/* Next Page Button */}
-        <SmartLink
-          href={{
-            pathname: `${pagePrefix}/page/${currentPage + 1}`,
-            query: router.query.s ? { s: router.query.s } : {}
-          }}
-          passHref
-          legacyBehavior>
-          <button
-            className={`w-10 h-10 flex items-center justify-center border border-[var(--endspace-border-base)] font-mono text-sm transition-all ${
-              !showNext
-                ? 'opacity-30 cursor-not-allowed bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)]'
-                : 'bg-[var(--endspace-bg-base)] text-[var(--endspace-text-secondary)] hover:border-blue-400 hover:text-blue-400 hover:bg-[var(--endspace-bg-secondary)]'
-            }`}
-            disabled={!showNext}
-          >
-            <IconChevronRight size={14} stroke={1.5} />
-          </button>
-        </SmartLink>
-
-        {/* Last Page Button */}
-        <SmartLink
-          href={{
-            pathname: `${pagePrefix}/page/${totalPage}`,
-            query: router.query.s ? { s: router.query.s } : {}
-          }}
-          passHref
-          legacyBehavior>
-          <button
-            className={`w-10 h-10 flex items-center justify-center border border-[var(--endspace-border-base)] font-mono text-sm transition-all ${
-              currentPage === totalPage
-                ? 'opacity-30 cursor-not-allowed bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)]'
-                : 'bg-[var(--endspace-bg-base)] text-[var(--endspace-text-secondary)] hover:border-blue-400 hover:text-blue-400 hover:bg-[var(--endspace-bg-secondary)]'
-            }`}
-            disabled={currentPage === totalPage}
-          >
-            <IconChevronsRight size={14} stroke={1.5} />
-          </button>
-        </SmartLink>
-      </div>
-
-      {/* Progress Indicator */}
-      <div className="w-48 h-1 bg-[var(--endspace-bg-secondary)] overflow-hidden">
-        <div 
-          className="h-full bg-blue-400 transition-all duration-300"
-          style={{ width: `${(currentPage / totalPage) * 100}%` }}
+        {/* Next Page */}
+        <DoubleCircleBtn 
+          href={{ pathname: `${pagePrefix}/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} }}
+          disabled={!showNext}
+          icon={IconChevronRight}
+          label="Next Page"
         />
+
+        {/* Last Page */}
+        <DoubleCircleBtn 
+          href={{ pathname: `${pagePrefix}/page/${totalPage}`, query: router.query.s ? { s: router.query.s } : {} }}
+          disabled={currentPage === totalPage}
+          icon={IconChevronsRight}
+          label="Last Page"
+        />
+
       </div>
     </div>
   )
 }
 
-/**
- * Generate page buttons
- */
-function generatePages(pagePrefix, page, currentPage, totalPage) {
-  const pages = []
-  const groupCount = 5 // Max visible page buttons
-
-  if (totalPage <= groupCount) {
-    for (let i = 1; i <= totalPage; i++) {
-      pages.push(getPageElement(pagePrefix, i, page))
-    }
-  } else {
-    pages.push(getPageElement(pagePrefix, 1, page))
-    
-    const dynamicGroupCount = groupCount - 2
-    let startPage = currentPage - 1
-    
-    if (startPage <= 1) {
-      startPage = 2
-    }
-    if (startPage + dynamicGroupCount > totalPage) {
-      startPage = totalPage - dynamicGroupCount
-    }
-    
-    if (startPage > 2) {
-      pages.push(
-        <div key={-1} className="w-8 h-10 flex items-center justify-center text-[var(--endspace-text-muted)] font-mono text-xs">
-          ...
-        </div>
-      )
-    }
-
-    for (let i = 0; i < dynamicGroupCount; i++) {
-      if (startPage + i < totalPage) {
-        pages.push(getPageElement(pagePrefix, startPage + i, page))
-      }
-    }
-
-    if (startPage + dynamicGroupCount < totalPage) {
-      pages.push(
-        <div key={-2} className="w-8 h-10 flex items-center justify-center text-[var(--endspace-text-muted)] font-mono text-xs">
-          ...
-        </div>
-      )
-    }
-
-    pages.push(getPageElement(pagePrefix, totalPage, page))
-  }
-  return pages
-}
-
-/**
- * Generate page button element
- */
-function getPageElement(pagePrefix, pageNum, currentPage) {
-  const isActive = pageNum + '' === currentPage + ''
-  
-  return (
-    <SmartLink
-      href={pageNum === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${pageNum}`}
-      key={pageNum}
-      passHref
-      className={`w-10 h-10 flex items-center justify-center border font-mono text-sm transition-all ${
-        isActive
-          ? 'bg-blue-500 border-blue-500 text-white font-bold'
-          : 'bg-[var(--endspace-bg-base)] border-[var(--endspace-border-base)] text-[var(--endspace-text-secondary)] hover:border-blue-400 hover:text-blue-400'
-      }`}
-    >
-      {pageNum}
-    </SmartLink>
-  )
-}
+// Helper functions like generatePages are no longer needed for this specific layout
+// but we keep the export default.
 
 export default PaginationNumber
