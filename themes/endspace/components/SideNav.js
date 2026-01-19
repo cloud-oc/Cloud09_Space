@@ -170,7 +170,7 @@ export const SideNav = (props) => {
             <img 
               src={avatarUrl}
               alt="Avatar"
-              className="w-full h-full rounded-full object-cover border-2 border-[var(--endspace-accent-yellow)] shadow-lg hover:border-[var(--endspace-text-primary)] transition-colors"
+              className="w-full h-full rounded-full object-cover shadow-lg transition-colors"
             />
           </div>
         </SmartLink>

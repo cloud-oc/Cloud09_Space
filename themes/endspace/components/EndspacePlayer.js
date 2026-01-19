@@ -201,7 +201,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
           {isPlaying ? (
             // Playing: Show rotating album cover
             <>
-              <div className="w-full h-full rounded-full overflow-hidden border-2 border-[var(--endspace-accent-yellow)] endspace-player-glow endspace-player-rotating">
+              <div className="w-full h-full rounded-full overflow-hidden endspace-player-glow endspace-player-rotating">
                 <img 
                   src={currentAudio.cover || '/default-cover.jpg'} 
                   alt="Cover"
