@@ -767,7 +767,7 @@ export const Style = () => {
         left: 0;
         width: 0%;
         height: 100%;
-        background: var(--endspace-bg-tertiary); /* Darker Grey for visibility */
+        background: #d4d4d8; /* Zinc-300 - Clearly visible grey */
         transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         z-index: -1;
       }
@@ -792,9 +792,14 @@ export const Style = () => {
         /* Optional: Active could be Accent color instead of Black */
         /* background-color: var(--endspace-accent-yellow) works via ::before? */
       }
+      /* Removed specific active override to keep consistent grey background */
       .nier-nav-item.active::before {
-        background: var(--endspace-text-primary); /* Keeping it monochrome NieR style for now, or use accent? User asked for 'inverse', usually B&W */
+         /* Ensure it uses the same grey as hover, or slightly darker if preferred.
+            Let's keep it consistent: */
+         background: #d4d4d8; /* Zinc-300 - Clearly visible grey */
       }
+      
+      /* Also update the base hover/active shared rule to use this darker grey */
       
       .dark .nier-nav-item::before {
         background: #f4f4f5; /* Light bg in dark mode */
