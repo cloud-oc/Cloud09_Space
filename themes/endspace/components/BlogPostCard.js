@@ -17,7 +17,7 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
       <article className={`endspace-frame group mb-6 flex flex-col overflow-hidden relative transition-all duration-300`}>
         
         {/* Hover Effect: Yellow Swoosh Background */}
-        <div className="absolute inset-0 bg-[#fbbf24] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out z-0" />
+        <div className="absolute inset-0 bg-[#FBFB45] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out z-0" />
         
         {/* Cover Image - Top (Full Width) */}
         {hasCover && (

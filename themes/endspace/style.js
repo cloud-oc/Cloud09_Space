@@ -22,14 +22,14 @@ export const Style = () => {
         --endspace-text-muted: #a1a1aa;
         
         /* Accents (Subtle Industrialism) -> Converted to Yellow Suite */
-        --endspace-accent-yellow: #eab308;
-        --endspace-accent-yellow-dim: rgba(251, 191, 36, 0.15);
-        --endspace-accent-cyan: #eab308; /* OVERRIDE: Cyan usage -> Yellow 500 */
-        --endspace-accent-cyan-dim: rgba(234, 179, 8, 0.1); /* OVERRIDE: Cyan dim -> Yellow dim */
+        --endspace-accent-yellow: #FBFB45;
+        --endspace-accent-yellow-dim: rgba(251, 251, 69, 0.15);
+        --endspace-accent-cyan: #FBFB45; /* OVERRIDE: Cyan usage -> Yellow 500 */
+        --endspace-accent-cyan-dim: rgba(251, 251, 69, 0.1); /* OVERRIDE: Cyan dim -> Yellow dim */
         
         /* Borders & Lines */
         --endspace-border-base: #e4e4e7;
-        --endspace-border-active: #eab308; /* Active border -> Yellow */
+        --endspace-border-active: #FBFB45; /* Active border -> Yellow */
         --endspace-grid-color: rgba(0,0,0,0.03);
         
         /* Shadows - Enhanced 3D Depth */
@@ -55,13 +55,13 @@ export const Style = () => {
         --endspace-text-secondary: #a1a1aa;
         --endspace-text-muted: #71717a;
         
-        --endspace-accent-yellow: #eab308;
-        --endspace-accent-yellow-dim: rgba(251, 191, 36, 0.15);
-        --endspace-accent-cyan: #ca8a04; /* Dark Mode: Yellow 600 */
-        --endspace-accent-cyan-dim: rgba(202, 138, 4, 0.1);
+        --endspace-accent-yellow: #FBFB45;
+        --endspace-accent-yellow-dim: rgba(251, 251, 69, 0.15);
+        --endspace-accent-cyan: #FBFB45; /* Dark Mode: Yellow 600 */
+        --endspace-accent-cyan-dim: rgba(251, 251, 69, 0.1);
         
         --endspace-border-base: #27272a;
-        --endspace-border-active: #eab308;
+        --endspace-border-active: #FBFB45;
         --endspace-grid-color: rgba(255,255,255,0.02);
         
         --endspace-shadow-base: 
@@ -591,7 +591,7 @@ export const Style = () => {
       
       .ef-button:hover::before {
         height: 70%;
-        background-color: #FFFA00;
+        background-color: #FBFB45;
       }
 
       /* ============================================
