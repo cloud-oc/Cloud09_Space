@@ -203,16 +203,6 @@ const LayoutSlug = (props) => {
             <ArticleAdjacent prev={props.prev} next={props.next} />
 
             <Comment frontMatter={post} />
-
-            {/* Mobile Table of Contents */}
-            {post.toc && post.toc.length > 0 && (
-              <MobileToc toc={post.toc} />
-            )}
-
-            {/* Desktop Floating TOC */}
-            {post.toc && post.toc.length > 0 && (
-              <FloatingToc toc={post.toc} />
-            )}
           </div>
         )
       )}
