@@ -232,7 +232,6 @@ export const LoadingCover = () => {
           letter-spacing: 0.4em;
           writing-mode: vertical-rl;
           text-orientation: mixed;
-          transform: rotate(180deg);
           background: linear-gradient(to left, rgba(253, 224, 71, 0.9) 0%, rgba(234, 179, 8, 0.5) 40%, rgba(202, 138, 4, 0.15) 80%, transparent 100%);
           -webkit-background-clip: text;
           background-clip: text;
