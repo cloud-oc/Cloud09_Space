@@ -120,8 +120,8 @@ const LayoutBase = (props) => {
 
       {/* Scroll to top button */}
       <div
-        className="fixed right-8 bottom-8 z-40 cursor-pointer 
-                   w-10 h-10 flex items-center justify-center shadow-md
+        className="fixed right-4 bottom-8 z-40 cursor-pointer 
+                   w-10 h-10 flex items-center justify-center shadow-md rounded-full
                    bg-white text-gray-400 border border-gray-200
                    hover:bg-[#FBFB46] hover:text-black hover:border-[#FBFB46] hover:shadow-lg hover:-translate-y-1
                    transition-all duration-300"

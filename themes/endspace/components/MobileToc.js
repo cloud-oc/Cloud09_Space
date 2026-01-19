@@ -94,26 +94,21 @@ const MobileToc = ({ toc }) => {
 
   return (
     <>
-      {/* Floating TOC Button - Only visible on mobile */}
+      {/* Floating TOC Button - Mobile Only (Styled like Desktop) */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-20 right-4 z-40 md:hidden w-12 h-12 bg-[var(--endspace-bg-primary)] border border-[var(--endspace-border-base)] shadow-lg flex items-center justify-center text-[var(--endspace-text-muted)] hover:text-blue-400 hover:border-blue-400 transition-all"
+         className="fixed right-4 bottom-24 z-40 md:hidden 
+                   w-10 h-10 flex items-center justify-center shadow-md cursor-pointer border rounded-full 
+                   bg-white text-gray-400 border-gray-200
+                   hover:bg-[#FBFB46] hover:text-black hover:border-[#FBFB46] hover:shadow-lg hover:-translate-y-1
+                   transition-all duration-300 group"
         title="Table of Contents"
       >
-        <ListCheck2Icon size={20} />
-        {/* Progress indicator ring */}
-        <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 48 48">
-          <circle
-            cx="24"
-            cy="24"
-            r="22"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeDasharray={`${progress * 1.38} 138`}
-            className="text-blue-400 opacity-60"
-          />
-        </svg>
+        {/* Show Percentage by default, Icon logic similar to desktop for consistency */}
+        <div className="relative w-full h-full flex items-center justify-center">
+            <span className="text-[10px] font-bold font-mono group-hover:hidden text-gray-400">{Math.round(progress)}%</span>
+            <ListCheck2Icon size={20} stroke={2} className="hidden group-hover:block" />
+        </div>
       </button>
 
       {/* Overlay */}
@@ -126,30 +121,30 @@ const MobileToc = ({ toc }) => {
 
       {/* TOC Panel - Slide up from bottom */}
       <div 
-        className={`fixed left-0 right-0 bottom-0 z-50 md:hidden bg-[var(--endspace-bg-primary)] border-t border-[var(--endspace-border-base)] transition-transform duration-300 ease-out ${
+        className={`fixed left-0 right-0 bottom-0 z-50 md:hidden bg-[#f7f9fe] border-t border-[var(--endspace-border-base)] transition-transform duration-300 ease-out ${
           isOpen ? 'translate-y-0' : 'translate-y-full'
         }`}
         style={{ maxHeight: '70vh' }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--endspace-border-base)] bg-[var(--endspace-bg-secondary)]">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--endspace-border-base)] bg-white">
           <div className="flex items-center gap-3">
-            <ListCheck2Icon size={16} className="text-blue-400" />
-            <span className="text-sm font-mono font-bold text-[var(--endspace-text-primary)] uppercase">TOC INDEX</span>
-            <span className="text-xs font-mono text-[var(--endspace-text-muted)]">{toc.length} sections</span>
+            <ListCheck2Icon size={16} className="text-[#FBFB46]" />
+            <span className="text-sm font-mono font-bold text-black uppercase">TOC INDEX</span>
+            <span className="text-xs font-mono text-gray-400">{toc.length} sections</span>
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="w-8 h-8 flex items-center justify-center text-[var(--endspace-text-muted)] hover:text-[var(--endspace-text-primary)] transition-colors"
+            className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-black transition-colors"
           >
             <CloseFillIcon size={20} />
           </button>
         </div>
 
         {/* Progress Bar */}
-        <div className="h-1 bg-[var(--endspace-bg-secondary)]">
+        <div className="h-1 bg-gray-100">
           <div 
-            className="h-full bg-blue-400 transition-all duration-150"
+            className="h-full bg-[#FBFB46] transition-all duration-150"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -172,8 +167,8 @@ const MobileToc = ({ toc }) => {
                   onClick={() => handleItemClick(id)}
                   className={`w-full text-left py-3 px-4 text-sm transition-all duration-200 border-l-2 ${
                     isActive 
-                      ? 'border-blue-400 text-blue-400 bg-blue-400/10' 
-                      : 'border-transparent text-[var(--endspace-text-secondary)] hover:text-[var(--endspace-text-primary)] hover:bg-[var(--endspace-bg-secondary)]'
+                      ? 'border-[#FBFB46] text-black font-bold bg-[#FBFB46]/10' 
+                      : 'border-transparent text-gray-500 hover:text-black hover:bg-white'
                   }`}
                   style={{ 
                     paddingLeft: `${16 + tocItem.indentLevel * 16}px`

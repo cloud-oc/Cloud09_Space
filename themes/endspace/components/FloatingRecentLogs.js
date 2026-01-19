@@ -13,8 +13,9 @@ const FloatingRecentLogs = (props) => {
     <div 
       className="fixed z-50 block"
       style={{
-        right: '2rem',
-        top: '120px', // Position near top
+        right: '1rem',
+        top: 'auto',
+        bottom: '160px', // Stacked: TOC (100px) -> RecentLogs (160px)
       }}
     >
       {/* Floating Container */}
@@ -28,7 +29,7 @@ const FloatingRecentLogs = (props) => {
         {/* Toggle Button (Left of content when expanded, or standalone) */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`flex items-center justify-center transition-all duration-300 shadow-md cursor-pointer border hover:-translate-y-1 hover:shadow-lg z-20 relative ${
+          className={`flex items-center justify-center transition-all duration-300 shadow-md cursor-pointer border hover:-translate-y-1 hover:shadow-lg z-20 relative rounded-full ${
             isExpanded 
               ? 'w-10 h-10 bg-[#FBFB46] text-black border-[#FBFB46]' 
               : 'w-10 h-10 bg-white text-gray-400 border-gray-200 hover:bg-[#FBFB46] hover:text-black hover:border-[#FBFB46]'
