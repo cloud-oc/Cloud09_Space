@@ -14,7 +14,7 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
 
   return (
     <SmartLink href={`/${post.slug}`}>
-      <article className={`endspace-frame group mb-6 flex flex-col md:flex-row overflow-hidden relative transition-all duration-300 ${hasCover ? '' : 'p-6 md:p-8'}`}>
+      <article className={`endspace-frame group mb-6 flex flex-col overflow-hidden relative transition-all duration-300`}>
         
         {/* Hover Effect: Yellow Swoosh Background */}
         <div className="absolute inset-0 bg-[var(--endspace-accent-yellow)] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out z-0" />
@@ -22,8 +22,23 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
         {/* Hover Effect: Left Black Bar */}
         <div className="absolute top-0 bottom-0 left-0 w-2 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
 
-        {/* Content - Left side with padding */}
-        <div className={`flex-1 flex flex-col justify-center relative z-10 ${hasCover ? 'p-6 md:p-8' : ''}`}>
+        {/* Cover Image - Top (Full Width) */}
+        {hasCover && (
+          <div className="w-full h-48 md:h-64 flex-shrink-0 relative overflow-hidden z-10">
+            <img
+              src={post.pageCoverThumbnail}
+              alt={post.title}
+              className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+            />
+            {/* Minimalist marker overlay */}
+            <div className="absolute top-3 right-3 w-2 h-2 bg-[var(--endspace-accent-yellow)] opacity-0 group-hover:opacity-100 transition-opacity" />
+            {/* Corner decoration on hover */}
+            <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-white opacity-0 group-hover:opacity-80 transition-opacity" />
+          </div>
+        )}
+
+        {/* Content - Bottom */}
+        <div className={`flex-1 flex flex-col justify-center relative z-10 p-6 md:p-8`}>
           
           {/* Top Meta */}
           <div className="flex items-center gap-3 text-xs font-mono text-[var(--endspace-text-muted)] mb-3 group-hover:text-black/60 transition-colors">
@@ -64,21 +79,6 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
             </div>
           </div>
         </div>
-
-        {/* Cover Image - Fixed size, flush right, no frame */}
-        {hasCover && (
-          <div className="md:w-64 lg:w-80 h-48 md:h-auto flex-shrink-0 relative overflow-hidden order-first md:order-last z-10">
-            <img
-              src={post.pageCoverThumbnail}
-              alt={post.title}
-              className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-            />
-            {/* Minimalist marker overlay */}
-            <div className="absolute top-3 right-3 w-2 h-2 bg-[var(--endspace-accent-yellow)] opacity-0 group-hover:opacity-100 transition-opacity" />
-            {/* Corner decoration on hover */}
-            <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-white opacity-0 group-hover:opacity-80 transition-opacity" />
-          </div>
-        )}
       </article>
     </SmartLink>
   )

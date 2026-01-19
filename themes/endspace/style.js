@@ -22,7 +22,7 @@ export const Style = () => {
         --endspace-text-muted: #a1a1aa;
         
         /* Accents (Subtle Industrialism) -> Converted to Yellow Suite */
-        --endspace-accent-yellow: #fbbf24;
+        --endspace-accent-yellow: #eab308;
         --endspace-accent-yellow-dim: rgba(251, 191, 36, 0.15);
         --endspace-accent-cyan: #eab308; /* OVERRIDE: Cyan usage -> Yellow 500 */
         --endspace-accent-cyan-dim: rgba(234, 179, 8, 0.1); /* OVERRIDE: Cyan dim -> Yellow dim */
@@ -55,7 +55,7 @@ export const Style = () => {
         --endspace-text-secondary: #a1a1aa;
         --endspace-text-muted: #71717a;
         
-        --endspace-accent-yellow: #fbbf24;
+        --endspace-accent-yellow: #eab308;
         --endspace-accent-yellow-dim: rgba(251, 191, 36, 0.15);
         --endspace-accent-cyan: #ca8a04; /* Dark Mode: Yellow 600 */
         --endspace-accent-cyan-dim: rgba(202, 138, 4, 0.1);
