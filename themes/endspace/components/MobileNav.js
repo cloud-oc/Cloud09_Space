@@ -185,27 +185,27 @@ export const MobileNav = (props) => {
         }`}
       >
         {/* Navigation Items */}
-        <div className="py-3 pt-5">
-          <p className="px-5 text-xs font-mono text-[var(--endspace-text-muted)] mb-2 uppercase tracking-wider">Navigation</p>
+        <div className="flex flex-col items-start p-6 space-y-2">
           {menuItems.map(item => (
             <SmartLink
               key={item.name}
               href={item.path}
-              className={`flex items-center gap-4 px-6 py-4 transition-all ${
+              className={`flex items-center gap-4 py-3 w-full transition-all group ${
                 activeTab === item.name
-                  ? 'bg-[#d4d4d8] text-[var(--endspace-text-primary)]'
-                  : 'text-[var(--endspace-text-secondary)] hover:bg-[#d4d4d8] hover:text-[var(--endspace-text-primary)]'
+                  ? 'text-black font-bold'
+                  : 'text-[var(--endspace-text-secondary)] hover:text-black'
               }`}
             >
-              {renderIcon(item.name)}
-              <span className="text-base font-medium">{item.name}</span>
+              <div className={`transition-colors ${activeTab === item.name ? 'text-black' : 'text-gray-400 group-hover:text-black'}`}>
+                 {renderIcon(item.name)}
+              </div>
+              <span className="text-xl font-medium">{item.name}</span>
             </SmartLink>
           ))}
         </div>
 
-        {/* Music Player */}
-        <div className="p-5 border-t border-[var(--endspace-border-base)]">
-          <p className="text-xs font-mono text-[var(--endspace-text-muted)] mb-3 uppercase tracking-wider">Music</p>
+        {/* Music Player (No Label, No Divider) */}
+        <div className="px-6 pb-6">
           <EndspacePlayer isExpanded={true} />
         </div>
 
