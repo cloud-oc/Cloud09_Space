@@ -24,21 +24,8 @@ export const LoadingCover = () => {
   const textSweeping = siteConfig('ENDSPACE_LOADING_TEXT_SWEEPING', 'LAUNCHING', CONFIG)
   const textFadeout = siteConfig('ENDSPACE_LOADING_TEXT_FADEOUT', 'WELCOME', CONFIG)
 
-  // Smooth progress simulation
-  const updateProgress = useCallback((currentProgress) => {
-    if (currentProgress >= 99) return currentProgress
-    
-    // Slow down as we approach 90%
-    if (currentProgress > 90) return currentProgress // Wait for real load
-    
-    const remaining = 90 - currentProgress
-    const increment = Math.max(0.1, remaining * 0.05)
-    return Math.min(90, currentProgress + increment)
-  }, [])
-
+  // Resource loading tracking
   useEffect(() => {
-    if (hasCompletedRef.current) return
-
     // Prevent body scroll during loading
     document.body.style.overflow = 'hidden'
 
@@ -47,31 +34,83 @@ export const LoadingCover = () => {
       setPhase('loading')
     }, 100)
 
-    // Progress simulation
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        // If page has loaded, accelerate to 100%
-        if (!onLoading) {
-           return Math.min(100, prev + 5)
-        }
-        return updateProgress(prev)
-      })
-    }, 50)
+    const updateLoadingProgress = () => {
+      const images = document.images
+      const total = images.length
+      
+      if (total === 0) {
+        // No images, rely on time-based simulation or waiting for onLoading
+        return
+      }
 
-    // Fallback: force complete after max wait time (3.5 seconds)
+      let loaded = 0
+      const trackImage = () => {
+        loaded++
+        const percent = Math.floor((loaded / total) * 100)
+        setProgress(prev => {
+           // Ensure we don't regress if multiple updates fire rapidly
+           return Math.max(prev, percent)
+        })
+      }
+
+      for (let i = 0; i < total; i++) {
+        if (images[i].complete) {
+          loaded++
+        } else {
+          images[i].addEventListener('load', trackImage)
+          images[i].addEventListener('error', trackImage)
+        }
+      }
+      
+      // Initial count update
+      if (loaded > 0) {
+        const percent = Math.floor((loaded / total) * 100)
+        setProgress(prev => Math.max(prev, percent))
+      }
+    }
+
+    // Run on mount
+    updateLoadingProgress()
+
+    // Also simulation to keep it alive if resources are stuck or few
+    const progressInterval = setInterval(() => {
+        setProgress(prev => {
+            // Check if loading is complete from global state
+            if (!onLoading) {
+                 return Math.min(100, prev + 10)
+            }
+            
+            // If we have images, we rely mostly on them, but ensure at least some movement
+            const images = document.images
+            if (images.length > 0) {
+                // If we are waiting for images, we might want to crawl slowly up to 90%
+                // But user wanted "accurate", so maybe we shouldn't fake it too much.
+                // However, standard browser behavior is progressive.
+                // Let's cap tracked progress at 99 until onLoading is false
+                return prev >= 99 ? 99 : prev
+            } else {
+                // Fallback simulation for no-image pages
+                if (prev >= 90) return prev
+                const remaining = 90 - prev
+                // Slow movement
+                return prev + Math.max(0.1, remaining * 0.05)
+            }
+        })
+    }, 100)
+
     const maxWaitTimer = setTimeout(() => {
       if (!hasCompletedRef.current) {
         setProgress(100)
       }
-    }, 3500)
+    }, 5000) // Increased timeout for heavy pages
 
     return () => {
       clearTimeout(initTimer)
-      clearTimeout(maxWaitTimer)
       clearInterval(progressInterval)
+      clearTimeout(maxWaitTimer)
       document.body.style.overflow = ''
     }
-  }, [updateProgress, onLoading])
+  }, [onLoading])
 
   // Complete loading sequence when progress reaches 100
   useEffect(() => {
@@ -97,14 +136,11 @@ export const LoadingCover = () => {
   if (!isVisible) return null
 
   return (
-    <div className={`loading-cover ${phase}`}>
+    <div className={`loading-cover ${phase}`} style={{ '--progress': `${progress}%` }}>
       {/* Left side - Vertical Progress Bar */}
       <div className="progress-container">
         <div className="progress-track">
-          <div 
-            className="progress-fill"
-            style={{ height: `${progress}%` }}
-          />
+          <div className="progress-fill" />
         </div>
       </div>
 
@@ -115,13 +151,10 @@ export const LoadingCover = () => {
         </div>
       </div>
 
-      {/* Progress Info - follows progress bar from top to bottom */}
-      <div 
-        className="progress-info"
-        style={{ top: `${progress}%` }}
-      >
+      {/* Progress Info - follows progress bar */}
+      <div className="progress-info">
         <div className="progress-percent">
-          {progress.toFixed(1)}%
+          {Math.floor(progress)}%
         </div>
         <div className="status-line">
           <span className="status-dot" />
@@ -173,6 +206,7 @@ export const LoadingCover = () => {
           top: 0;
           left: 0;
           width: 100%;
+          height: var(--progress); /* Vertical growth */
           background: linear-gradient(180deg, #60a5fa 0%, #93c5fd 100%);
           transition: height 0.15s ease-out;
           box-shadow: 0 0 15px #60a5fa;
@@ -210,12 +244,13 @@ export const LoadingCover = () => {
         .progress-info {
           position: absolute;
           left: 20px;
+          top: var(--progress); /* Follows vertically */
           transform: translateY(-100%);
           display: flex;
           flex-direction: column;
           align-items: flex-start;
           gap: 8px;
-          transition: top 0.15s ease-out;
+          transition: top 0.15s ease-out, left 0.15s ease-out; /* Smooth transition for both properties */
           padding-bottom: 10px;
         }
 
@@ -328,18 +363,52 @@ export const LoadingCover = () => {
 
         /* Mobile responsive */
         @media (max-width: 768px) {
+          /* Reposition Site Name to Top Center */
           .site-name-container {
-            padding-right: 25px;
+            right: 0;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: auto;
+            align-items: flex-start;
+            padding-right: 0;
           }
 
           .site-name {
             font-size: 1.5rem;
             letter-spacing: 0.3em;
+            writing-mode: horizontal-tb; /* Horizontal text */
+            text-orientation: mixed;
+            transform: none;
+            background: linear-gradient(to right, rgba(147, 197, 253, 0.9) 0%, rgba(96, 165, 250, 0.5) 40%, rgba(59, 130, 246, 0.15) 80%, transparent 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
           }
 
+          /* Reposition Progress Bar to Bottom */
+          .progress-container {
+            width: 100%; 
+            height: 4px; /* Thin horizontal line */
+            top: auto;
+            bottom: 0;
+            left: 0;
+          }
+          
+          .progress-fill {
+            width: var(--progress); /* Horizontal growth */
+            height: 100%;
+            background: linear-gradient(90deg, #60a5fa 0%, #93c5fd 100%);
+            transition: width 0.15s ease-out;
+          }
+
+          /* Progress Info follows horizontal bar */
           .progress-info {
-            left: 15px;
-            gap: 6px;
+            top: auto;
+            bottom: 20px; /* Above the bar */
+            left: var(--progress); /* Follows horizontally */
+            transform: translateX(-50%); /* Center on the leading edge */
+            align-items: center; /* Center text */
+            padding-bottom: 0;
           }
 
           .progress-percent {
@@ -349,6 +418,14 @@ export const LoadingCover = () => {
           .status-text {
             font-size: 9px;
             letter-spacing: 1px;
+          }
+          
+          /* Adjust corner decoration */
+          .loading-cover::after {
+             bottom: 20px;
+             right: 20px;
+             width: 40px;
+             height: 40px;
           }
         }
       `}</style>
