@@ -32,7 +32,7 @@ export const SearchInput = ({ keyword = '', locale }) => {
         {/* Search Label */}
         <div className="flex items-center gap-2 text-black tech-text tracking-wider">
           <IconSearch size={24} stroke={1.5} />
-          <span className="text-5xl font-black">SEARCH_DATABASE</span>
+          <span className="text-5xl font-black">SEARCH</span>
         </div>
 
         {/* Search Input Container */}
@@ -44,12 +44,8 @@ export const SearchInput = ({ keyword = '', locale }) => {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             placeholder={locale?.SEARCH?.ARTICLES || 'Input query...'}
-            className="w-full px-4 py-3 bg-[var(--endspace-bg-secondary)] border border-[var(--endspace-border-base)] text-[var(--endspace-text-primary)] focus:border-[var(--endspace-accent-cyan)] focus:outline-none transition-colors pr-24 tech-text text-sm placeholder-[var(--endspace-text-muted)]"
+            className="w-full px-4 py-3 bg-[var(--endspace-bg-secondary)] border border-[var(--endspace-border-base)] text-[var(--endspace-text-primary)] focus:bg-black focus:text-[#FBFB46] focus:border-[var(--endspace-accent-yellow)] focus:outline-none transition-colors pr-24 tech-text text-sm placeholder-[var(--endspace-text-muted)]"
           />
-          
-          {/* Corner accents for input */}
-          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[var(--endspace-border-active)] pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[var(--endspace-border-active)] pointer-events-none" />
 
           {/* Clear Button */}
           {searchTerm && (

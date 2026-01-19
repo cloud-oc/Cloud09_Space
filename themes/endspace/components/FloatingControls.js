@@ -188,7 +188,7 @@ const FloatingControls = ({ toc, ...props }) => {
                 active={activeTab === 'logs'}
                 onClick={() => toggleDrawer('logs')}
                 iconClassName="text-gray-500"
-                iconSize={24}
+                iconSize={28}
              />
 
              {/* TOC - Only on Article Pages */}
@@ -199,6 +199,8 @@ const FloatingControls = ({ toc, ...props }) => {
                     active={activeTab === 'toc'}
                     onClick={() => toggleDrawer('toc')}
                     showPercent={true}
+                    iconClassName="text-gray-500"
+                    iconSize={28}
                  />
              )}
 

@@ -19,7 +19,7 @@ export const BlogListArchive = ({ archiveTitle, archivePosts }) => {
           // {archivePosts[archiveTitle]?.length}_ENTRIES_FOUND
         </span>
         <div className="flex-1" />
-        <div className="text-xs text-[var(--endspace-accent-cyan)] mb-2 tech-text">
+        <div className="text-xs text-black mb-2 tech-text">
           STATUS: ARCHIVED
         </div>
       </div>

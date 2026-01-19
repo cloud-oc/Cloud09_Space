@@ -41,7 +41,7 @@ const PaginationNumber = ({ page, totalPage }) => {
   return (
     <div className="mt-12 py-6 flex flex-col items-center">
       {/* Dark Pill Container */}
-      <div className="bg-[#2a2a2a] rounded-full px-6 py-3 flex items-center gap-6 shadow-2xl">
+      <div className="bg-[#2a2a2a] rounded-full p-1.5 flex items-center gap-3 shadow-2xl">
         
         {/* First Page */}
         <DoubleCircleBtn 
