@@ -100,17 +100,17 @@ const FloatingToc = ({ toc }) => {
         {/* Toggle Button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`flex items-center justify-center transition-all duration-200 hover:bg-[var(--endspace-bg-secondary)] ${
+          className={`flex items-center justify-center transition-all duration-300 shadow-md rounded-xl cursor-pointer border hover:-translate-y-1 hover:shadow-lg relative ${
             isExpanded 
-              ? 'absolute -left-11 top-0 w-10 h-10 bg-[var(--endspace-bg-primary)]/95 backdrop-blur-sm border border-[var(--endspace-border-base)] border-r-0' 
-              : 'w-11 h-11 bg-[var(--endspace-bg-primary)]/95 backdrop-blur-sm border border-[var(--endspace-border-base)]'
+              ? 'w-10 h-10 bg-[#FBFB46] text-black border-[#FBFB46] absolute -left-12 top-0' 
+              : 'w-10 h-10 bg-white text-gray-400 border-gray-200 hover:bg-[#FBFB46] hover:text-black hover:border-[#FBFB46]'
           }`}
           title={isExpanded ? 'Collapse TOC' : 'Expand TOC'}
         >
           {isExpanded ? (
-            <IconChevronRight size={16} stroke={1.5} className="text-blue-400" />
+            <IconChevronRight size={20} stroke={2} />
           ) : (
-            <IconListTree size={16} stroke={1.5} className="text-blue-400" />
+            <IconListTree size={20} stroke={2} />
           )}
         </button>
 

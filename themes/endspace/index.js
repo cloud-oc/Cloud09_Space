@@ -121,11 +121,10 @@ const LayoutBase = (props) => {
       {/* Scroll to top button */}
       <div
         className="fixed right-8 bottom-8 z-40 cursor-pointer 
-                   w-10 h-10 flex items-center justify-center 
-                   bg-[var(--endspace-bg-secondary)] hover:bg-[var(--endspace-bg-tertiary)]
-                   border border-[var(--endspace-border-base)] hover:border-[var(--endspace-accent-yellow)]
-                   text-[var(--endspace-text-muted)] hover:text-[var(--endspace-accent-yellow)]
-                   transition-all duration-300 shadow-lg"
+                   w-10 h-10 flex items-center justify-center rounded-xl shadow-md
+                   bg-white text-gray-400 border border-gray-200
+                   hover:bg-[#FBFB46] hover:text-black hover:border-[#FBFB46] hover:shadow-lg hover:-translate-y-1
+                   transition-all duration-300"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       >
         <IconChevronUp size={18} stroke={1.5} />

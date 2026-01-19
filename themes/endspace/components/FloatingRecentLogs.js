@@ -28,17 +28,17 @@ const FloatingRecentLogs = (props) => {
         {/* Toggle Button (Left of content when expanded, or standalone) */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`flex items-center justify-center transition-all duration-200 hover:bg-[var(--endspace-bg-secondary)] shadow-lg z-20 relative ${
+          className={`flex items-center justify-center transition-all duration-300 shadow-md rounded-xl cursor-pointer border hover:-translate-y-1 hover:shadow-lg z-20 relative ${
             isExpanded 
-              ? 'w-10 h-10 bg-[var(--endspace-bg-primary)]/95 backdrop-blur-sm border border-[var(--endspace-border-base)] border-r-0 rounded-l-sm' 
-              : 'w-11 h-11 bg-[var(--endspace-bg-primary)]/95 backdrop-blur-sm border border-[var(--endspace-border-base)] rounded-sm'
+              ? 'w-10 h-10 bg-[#FBFB46] text-black border-[#FBFB46]' 
+              : 'w-10 h-10 bg-white text-gray-400 border-gray-200 hover:bg-[#FBFB46] hover:text-black hover:border-[#FBFB46]'
           }`}
           title={isExpanded ? 'Collapse Sidebar' : 'Show Recent Logs'}
         >
           {isExpanded ? (
-            <IconChevronRight size={18} stroke={1.5} className="text-[var(--endspace-accent-yellow)]" />
+            <IconChevronRight size={20} stroke={2} />
           ) : (
-            <IconHistory size={18} stroke={1.5} className="text-[var(--endspace-accent-yellow)]" />
+            <IconHistory size={20} stroke={2} />
           )}
         </button>
 
