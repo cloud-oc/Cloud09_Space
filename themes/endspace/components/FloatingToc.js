@@ -79,7 +79,7 @@ const FloatingToc = ({ toc }) => {
 
   return (
     <div 
-      className="fixed z-50 hidden lg:block"
+      className="fixed z-50 block"
       style={{
         right: '2rem',
         top: 'auto',
@@ -90,8 +90,8 @@ const FloatingToc = ({ toc }) => {
       <div 
         className={`transition-all duration-300 ease-out ${
           isExpanded 
-            ? 'w-64 bg-[var(--endspace-bg-primary)]/95 backdrop-blur-sm border border-[var(--endspace-border-base)] shadow-lg' 
-            : 'w-11'
+            ? 'w-64 bg-[#f7f9fe] border border-[var(--endspace-border-base)] shadow-lg' 
+            : 'w-10'
         }`}
         style={{
           maxHeight: '70vh'
@@ -100,9 +100,9 @@ const FloatingToc = ({ toc }) => {
         {/* Toggle Button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`flex items-center justify-center transition-all duration-300 shadow-md rounded-xl cursor-pointer border hover:-translate-y-1 hover:shadow-lg relative ${
+          className={`flex items-center justify-center transition-all duration-300 shadow-md cursor-pointer border hover:-translate-y-1 hover:shadow-lg relative group ${
             isExpanded 
-              ? 'w-10 h-10 bg-[#FBFB46] text-black border-[#FBFB46] absolute -left-12 top-0' 
+              ? 'w-10 h-10 bg-[#FBFB46] text-black border-[#FBFB46] absolute -left-10 top-0' 
               : 'w-10 h-10 bg-white text-gray-400 border-gray-200 hover:bg-[#FBFB46] hover:text-black hover:border-[#FBFB46]'
           }`}
           title={isExpanded ? 'Collapse TOC' : 'Expand TOC'}
@@ -110,7 +110,12 @@ const FloatingToc = ({ toc }) => {
           {isExpanded ? (
             <IconChevronRight size={20} stroke={2} />
           ) : (
-            <IconListTree size={20} stroke={2} />
+            // Show Percentage when collapsed, Icon on hover (optional, or just overlay)
+            // User asked for "percentage in directory button"
+            <div className="relative w-full h-full flex items-center justify-center">
+               <span className="text-[10px] font-bold font-mono group-hover:hidden">{Math.round(progress)}%</span>
+               <IconListTree size={20} stroke={2} className="hidden group-hover:block" />
+            </div>
           )}
         </button>
 
@@ -120,16 +125,16 @@ const FloatingToc = ({ toc }) => {
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-[var(--endspace-text-muted)] font-mono text-xs font-bold tracking-widest uppercase flex items-center gap-2">
-                <IconListTree size={14} stroke={1.5} className="text-blue-400" />
+                <IconListTree size={14} stroke={1.5} className="text-[#FBFB46]" />
                 <span>TOC Index</span>
               </h3>
-              <span className="text-[10px] font-mono text-blue-400">{Math.round(progress)}%</span>
+              <span className="text-[10px] font-mono text-[#FBFB46]">{Math.round(progress)}%</span>
             </div>
 
             {/* Progress Bar */}
             <div className="h-0.5 bg-[var(--endspace-bg-secondary)] mb-4">
               <div 
-                className="h-full bg-blue-400 transition-all duration-150"
+                className="h-full bg-[#FBFB46] transition-all duration-150"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -151,7 +156,7 @@ const FloatingToc = ({ toc }) => {
                       href={`#${id}`}
                       className={`block py-1 text-xs transition-all duration-200 hover:translate-x-1 ${
                         isActive 
-                          ? 'text-blue-400 font-medium' 
+                          ? 'text-[#FBFB46] font-medium' 
                           : 'text-[var(--endspace-text-secondary)] hover:text-[var(--endspace-text-primary)]'
                       }`}
                       style={{ 
@@ -174,17 +179,6 @@ const FloatingToc = ({ toc }) => {
               </div>
             </div>
           </div>
-        )}
-
-        {/* Collapsed Progress Indicator */}
-        {!isExpanded && (
-          <div 
-            className="absolute left-0 bottom-0 w-full bg-blue-400/30"
-            style={{ 
-              height: `${progress}%`,
-              transition: 'height 0.15s ease-out'
-            }}
-          />
         )}
       </div>
     </div>

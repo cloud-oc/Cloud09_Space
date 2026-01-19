@@ -11,7 +11,7 @@ const FloatingRecentLogs = (props) => {
 
   return (
     <div 
-      className="fixed z-50 hidden lg:block"
+      className="fixed z-50 block"
       style={{
         right: '2rem',
         top: '120px', // Position near top
@@ -22,13 +22,13 @@ const FloatingRecentLogs = (props) => {
         className={`transition-all duration-300 ease-out flex ${
           isExpanded 
             ? 'w-80' // Wider for sidebar content
-            : 'w-11'
+            : 'w-10'
         }`}
       >
         {/* Toggle Button (Left of content when expanded, or standalone) */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`flex items-center justify-center transition-all duration-300 shadow-md rounded-xl cursor-pointer border hover:-translate-y-1 hover:shadow-lg z-20 relative ${
+          className={`flex items-center justify-center transition-all duration-300 shadow-md cursor-pointer border hover:-translate-y-1 hover:shadow-lg z-20 relative ${
             isExpanded 
               ? 'w-10 h-10 bg-[#FBFB46] text-black border-[#FBFB46]' 
               : 'w-10 h-10 bg-white text-gray-400 border-gray-200 hover:bg-[#FBFB46] hover:text-black hover:border-[#FBFB46]'
@@ -44,7 +44,7 @@ const FloatingRecentLogs = (props) => {
 
         {/* Expanded Content Drawer */}
         <div 
-            className={`transition-opacity duration-300 bg-[var(--endspace-bg-primary)]/95 backdrop-blur-sm border border-[var(--endspace-border-base)] shadow-2xl overflow-hidden ${
+            className={`transition-opacity duration-300 bg-[#f7f9fe] border border-[var(--endspace-border-base)] shadow-2xl overflow-hidden ${
                 isExpanded ? 'opacity-100 visible w-full' : 'opacity-0 invisible w-0 border-0'
             }`}
              style={{
