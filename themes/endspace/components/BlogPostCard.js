@@ -14,17 +14,17 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
 
   return (
     <SmartLink href={`/${post.slug}`}>
-      <article className={`endspace-frame group mb-6 flex flex-col md:flex-row overflow-hidden hover:border-[var(--endspace-border-active)] transition-all duration-300 ${hasCover ? '' : 'p-6 md:p-8'}`}>
+      <article className={`endspace-frame group mb-6 flex flex-col md:flex-row overflow-hidden hover:bg-black hover:border-[var(--endspace-border-active)] transition-all duration-300 ${hasCover ? '' : 'p-6 md:p-8'}`}>
         
         {/* Content - Left side with padding */}
         <div className={`flex-1 flex flex-col justify-center ${hasCover ? 'p-6 md:p-8' : ''}`}>
           
           {/* Top Meta */}
-          <div className="flex items-center gap-3 text-xs font-mono text-[var(--endspace-text-muted)] mb-3">
-             <span className="text-[var(--endspace-text-primary)] font-bold">
+          <div className="flex items-center gap-3 text-xs font-mono text-[var(--endspace-text-muted)] mb-3 group-hover:text-gray-400 transition-colors">
+             <span className="text-[var(--endspace-text-primary)] font-bold group-hover:text-[var(--endspace-accent-yellow)] transition-colors">
                  {post.publishDay}
              </span>
-             <span className="w-px h-3 bg-[var(--endspace-border-base)]" />
+             <span className="w-px h-3 bg-[var(--endspace-border-base)] group-hover:bg-gray-600 transition-colors" />
              {post.category && (
                 <span className="tracking-wider">{post.category.toUpperCase()}</span>
              )}
@@ -37,7 +37,7 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
 
           {/* Summary */}
           {showSummary && showPreview && post.summary && (
-            <p className="text-[var(--endspace-text-secondary)] text-sm leading-relaxed line-clamp-2 md:line-clamp-3 mb-6 font-medium">
+            <p className="text-[var(--endspace-text-secondary)] text-sm leading-relaxed line-clamp-2 md:line-clamp-3 mb-6 font-medium group-hover:text-gray-300 transition-colors">
               {post.summary}
             </p>
           )}
@@ -46,15 +46,15 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
           <div className="mt-auto flex items-center justify-between">
             <div className="flex gap-2">
                 {post.tags?.slice(0,3).map(tag => (
-                    <span key={tag} className="text-[10px] text-[var(--endspace-text-muted)] bg-[var(--endspace-bg-secondary)] px-1.5 py-0.5 rounded">
+                    <span key={tag} className="text-[10px] text-[var(--endspace-text-muted)] bg-[var(--endspace-bg-secondary)] px-1.5 py-0.5 rounded group-hover:text-gray-200 group-hover:bg-opacity-20 transition-colors">
                         #{tag}
                     </span>
                 ))}
             </div>
             
-            <div className="flex items-center gap-2 text-[var(--endspace-text-primary)] text-xs font-bold uppercase tracking-wider group-hover:gap-3 transition-all">
+            <div className="flex items-center gap-2 text-[var(--endspace-text-primary)] text-xs font-bold uppercase tracking-wider group-hover:gap-3 transition-all group-hover:text-white">
                 <span>Access</span>
-                <IconArrowRight size={12} stroke={2} className="group-hover:translate-x-1 transition-transform" />
+                <IconArrowRight size={12} stroke={2} className="group-hover:translate-x-1 transition-transform group-hover:text-[var(--endspace-accent-yellow)]" />
             </div>
           </div>
         </div>
