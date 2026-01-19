@@ -40,6 +40,7 @@ import { IconChevronUp, IconFolder, IconTag, IconLoader2 } from '@tabler/icons-r
 const LayoutBase = (props) => {
   const { children, post } = props
   const { onLoading, fullWidth, locale } = useGlobal()
+  const toc = post?.toc
 
   // Article detail page vertical layout
   const LAYOUT_VERTICAL =
