@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
-import { IconHistory, IconListTree, IconArrowUp, IconX, IconChevronRight } from '@tabler/icons-react'
+import { IconHistory, IconListTree, IconArrowUp, IconX, IconChevronRight, IconMessage } from '@tabler/icons-react'
 import { SideBar } from './SideBar'
 
 /**
@@ -115,7 +115,7 @@ const FloatingControls = ({ toc, ...props }) => {
             ${isOpen ? 'translate-y-0 opacity-100 visible' : 'translate-y-full opacity-0 invisible'}
 
             /* Desktop Styles: Floating Card (Left of buttons) */
-            lg:absolute lg:bottom-0 lg:right-16 lg:left-auto lg:w-80 lg:rounded-xl lg:border lg:h-auto lg:max-h-[70vh]
+            lg:fixed lg:bottom-8 lg:right-20 lg:left-auto lg:w-80 lg:rounded-xl lg:border lg:h-auto lg:max-h-[70vh]
             lg:max-w-[calc(100vw-2rem)]
             ${isOpen ? 'lg:translate-y-0 lg:opacity-100 lg:visible' : 'lg:translate-y-0 lg:translate-x-4 lg:opacity-0 lg:invisible'}
         `}
@@ -189,14 +189,30 @@ const FloatingControls = ({ toc, ...props }) => {
                 onClick={() => toggleDrawer('logs')}
              />
 
-             {/* TOC */}
-             <ControlBtn 
-                icon={IconListTree} 
-                label="Table of Contents" 
-                active={activeTab === 'toc'}
-                onClick={() => toggleDrawer('toc')}
-                showPercent={true}
-             />
+             {/* TOC - Only on Article Pages */}
+             {toc && toc.length > 0 && (
+                 <ControlBtn 
+                    icon={IconListTree} 
+                    label="Table of Contents" 
+                    active={activeTab === 'toc'}
+                    onClick={() => toggleDrawer('toc')}
+                    showPercent={true}
+                 />
+             )}
+
+             {/* Comments - Only on Article Pages (approximated by TOC presence) */}
+             {toc && toc.length > 0 && (
+                 <ControlBtn 
+                    icon={IconMessage} 
+                    label="Jump to Comments" 
+                    onClick={() => {
+                        const comments = document.getElementById('comments')
+                        if (comments) {
+                            comments.scrollIntoView({ behavior: 'smooth' })
+                        }
+                    }}
+                 />
+             )}
 
              {/* Scroll To Top */}
              <ControlBtn 
