@@ -767,7 +767,7 @@ export const Style = () => {
         left: 0;
         width: 0%;
         height: 100%;
-        background: var(--endspace-bg-secondary); /* Inverted Background Color */
+        background: var(--endspace-bg-tertiary); /* Darker Grey for visibility */
         transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         z-index: -1;
       }
