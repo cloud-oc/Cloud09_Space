@@ -24,10 +24,8 @@ import { SideNav } from './components/SideNav'
 import TitleBar from './components/TitleBar'
 import LoadingCover from './components/LoadingCover'
 import MobileNav from './components/MobileNav'
-import MobileToc from './components/MobileToc'
 import ArticleAdjacent from './components/ArticleAdjacent'
-import FloatingToc from './components/FloatingToc'
-import FloatingRecentLogs from './components/FloatingRecentLogs'
+import FloatingControls from './components/FloatingControls'
 import useViewportScale from './components/useViewportScale'
 import CONFIG from './config'
 import { Style } from './style'
@@ -111,24 +109,8 @@ const LayoutBase = (props) => {
             {!fullWidth && (
                <FloatingRecentLogs {...props} />
             )}
-          </div>
-        </div>
-
-        {/* Footer */}
-        {!fullWidth && <Footer />}
-      </div>
-
-      {/* Scroll to top button */}
-      <div
-        className="fixed right-4 bottom-8 z-40 cursor-pointer 
-                   w-10 h-10 flex items-center justify-center shadow-md rounded-full
-                   bg-white text-gray-400 border border-gray-200
-                   hover:bg-[#FBFB46] hover:text-black hover:border-[#FBFB46] hover:shadow-lg hover:-translate-y-1
-                   transition-all duration-300"
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      >
-        <IconChevronUp size={18} stroke={1.5} />
-      </div>
+          {/* Floating Controls (Unified) */}
+      <FloatingControls toc={toc} {...props} />
     </div>
   )
 }
