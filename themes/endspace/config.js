@@ -33,7 +33,7 @@ const CONFIG = {
   
   // Custom Loading Image (Optional)
   // Displayed at right-center on desktop, top-center on mobile
-  ENDSPACE_LOADING_IMAGE: 'https://github.com/cloud-oc/picx-images-hosting/raw/master/Origin/Cloud_icon.45i5x9cle4.webp', // e.g., '/images/logo.png'
+  ENDSPACE_LOADING_IMAGE: 'public\svg\cloud.svg', // e.g., '/images/logo.png'
 
   // ============================================
   // 视觉美化 (Visual Aesthetics)
