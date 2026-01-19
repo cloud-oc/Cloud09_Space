@@ -84,55 +84,41 @@ export const EndspacePlayer = ({ isExpanded }) => {
 
   // Auto-play on initial load based on config
   useEffect(() => {
-    // Only run this logic once on mount, or if autoplay is requested and we haven't init yet
-    if (hasInitializedRef.current || !audioRef.current || !currentAudio.url) return
+    // Only run this once on mount/init for autoplay
+    if (hasInitializedRef.current) return
 
-    if (autoPlay) {
+    if (autoPlay && audioRef.current && currentAudio.url) {
       hasInitializedRef.current = true
       
-      let cleanupListeners = null
-
+      // Simple, direct attempt to play
       const attemptPlay = async () => {
         try {
           await audioRef.current?.play()
           setIsPlaying(true)
         } catch (error) {
-          console.log('Autoplay blocked, waiting for interaction:', error)
-          
-          const onInteract = () => {
-            if (audioRef.current) {
-               audioRef.current.play()
-                .then(() => setIsPlaying(true))
-                .catch(e => console.log('Interaction play failed:', e))
-            }
-            if (cleanupListeners) cleanupListeners()
-          }
-
-          cleanupListeners = () => {
-            window.removeEventListener('click', onInteract)
-            window.removeEventListener('keydown', onInteract)
-            window.removeEventListener('touchstart', onInteract)
-          }
-          
-          window.addEventListener('click', onInteract)
-          window.addEventListener('keydown', onInteract)
-          window.addEventListener('touchstart', onInteract)
+          console.log('Autoplay prevented by browser:', error)
+          // We DO NOT attach global listeners here to prevent zombie audio.
+          // If browser blocks, user must manually click play.
         }
       }
-
-      // Small delay to ensure audio is ready
-      const timer = setTimeout(attemptPlay, 500)
       
-      // Cleanup function for the effect
-      return () => {
-        clearTimeout(timer)
-        if (cleanupListeners) cleanupListeners()
-      }
+      // Small delay to ensure DOM is ready
+      const timer = setTimeout(attemptPlay, 800)
+      return () => clearTimeout(timer)
     } else {
-      // If no autoplay, just mark initialized so we don't try later
-      hasInitializedRef.current = true
+       hasInitializedRef.current = true
     }
   }, [currentAudio.url, autoPlay])
+
+  // Strict cleanup when track changes
+  useEffect(() => {
+    return () => {
+       // FORCE PAUSE on unmount/change to kill zombie audio
+       if (audioRef.current) {
+          audioRef.current.pause()
+       }
+    }
+  }, [currentAudio.url])
 
   // Progress update
   useEffect(() => {
