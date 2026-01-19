@@ -27,6 +27,7 @@ import MobileNav from './components/MobileNav'
 import MobileToc from './components/MobileToc'
 import ArticleAdjacent from './components/ArticleAdjacent'
 import FloatingToc from './components/FloatingToc'
+import FloatingRecentLogs from './components/FloatingRecentLogs'
 import useViewportScale from './components/useViewportScale'
 import CONFIG from './config'
 import { Style } from './style'
@@ -80,19 +81,14 @@ const LayoutBase = (props) => {
         <div id="container-inner" className="w-full relative z-10 flex-grow">
           <div
             id="container-wrapper"
-            className={`relative mx-auto justify-center md:flex py-8 px-4 md:px-8 lg:px-12 max-w-screen-xl xl:max-w-screen-2xl
-            ${LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''} 
-            ${LAYOUT_VERTICAL ? 'items-center flex-col' : 'items-start'} 
-            `}
+            className="relative mx-auto justify-center md:flex py-8 px-4 md:px-8 lg:px-12 max-w-screen-xl xl:max-w-screen-2xl items-start"
           >
-            {/* Main content */}
+            {/* Main content - Centered */}
             <div
               className={`${
                 fullWidth
                   ? 'w-full'
-                  : LAYOUT_VERTICAL
-                  ? 'max-w-5xl w-full mx-auto'
-                  : 'max-w-4xl lg:max-w-5xl w-full mx-auto md:mx-0 md:pr-8 lg:pr-12 flex-1'
+                  : 'max-w-4xl w-full mx-auto'
               }`}
             >
               <Transition
@@ -110,18 +106,10 @@ const LayoutBase = (props) => {
                 {children}
               </Transition>
             </div>
-
-            {/* Right sidebar */}
+            
+            {/* Floating Recent Logs (Desktop) */}
             {!fullWidth && (
-              <div
-                className={`${
-                  LAYOUT_VERTICAL
-                    ? 'flex space-x-0 md:space-x-4 md:flex-row flex-col w-full max-w-5xl justify-center mt-8 mx-auto'
-                    : 'lg:w-80 xl:w-96 w-full mt-8 md:mt-0 md:sticky md:top-24 flex-shrink-0'
-                }`}
-              >
-                <SideBar {...props} />
-              </div>
+               <FloatingRecentLogs {...props} />
             )}
           </div>
         </div>
@@ -132,12 +120,12 @@ const LayoutBase = (props) => {
 
       {/* Scroll to top button */}
       <div
-        className="fixed right-4 bottom-20 md:bottom-8 z-40 cursor-pointer 
+        className="fixed right-8 bottom-8 z-40 cursor-pointer 
                    w-10 h-10 flex items-center justify-center 
                    bg-[var(--endspace-bg-secondary)] hover:bg-[var(--endspace-bg-tertiary)]
                    border border-[var(--endspace-border-base)] hover:border-[var(--endspace-accent-yellow)]
                    text-[var(--endspace-text-muted)] hover:text-[var(--endspace-accent-yellow)]
-                   transition-all duration-300"
+                   transition-all duration-300 shadow-lg"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       >
         <IconChevronUp size={18} stroke={1.5} />

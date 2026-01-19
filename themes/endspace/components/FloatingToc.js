@@ -82,8 +82,8 @@ const FloatingToc = ({ toc }) => {
       className="fixed z-50 hidden lg:block"
       style={{
         right: '2rem',
-        top: '50%',
-        transform: 'translateY(-50%)'
+        top: 'auto',
+        bottom: '250px' // Position above scroll to top, below recent logs
       }}
     >
       {/* Floating Container */}
