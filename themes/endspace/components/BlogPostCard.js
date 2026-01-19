@@ -26,8 +26,6 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
             />
             {/* Minimalist marker overlay */}
             <div className="absolute top-3 right-3 w-2 h-2 bg-[var(--endspace-accent-yellow)] opacity-0 group-hover:opacity-100 transition-opacity" />
-            {/* Corner decoration on hover */}
-            <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-white opacity-0 group-hover:opacity-80 transition-opacity" />
           </div>
         )}
 
