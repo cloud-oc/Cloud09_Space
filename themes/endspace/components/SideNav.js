@@ -191,7 +191,7 @@ export const SideNav = (props) => {
       <div ref={navRef} className="flex-1 py-4 flex flex-col gap-2 overflow-y-auto overflow-x-hidden relative">
         {/* Animated Active Indicator Bar - Higher z-index */}
         <div 
-          className="absolute left-0 w-[0.25rem] h-[3rem] bg-[var(--endspace-accent-yellow)] transition-all duration-300 ease-out z-10"
+          className="absolute left-0 w-1.5 h-[3rem] bg-[var(--endspace-text-primary)] transition-all duration-300 ease-out z-10"
           style={{ top: indicatorStyle.top, opacity: indicatorStyle.opacity }}
         />
         
