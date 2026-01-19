@@ -180,7 +180,7 @@ export const MobileNav = (props) => {
 
       {/* Slide-in Menu Panel */}
       <div 
-        className={`fixed top-20 right-0 bottom-0 w-72 max-w-[80vw] z-40 md:hidden bg-[var(--endspace-bg-primary)] border-l border-[var(--endspace-border-base)] transition-transform duration-300 ease-out overflow-y-auto ${
+        className={`fixed top-20 left-0 right-0 bottom-0 z-40 md:hidden bg-white transition-transform duration-300 ease-out overflow-y-auto ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -205,13 +205,12 @@ export const MobileNav = (props) => {
         </div>
 
         {/* Music Player (No Label, No Divider) */}
-        <div className="px-6 pb-6">
+        <div className="px-6 pb-2">
           <EndspacePlayer isExpanded={true} />
         </div>
 
-        {/* Social Links */}
-        <div className="p-5 border-t border-[var(--endspace-border-base)]">
-          <p className="text-xs font-mono text-[var(--endspace-text-muted)] mb-3 uppercase tracking-wider">Contact</p>
+        {/* Social Links (No Label, No Divider) */}
+        <div className="px-6 pb-8">
           <div className="flex items-center gap-3 flex-wrap">
             {/* Email */}
             {email && (
@@ -239,13 +238,6 @@ export const MobileNav = (props) => {
                 </a>
               )
             })}
-          </div>
-        </div>
-
-        {/* Theme Toggle or other utilities could go here */}
-        <div className="p-5 border-t border-[var(--endspace-border-base)] mt-auto">
-          <div className="text-xs text-[var(--endspace-text-muted)] font-mono">
-            © {new Date().getFullYear()} {siteConfig('AUTHOR') || 'Cloud'}
           </div>
         </div>
       </div>
