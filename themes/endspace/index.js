@@ -105,9 +105,9 @@ const LayoutBase = (props) => {
               </Transition>
             </div>
             
-            {/* Floating Recent Logs (Desktop) */}
+            {/* Spacer for structure consistency */}
             {!fullWidth && (
-               <div /> /* Spacer or empty? Originally FloatingRecentLogs was here. We can just close the div. */
+               <div />
             )}
           </div>
         </div>
@@ -118,6 +118,7 @@ const LayoutBase = (props) => {
         {/* Floating Controls (Unified) */}
         <FloatingControls toc={toc} {...props} />
       </div>
+    </div>
   )
 }
 
