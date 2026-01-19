@@ -190,7 +190,7 @@ export const LoadingCover = () => {
           top: 0;
           width: 6px;
           height: 100%;
-          background: rgba(96, 165, 250, 0.15);
+          background: rgba(234, 179, 8, 0.15);
         }
 
         .progress-track {
@@ -207,9 +207,9 @@ export const LoadingCover = () => {
           left: 0;
           width: 100%;
           height: var(--progress); /* Vertical growth */
-          background: linear-gradient(180deg, #60a5fa 0%, #93c5fd 100%);
+          background: linear-gradient(180deg, #eab308 0%, #fde047 100%);
           transition: height 0.15s ease-out;
-          box-shadow: 0 0 15px #60a5fa;
+          box-shadow: 0 0 15px #eab308;
         }
 
         /* Right side - Vertical Text */
@@ -233,11 +233,11 @@ export const LoadingCover = () => {
           writing-mode: vertical-rl;
           text-orientation: mixed;
           transform: rotate(180deg);
-          background: linear-gradient(to left, rgba(147, 197, 253, 0.9) 0%, rgba(96, 165, 250, 0.5) 40%, rgba(59, 130, 246, 0.15) 80%, transparent 100%);
+          background: linear-gradient(to left, rgba(253, 224, 71, 0.9) 0%, rgba(234, 179, 8, 0.5) 40%, rgba(202, 138, 4, 0.15) 80%, transparent 100%);
           -webkit-background-clip: text;
           background-clip: text;
           user-select: none;
-          text-shadow: 0 0 40px rgba(96, 165, 250, 0.3);
+          text-shadow: 0 0 40px rgba(234, 179, 8, 0.3);
         }
 
         /* Progress Info - follows progress bar */
@@ -258,10 +258,10 @@ export const LoadingCover = () => {
           font-family: 'Orbitron', 'Rajdhani', 'Share Tech Mono', 'Consolas', monospace;
           font-size: clamp(36px, 6vw, 56px);
           font-weight: 700;
-          color: #93c5fd;
+          color: #fde047;
           letter-spacing: 2px;
           line-height: 1;
-          text-shadow: 0 0 30px rgba(96, 165, 250, 0.5);
+          text-shadow: 0 0 30px rgba(234, 179, 8, 0.5);
         }
 
         .status-line {
@@ -273,17 +273,17 @@ export const LoadingCover = () => {
         .status-dot {
           width: 6px;
           height: 6px;
-          background: #60a5fa;
+          background: #eab308;
           border-radius: 50%;
           animation: pulse 1s ease-in-out infinite;
-          box-shadow: 0 0 10px #60a5fa;
+          box-shadow: 0 0 10px #eab308;
         }
 
         .status-text {
           font-family: 'Orbitron', 'Rajdhani', 'Share Tech Mono', 'Consolas', monospace;
           font-size: 11px;
           font-weight: 500;
-          color: rgba(147, 197, 253, 0.7);
+          color: rgba(253, 224, 71, 0.7);
           letter-spacing: 2px;
           text-transform: uppercase;
         }
@@ -295,7 +295,7 @@ export const LoadingCover = () => {
           left: 0;
           width: 100%;
           height: 100%;
-          background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 50%, #93c5fd 100%);
+          background: linear-gradient(90deg, #eab308 0%, #facc15 50%, #fde047 100%);
           transform: scaleX(0);
           transform-origin: left;
           pointer-events: none;
@@ -320,8 +320,8 @@ export const LoadingCover = () => {
           position: absolute;
           inset: 0;
           background-image: 
-            linear-gradient(rgba(96, 165, 250, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(96, 165, 250, 0.03) 1px, transparent 1px);
+            linear-gradient(rgba(234, 179, 8, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(234, 179, 8, 0.03) 1px, transparent 1px);
           background-size: 60px 60px;
           pointer-events: none;
         }
@@ -334,19 +334,19 @@ export const LoadingCover = () => {
           right: 50px;
           width: 80px;
           height: 80px;
-          border-right: 2px solid rgba(96, 165, 250, 0.4);
-          border-bottom: 2px solid rgba(96, 165, 250, 0.4);
+          border-right: 2px solid rgba(234, 179, 8, 0.4);
+          border-bottom: 2px solid rgba(234, 179, 8, 0.4);
           pointer-events: none;
         }
 
         @keyframes pulse {
           0%, 100% { 
             opacity: 1; 
-            box-shadow: 0 0 10px #60a5fa, 0 0 20px rgba(96, 165, 250, 0.4);
+            box-shadow: 0 0 10px #eab308, 0 0 20px rgba(234, 179, 8, 0.4);
           }
           50% { 
             opacity: 0.6; 
-            box-shadow: 0 0 15px #60a5fa, 0 0 30px rgba(96, 165, 250, 0.2);
+            box-shadow: 0 0 15px #eab308, 0 0 30px rgba(234, 179, 8, 0.2);
           }
         }
 
@@ -380,7 +380,7 @@ export const LoadingCover = () => {
             writing-mode: horizontal-tb; /* Horizontal text */
             text-orientation: mixed;
             transform: none;
-            background: linear-gradient(to top, rgba(147, 197, 253, 0.9) 0%, rgba(96, 165, 250, 0.5) 40%, rgba(59, 130, 246, 0.15) 80%, transparent 100%);
+            background: linear-gradient(to top, rgba(253, 224, 71, 0.9) 0%, rgba(234, 179, 8, 0.5) 40%, rgba(202, 138, 4, 0.15) 80%, transparent 100%);
             -webkit-background-clip: text;
             background-clip: text;
           }
@@ -397,7 +397,7 @@ export const LoadingCover = () => {
           .progress-fill {
             width: var(--progress); /* Horizontal growth */
             height: 100%;
-            background: linear-gradient(90deg, #60a5fa 0%, #93c5fd 100%);
+            background: linear-gradient(90deg, #eab308 0%, #fde047 100%);
             transition: width 0.15s ease-out;
           }
 

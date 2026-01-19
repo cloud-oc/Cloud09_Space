@@ -21,15 +21,15 @@ export const Style = () => {
         --endspace-text-secondary: #52525b;
         --endspace-text-muted: #a1a1aa;
         
-        /* Accents (Subtle Industrialism) */
-        --endspace-accent-yellow: #62F0F5;
-        --endspace-accent-yellow-dim: rgba(98, 240, 245, 0.15);
-        --endspace-accent-cyan: #06b6d4;
-        --endspace-accent-cyan-dim: rgba(6, 182, 212, 0.1);
+        /* Accents (Subtle Industrialism) -> Converted to Yellow Suite */
+        --endspace-accent-yellow: #fbbf24;
+        --endspace-accent-yellow-dim: rgba(251, 191, 36, 0.15);
+        --endspace-accent-cyan: #eab308; /* OVERRIDE: Cyan usage -> Yellow 500 */
+        --endspace-accent-cyan-dim: rgba(234, 179, 8, 0.1); /* OVERRIDE: Cyan dim -> Yellow dim */
         
         /* Borders & Lines */
         --endspace-border-base: #e4e4e7;
-        --endspace-border-active: #3b82f6;
+        --endspace-border-active: #eab308; /* Active border -> Yellow */
         --endspace-grid-color: rgba(0,0,0,0.03);
         
         /* Shadows - Enhanced 3D Depth */
@@ -55,13 +55,13 @@ export const Style = () => {
         --endspace-text-secondary: #a1a1aa;
         --endspace-text-muted: #71717a;
         
-        --endspace-accent-yellow: #62F0F5;
-        --endspace-accent-yellow-dim: rgba(98, 240, 245, 0.15);
-        --endspace-accent-cyan: #22d3ee;
-        --endspace-accent-cyan-dim: rgba(34, 211, 238, 0.1);
+        --endspace-accent-yellow: #fbbf24;
+        --endspace-accent-yellow-dim: rgba(251, 191, 36, 0.15);
+        --endspace-accent-cyan: #ca8a04; /* Dark Mode: Yellow 600 */
+        --endspace-accent-cyan-dim: rgba(202, 138, 4, 0.1);
         
         --endspace-border-base: #27272a;
-        --endspace-border-active: #3b82f6;
+        --endspace-border-active: #eab308;
         --endspace-grid-color: rgba(255,255,255,0.02);
         
         --endspace-shadow-base: 
