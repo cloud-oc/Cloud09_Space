@@ -21,6 +21,7 @@ import RadarFillIcon from 'remixicon-react/RadarFillIcon'
 import MailSendFillIcon from 'remixicon-react/MailSendFillIcon'
 // Conceptual Navigation Icons (Solid, Angular)
 import AppsFillIcon from 'remixicon-react/AppsFillIcon'
+import FolderFillIcon from 'remixicon-react/FolderFillIcon'
 import BookMarkFillIcon from 'remixicon-react/BookMarkFillIcon'
 import BarcodeFillIcon from 'remixicon-react/BarcodeFillIcon'
 import StackFillIcon from 'remixicon-react/StackFillIcon'
