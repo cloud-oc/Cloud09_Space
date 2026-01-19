@@ -30,9 +30,9 @@ export const SearchInput = ({ keyword = '', locale }) => {
     <div className={`endspace-frame p-6 transition-colors ${isFocused ? 'border-[var(--endspace-accent-yellow)]' : ''}`}>
       <form onSubmit={handleSearch} className="space-y-4">
         {/* Search Label */}
-        <div className="flex items-center gap-2 text-[var(--endspace-accent-yellow)] tech-text text-xs tracking-wider">
-          <IconSearch size={14} stroke={1.5} />
-          <span>SEARCH_DATABASE</span>
+        <div className="flex items-center gap-2 text-[var(--endspace-accent-yellow)] tech-text tracking-wider">
+          <IconSearch size={24} stroke={1.5} />
+          <span className="text-5xl font-black">SEARCH_DATABASE</span>
         </div>
 
         {/* Search Input Container */}
@@ -65,7 +65,7 @@ export const SearchInput = ({ keyword = '', locale }) => {
           {/* Search Button (Enter) */}
           <button
             type="submit"
-            className="absolute right-1 top-1 bottom-1 px-3 bg-[var(--endspace-bg-tertiary)] text-[var(--endspace-accent-yellow)] hover:bg-[var(--endspace-accent-yellow)] hover:text-black transition-colors font-bold text-xs border-l border-[var(--endspace-border-base)]"
+            className="absolute right-1 top-1 bottom-1 px-3 bg-[var(--endspace-bg-tertiary)] text-black hover:bg-[#FBFB46] hover:text-black transition-colors font-bold text-xs border-l border-[var(--endspace-border-base)]"
           >
             GO
           </button>

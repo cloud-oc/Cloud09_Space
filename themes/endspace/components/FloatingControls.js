@@ -72,7 +72,7 @@ const FloatingControls = ({ toc, ...props }) => {
   }
 
   // Common Button Style (Double Circle)
-  const ControlBtn = ({ icon: Icon, onClick, active, label, showPercent }) => (
+  const ControlBtn = ({ icon: Icon, onClick, active, label, showPercent, iconClassName = "text-black", iconSize = 20 }) => (
     <button
       onClick={onClick}
       className={`w-10 h-10 rounded-full bg-white flex items-center justify-center p-1 cursor-pointer group shadow-lg transition-transform active:scale-95 ${active ? 'ring-2 ring-[#FBFB46]' : ''}`}
@@ -89,10 +89,10 @@ const FloatingControls = ({ toc, ...props }) => {
                 <span className={`text-[10px] font-bold font-mono ${active ? 'text-black hidden' : 'text-gray-600 group-hover:hidden'}`}>
                     {Math.round(percent)}%
                 </span>
-                <Icon size={20} stroke={2} className={`text-black ${active ? 'block' : 'hidden group-hover:block'}`} />
+                <Icon size={iconSize} stroke={2} className={`${iconClassName} ${active ? 'block' : 'hidden group-hover:block'}`} />
             </div>
         ) : (
-            <Icon size={20} stroke={2} className="text-black" />
+            <Icon size={iconSize} stroke={2} className={iconClassName} />
         )}
       </div>
     </button>
@@ -172,7 +172,7 @@ const FloatingControls = ({ toc, ...props }) => {
                     </nav>
                 )}
                 {activeTab === 'logs' && (
-                    <SideBar {...props} />
+                    <SideBar {...props} showTitle={false} />
                 )}
              </div>
       </div>
@@ -187,6 +187,8 @@ const FloatingControls = ({ toc, ...props }) => {
                 label="Recent Logs" 
                 active={activeTab === 'logs'}
                 onClick={() => toggleDrawer('logs')}
+                iconClassName="text-gray-500"
+                iconSize={24}
              />
 
              {/* TOC - Only on Article Pages */}

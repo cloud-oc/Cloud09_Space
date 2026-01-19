@@ -11,17 +11,19 @@ import PriceTag3FillIcon from 'remixicon-react/PriceTag3FillIcon'
  * Removed redundant "Operator Info" headers, focused on content.
  */
 export const SideBar = (props) => {
-  const { tags, categories, latestPosts, locale } = props
+  const { tags, categories, latestPosts, locale, showTitle = true } = props
 
   return (
     <aside className="space-y-8 max-h-[calc(100vh-8rem)] overflow-y-auto overflow-x-hidden" style={{ scrollbarWidth: 'thin' }}>
       {/* Latest Posts (Minimalist List) */}
       {latestPosts && latestPosts.length > 0 && (
         <div className="p-2">
-          <h3 className="text-[var(--endspace-text-muted)] font-mono text-xs font-bold mb-6 tracking-widest uppercase flex items-center gap-2">
-            <TimeFillIcon size={14} className="text-[var(--endspace-accent-yellow)]" />
-            Recent Logs
-          </h3>
+          {showTitle && (
+            <h3 className="text-[var(--endspace-text-muted)] font-mono text-xs font-bold mb-6 tracking-widest uppercase flex items-center gap-2">
+              <TimeFillIcon size={14} className="text-[var(--endspace-accent-yellow)]" />
+              Recent Logs
+            </h3>
+          )}
           <div className="space-y-5 border-l border-[var(--endspace-border-base)] pl-4">
             {latestPosts.slice(0, 5).map((post, index) => (
               <SmartLink

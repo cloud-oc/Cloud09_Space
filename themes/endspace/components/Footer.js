@@ -9,7 +9,7 @@ export const Footer = ({ title }) => {
   const y = d.getFullYear()
 
   return (
-    <footer className="relative mt-20 bg-[#0d0d0d] text-gray-300 overflow-hidden">
+    <footer className="relative mt-20 bg-[#252726] text-gray-300 overflow-hidden">
       {/* Spectrum Bar Top */}
       <div className="spectrum-bar opacity-30" />
       
