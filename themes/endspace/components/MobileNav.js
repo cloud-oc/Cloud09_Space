@@ -146,7 +146,7 @@ export const MobileNav = (props) => {
         <div className="flex items-center justify-between h-20 px-5">
           {/* Left: Avatar */}
           <SmartLink href="/cloud09" title="Profile" className="flex-shrink-0 flex items-center">
-            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[var(--endspace-accent-yellow)] hover:border-blue-500 transition-colors">
+            <div className="w-14 h-14 rounded-full overflow-hidden transition-colors">
               <img 
                 src={avatarUrl}
                 alt="Avatar"
@@ -158,7 +158,7 @@ export const MobileNav = (props) => {
           {/* Right: Hamburger Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="w-14 h-14 flex items-center justify-center text-[var(--endspace-text-primary)] hover:text-blue-500 transition-colors"
+            className="w-14 h-14 flex items-center justify-center text-[var(--endspace-text-primary)] hover:text-[#d4d4d8] transition-colors"
             aria-label="Toggle Menu"
           >
             {isMenuOpen ? (
@@ -193,8 +193,8 @@ export const MobileNav = (props) => {
               href={item.path}
               className={`flex items-center gap-4 px-6 py-4 transition-all ${
                 activeTab === item.name
-                  ? 'bg-blue-500/10 text-blue-500 border-r-2 border-blue-500'
-                  : 'text-[var(--endspace-text-secondary)] hover:bg-[var(--endspace-bg-secondary)] hover:text-[var(--endspace-text-primary)]'
+                  ? 'bg-[#d4d4d8] text-[var(--endspace-text-primary)]'
+                  : 'text-[var(--endspace-text-secondary)] hover:bg-[#d4d4d8] hover:text-[var(--endspace-text-primary)]'
               }`}
             >
               {renderIcon(item.name)}
@@ -218,7 +218,7 @@ export const MobileNav = (props) => {
               <a
                 href={`mailto:${email}`}
                 title={email}
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] hover:text-blue-500 hover:bg-blue-500/10 transition-colors"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] hover:text-[var(--endspace-text-primary)] hover:bg-[#d4d4d8] transition-colors"
               >
                 <IconMail size={16} stroke={1.5} />
               </a>
@@ -233,7 +233,7 @@ export const MobileNav = (props) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   title={social.label}
-                  className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] hover:text-blue-500 hover:bg-blue-500/10 transition-colors"
+                  className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] hover:text-[var(--endspace-text-primary)] hover:bg-[#d4d4d8] transition-colors"
                 >
                   {renderSocialIcon(social.key, social.svg, social.label)}
                 </a>
