@@ -16,9 +16,6 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
     <SmartLink href={`/${post.slug}`}>
       <article className={`endspace-frame group mb-6 flex flex-col overflow-hidden relative transition-all duration-300`}>
         
-        {/* Hover Effect: Yellow Swoosh Background */}
-        <div className="absolute inset-0 bg-[#FBFB45] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out z-0" />
-        
         {/* Cover Image - Top (Full Width) */}
         {hasCover && (
           <div className="w-full aspect-video flex-shrink-0 relative overflow-hidden z-10 bg-black/5">
@@ -34,11 +31,17 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
           </div>
         )}
 
-        {/* Hover Effect: Horizontal Black Bar (Between Image and Text) */}
-        <div className="w-full h-1.5 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
-
         {/* Content - Bottom */}
-        <div className={`flex-1 flex flex-col justify-center relative z-10 p-5 md:p-6`}>
+        <div className={`flex-1 flex flex-col justify-center relative z-10 p-5 md:p-6 overflow-hidden`}>
+          
+          {/* Hover Effect: Yellow Swoosh Background (Now confined to text area) */}
+          <div className="absolute inset-0 bg-[#FBFB45] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out z-0" />
+          
+          {/* Hover Effect: Horizontal Black Bar (Top of text area) */}
+          <div className="absolute top-0 left-0 right-0 h-1.5 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
+
+          {/* Wrapper for content to ensure it sits above the yellow background */}
+          <div className="relative z-10">
           
           {/* Top Meta */}
           <div className="flex items-center gap-3 text-xs font-mono text-[var(--endspace-text-muted)] mb-3 group-hover:text-black/60 transition-colors">
@@ -78,6 +81,7 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
                 <IconArrowRight size={12} stroke={2} className="group-hover:translate-x-1 transition-transform group-hover:text-black" />
             </div>
           </div>
+          </div> {/* End relative z-10 wrapper */}
         </div>
       </article>
     </SmartLink>

@@ -239,7 +239,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
             </>
           ) : (
             // Not playing: Show music icon
-            <div className="w-full h-full rounded-lg flex items-center justify-center bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] hover:text-[var(--endspace-accent-yellow)] hover:bg-[var(--endspace-accent-yellow-dim)] transition-all">
+            <div className="w-full h-full rounded-lg flex items-center justify-center bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] hover:text-gray-600 hover:bg-gray-200 transition-all">
               <IconMusic size={18} stroke={1.5} />
             </div>
           )}
@@ -298,12 +298,12 @@ export const EndspacePlayer = ({ isExpanded }) => {
           </div>
         </div>
 
-        {/* Right side: Playlist button + Prev/Next buttons */}
+          {/* Right side: Playlist button + Prev/Next buttons */}
         <div className="flex flex-col items-center gap-1">
           {/* Playlist Toggle Button */}
           <button 
             onClick={(e) => { e.stopPropagation(); setShowPlaylist(!showPlaylist) }}
-            className={`w-6 h-6 flex items-center justify-center rounded transition-colors ${showPlaylist ? 'bg-[var(--endspace-accent-yellow)] text-white' : 'text-[var(--endspace-text-muted)] hover:text-[var(--endspace-accent-yellow)]'}`}
+            className={`w-6 h-6 flex items-center justify-center rounded transition-colors ${showPlaylist ? 'bg-[var(--endspace-accent-yellow)] text-white' : 'text-[var(--endspace-text-muted)] hover:text-gray-400'}`}
             title="Playlist"
           >
             <IconList size={12} stroke={1.5} />
@@ -313,14 +313,14 @@ export const EndspacePlayer = ({ isExpanded }) => {
           <div className="flex items-center gap-0.5">
             <button 
               onClick={playPrev}
-              className="w-5 h-5 flex items-center justify-center text-[var(--endspace-text-muted)] hover:text-[var(--endspace-accent-yellow)] transition-colors"
+              className="w-5 h-5 flex items-center justify-center text-[var(--endspace-text-muted)] hover:text-gray-400 transition-colors"
               title="Previous"
             >
               <IconPlayerTrackPrev size={11} stroke={1.5} />
             </button>
             <button 
               onClick={playNext}
-              className="w-5 h-5 flex items-center justify-center text-[var(--endspace-text-muted)] hover:text-[var(--endspace-accent-yellow)] transition-colors"
+              className="w-5 h-5 flex items-center justify-center text-[var(--endspace-text-muted)] hover:text-gray-400 transition-colors"
               title="Next"
             >
               <IconPlayerTrackNext size={11} stroke={1.5} />
