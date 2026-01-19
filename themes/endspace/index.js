@@ -202,7 +202,9 @@ const LayoutSlug = (props) => {
             {/* Previous / Next Article Navigation */}
             <ArticleAdjacent prev={props.prev} next={props.next} />
 
-            <Comment frontMatter={post} />
+            <div id="comments">
+              <Comment frontMatter={post} />
+            </div>
           </div>
         )
       )}
@@ -360,15 +362,15 @@ const LayoutCategoryIndex = (props) => {
               passHref
               legacyBehavior
             >
-              <div className="tech-corner p-4 bg-[var(--endspace-bg-secondary)] hover:bg-[var(--endspace-bg-tertiary)] border border-[var(--endspace-border-base)] hover:border-[var(--endspace-accent-yellow)] transition-all cursor-pointer group">
+              <div className="tech-corner p-4 bg-[var(--endspace-bg-secondary)] hover:bg-[#FBFB46] border border-[var(--endspace-border-base)] hover:border-black transition-all cursor-pointer group">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <IconFolder size={16} stroke={1.5} className="text-[var(--endspace-accent-cyan)] group-hover:text-[var(--endspace-accent-yellow)] transition-colors" />
-                    <span className="text-[var(--endspace-text-primary)] group-hover:text-[var(--endspace-accent-yellow)] transition-colors">
+                    <IconFolder size={16} stroke={1.5} className="text-[var(--endspace-accent-cyan)] group-hover:text-black transition-colors" />
+                    <span className="text-[var(--endspace-text-primary)] group-hover:text-black transition-colors font-bold">
                       {category.name}
                     </span>
                   </div>
-                  <span className="tech-text text-xs text-[var(--endspace-text-muted)]">
+                  <span className="tech-text text-xs text-[var(--endspace-text-muted)] group-hover:text-black font-mono">
                     [{category.count}]
                   </span>
                 </div>

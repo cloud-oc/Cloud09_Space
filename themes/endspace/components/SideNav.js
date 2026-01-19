@@ -198,20 +198,14 @@ export const SideNav = (props) => {
         
         {menuItems.map((item) => {
           const isActive = activeTab === item.name
-          const isCategory = item.name === 'Category'
-
           return (
             <SmartLink key={item.name} href={item.path}>
               <div 
                 ref={el => itemRefs.current[item.name] = el}
-                className={`nier-nav-item relative h-[3rem] flex items-center cursor-pointer group transition-colors duration-300 ${
-                  isCategory 
-                    ? `hover:bg-[#FBFB46] hover:text-black ${isActive ? 'active bg-[#FBFB46] text-black' : ''}`
-                    : `hover:bg-[#d4d4d8] ${isActive ? 'active bg-[#d4d4d8]' : ''}`
-                }`}
+                className={`nier-nav-item relative h-[3rem] flex items-center cursor-pointer group transition-colors duration-300 hover:bg-[#d4d4d8] ${isActive ? 'active bg-[#d4d4d8]' : ''}`}
               >
                 {/* Icon Container */}
-                <div className={`w-[5rem] flex-shrink-0 flex items-center justify-center z-10 ${isCategory ? 'text-black' : ''}`}>
+                <div className="w-[5rem] flex-shrink-0 flex items-center justify-center z-10">
                   {renderIcon(item.name, isActive)}
                 </div>
 

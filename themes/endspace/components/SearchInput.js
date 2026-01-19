@@ -30,7 +30,7 @@ export const SearchInput = ({ keyword = '', locale }) => {
     <div className={`endspace-frame p-6 transition-colors ${isFocused ? 'border-[var(--endspace-accent-yellow)]' : ''}`}>
       <form onSubmit={handleSearch} className="space-y-4">
         {/* Search Label */}
-        <div className="flex items-center gap-2 text-[var(--endspace-accent-yellow)] tech-text tracking-wider">
+        <div className="flex items-center gap-2 text-black tech-text tracking-wider">
           <IconSearch size={24} stroke={1.5} />
           <span className="text-5xl font-black">SEARCH_DATABASE</span>
         </div>
