@@ -75,7 +75,7 @@ const FloatingControls = ({ toc, ...props }) => {
   const ControlBtn = ({ icon: Icon, onClick, active, label, showPercent, iconClassName = "text-black", iconSize = 20 }) => (
     <button
       onClick={onClick}
-      className={`w-10 h-10 rounded-full bg-white flex items-center justify-center p-1 cursor-pointer group shadow-lg transition-transform active:scale-95 ${active ? 'ring-2 ring-[#FBFB46]' : ''}`}
+      className="w-10 h-10 rounded-full bg-white flex items-center justify-center p-1 cursor-pointer group shadow-lg transition-transform active:scale-95"
       aria-label={label}
       title={label}
     >
