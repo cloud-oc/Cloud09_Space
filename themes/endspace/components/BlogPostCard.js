@@ -17,14 +17,11 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
       <article className={`endspace-frame group mb-6 flex flex-col overflow-hidden relative transition-all duration-300`}>
         
         {/* Hover Effect: Yellow Swoosh Background */}
-        <div className="absolute inset-0 bg-[var(--endspace-accent-yellow)] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out z-0" />
+        <div className="absolute inset-0 bg-[#fbbf24] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out z-0" />
         
-        {/* Hover Effect: Left Black Bar */}
-        <div className="absolute top-0 bottom-0 left-0 w-2 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
-
         {/* Cover Image - Top (Full Width) */}
         {hasCover && (
-          <div className="w-full h-48 md:h-64 flex-shrink-0 relative overflow-hidden z-10">
+          <div className="w-full aspect-video flex-shrink-0 relative overflow-hidden z-10 bg-black/5">
             <img
               src={post.pageCoverThumbnail}
               alt={post.title}
@@ -37,8 +34,11 @@ export const BlogPostCard = ({ post, showSummary = true }) => {
           </div>
         )}
 
+        {/* Hover Effect: Horizontal Black Bar (Between Image and Text) */}
+        <div className="w-full h-1.5 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
+
         {/* Content - Bottom */}
-        <div className={`flex-1 flex flex-col justify-center relative z-10 p-6 md:p-8`}>
+        <div className={`flex-1 flex flex-col justify-center relative z-10 p-5 md:p-6`}>
           
           {/* Top Meta */}
           <div className="flex items-center gap-3 text-xs font-mono text-[var(--endspace-text-muted)] mb-3 group-hover:text-black/60 transition-colors">

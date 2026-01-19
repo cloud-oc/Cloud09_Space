@@ -86,12 +86,36 @@ export const EndspacePlayer = ({ isExpanded }) => {
   useEffect(() => {
     if (!hasInitializedRef.current && audioRef.current && currentAudio.url && autoPlay) {
       hasInitializedRef.current = true
+      
+      const attemptPlay = async () => {
+        try {
+          await audioRef.current?.play()
+          setIsPlaying(true)
+        } catch (error) {
+          console.log('Autoplay blocked, waiting for interaction:', error)
+          // Fallback: Play on first interaction
+          const resume = () => {
+             audioRef.current?.play().then(() => {
+                setIsPlaying(true)
+                // Clean up listeners once successful
+                window.removeEventListener('click', resume)
+                window.removeEventListener('keydown', resume)
+                window.removeEventListener('touchstart', resume)
+             }).catch(e => console.log('Interaction play failed:', e))
+          }
+          
+          window.addEventListener('click', resume)
+          window.addEventListener('keydown', resume)
+          window.addEventListener('touchstart', resume)
+        }
+      }
+
       // Small delay to ensure audio is ready
-      const timer = setTimeout(() => {
-        audioRef.current?.play().catch(e => console.log('Initial autoplay prevented:', e))
-        setIsPlaying(true)
-      }, 500)
-      return () => clearTimeout(timer)
+      const timer = setTimeout(attemptPlay, 500)
+      return () => {
+        clearTimeout(timer)
+        window.removeEventListener('click', attemptPlay) // effectively cleaning up reference if it was named
+      }
     } else if (!hasInitializedRef.current && audioRef.current && currentAudio.url) {
       hasInitializedRef.current = true
     }
