@@ -379,7 +379,7 @@ export const LoadingCover = () => {
             writing-mode: horizontal-tb; /* Horizontal text */
             text-orientation: mixed;
             transform: none;
-            background: linear-gradient(to top, rgba(253, 224, 71, 0.9) 0%, rgba(234, 179, 8, 0.5) 40%, rgba(202, 138, 4, 0.15) 80%, transparent 100%);
+            background: linear-gradient(to top, rgba(251, 251, 70, 0.9) 0%, rgba(251, 251, 70, 0.5) 40%, rgba(202, 138, 4, 0.15) 80%, transparent 100%);
             -webkit-background-clip: text;
             background-clip: text;
           }
@@ -396,7 +396,7 @@ export const LoadingCover = () => {
           .progress-fill {
             width: var(--progress); /* Horizontal growth */
             height: 100%;
-            background: linear-gradient(90deg, #eab308 0%, #fde047 100%);
+            background: linear-gradient(90deg, #FBFB46 0%, #fde047 100%);
             transition: width 0.15s ease-out;
           }
 

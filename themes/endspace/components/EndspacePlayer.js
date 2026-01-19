@@ -303,7 +303,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
           {/* Playlist Toggle Button */}
           <button 
             onClick={(e) => { e.stopPropagation(); setShowPlaylist(!showPlaylist) }}
-            className={`w-6 h-6 flex items-center justify-center rounded transition-colors ${showPlaylist ? 'bg-[var(--endspace-accent-yellow)] text-white' : 'text-[var(--endspace-text-muted)] hover:text-gray-400'}`}
+            className={`w-6 h-6 flex items-center justify-center rounded transition-colors ${showPlaylist ? 'bg-black text-white' : 'text-[var(--endspace-text-muted)] hover:text-black'}`}
             title="Playlist"
           >
             <IconList size={12} stroke={1.5} />
@@ -313,14 +313,14 @@ export const EndspacePlayer = ({ isExpanded }) => {
           <div className="flex items-center gap-0.5">
             <button 
               onClick={playPrev}
-              className="w-5 h-5 flex items-center justify-center text-[var(--endspace-text-muted)] hover:text-gray-400 transition-colors"
+              className="w-5 h-5 flex items-center justify-center text-[var(--endspace-text-muted)] hover:text-black transition-colors"
               title="Previous"
             >
               <IconPlayerTrackPrev size={11} stroke={1.5} />
             </button>
             <button 
               onClick={playNext}
-              className="w-5 h-5 flex items-center justify-center text-[var(--endspace-text-muted)] hover:text-gray-400 transition-colors"
+              className="w-5 h-5 flex items-center justify-center text-[var(--endspace-text-muted)] hover:text-black transition-colors"
               title="Next"
             >
               <IconPlayerTrackNext size={11} stroke={1.5} />
@@ -338,13 +338,13 @@ export const EndspacePlayer = ({ isExpanded }) => {
               onClick={() => selectTrack(index)}
               className={`px-3 py-1.5 cursor-pointer transition-colors ${
                 index === currentTrack 
-                  ? 'bg-[var(--endspace-accent-yellow-dim)]' 
+                  ? 'bg-black text-white' 
                   : 'hover:bg-[var(--endspace-bg-tertiary)]'
               }`}
             >
               {/* Song name line */}
               <div className={`text-xs truncate flex items-center gap-1.5 ${
-                index === currentTrack ? 'text-[var(--endspace-accent-yellow)] font-medium' : 'text-[var(--endspace-text-secondary)]'
+                index === currentTrack ? 'text-white font-medium' : 'text-[var(--endspace-text-secondary)]'
               }`}>
                 {index === currentTrack && isPlaying && (
                   <IconVolume size={11} stroke={1.5} className="flex-shrink-0" />
