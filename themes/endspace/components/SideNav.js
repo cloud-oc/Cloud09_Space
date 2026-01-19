@@ -15,6 +15,7 @@ import {
   IconBrandYoutube,
   IconBrandLinkedin,
   IconBrandWechat,
+  IconBrandX,
   IconPlanet
 } from '@tabler/icons-react'
 import RadarFillIcon from 'remixicon-react/RadarFillIcon'
@@ -29,6 +30,18 @@ import Compass3FillIcon from 'remixicon-react/Compass3FillIcon'
 import EarthFillIcon from 'remixicon-react/EarthFillIcon'
 import ProfileFillIcon from 'remixicon-react/ProfileFillIcon'
 
+  // Social Icons (Solid)
+import GithubFillIcon from 'remixicon-react/GithubFillIcon'
+import WeiboFillIcon from 'remixicon-react/WeiboFillIcon'
+import BilibiliFillIcon from 'remixicon-react/BilibiliFillIcon'
+import TelegramFillIcon from 'remixicon-react/TelegramFillIcon'
+import InstagramFillIcon from 'remixicon-react/InstagramFillIcon'
+import YoutubeFillIcon from 'remixicon-react/YoutubeFillIcon'
+import LinkedinBoxFillIcon from 'remixicon-react/LinkedinBoxFillIcon'
+import WechatFillIcon from 'remixicon-react/WechatFillIcon'
+import GlobeFillIcon from 'remixicon-react/GlobeFillIcon'
+import MailFillIcon from 'remixicon-react/MailFillIcon'
+
 // Icon mapping (Conceptual Remix Icons)
 const IconComponents = {
   'Home': AppsFillIcon,
@@ -42,16 +55,16 @@ const IconComponents = {
 
 // Social icon mapping
 const SocialIconComponents = {
-  'CONTACT_GITHUB': IconBrandGithub,
-  'CONTACT_TWITTER': IconBrandTwitter,
-  'CONTACT_WEIBO': IconBrandWeibo,
-  'CONTACT_BILIBILI': IconBrandBilibili,
-  'CONTACT_TELEGRAM': IconBrandTelegram,
-  'CONTACT_INSTAGRAM': IconBrandInstagram,
-  'CONTACT_YOUTUBE': IconBrandYoutube,
-  'CONTACT_LINKEDIN': IconBrandLinkedin,
-  'CONTACT_WEHCHAT_PUBLIC': IconBrandWechat,
-  'CONTACT_ZHISHIXINGQIU': IconPlanet
+  'CONTACT_GITHUB': GithubFillIcon,
+  'CONTACT_TWITTER': IconBrandX,
+  'CONTACT_WEIBO': WeiboFillIcon,
+  'CONTACT_BILIBILI': BilibiliFillIcon,
+  'CONTACT_TELEGRAM': TelegramFillIcon,
+  'CONTACT_INSTAGRAM': InstagramFillIcon,
+  'CONTACT_YOUTUBE': YoutubeFillIcon,
+  'CONTACT_LINKEDIN': LinkedinBoxFillIcon,
+  'CONTACT_WEHCHAT_PUBLIC': WechatFillIcon,
+  'CONTACT_ZHISHIXINGQIU': GlobeFillIcon
 }
 
 export const SideNav = (props) => {
@@ -227,7 +240,7 @@ export const SideNav = (props) => {
         
         {/* Collapsed State: Contact Button with light gray background */}
         <div className={`flex justify-center transition-all duration-300 ${isHovered ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
-          <div className="w-[2.5rem] h-[2.5rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded cursor-pointer hover:text-white hover:bg-gray-600 transition-colors">
+          <div className="w-[2.5rem] h-[2.5rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded-full cursor-pointer hover:text-white hover:bg-gray-600 transition-colors">
              <RadarFillIcon size={18} />
            </div>
          </div>
@@ -241,9 +254,9 @@ export const SideNav = (props) => {
                   <a 
                   href={`mailto:${email}`}
                   title={email}
-                  className="w-[1.75rem] h-[1.75rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded hover:text-white hover:bg-gray-600 transition-colors flex-shrink-0"
+                  className="w-[1.75rem] h-[1.75rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded-full hover:text-white hover:bg-gray-600 transition-colors flex-shrink-0"
                 >
-                  <MailSendFillIcon size={14} />
+                  <MailFillIcon size={14} />
                </a>
              )}
              
@@ -258,7 +271,7 @@ export const SideNav = (props) => {
                    target="_blank" 
                    rel="noreferrer"
                    title={label}
-                   className="w-[1.75rem] h-[1.75rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded hover:text-white hover:bg-gray-600 transition-colors flex-shrink-0"
+                   className="w-[1.75rem] h-[1.75rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded-full hover:text-white hover:bg-gray-600 transition-colors flex-shrink-0"
                  >
                    {renderSocialIcon(key, svg, label)}
                  </a>

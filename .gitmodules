@@ -1,3 +1,4 @@
 [submodule "themes/endspace"]
 	path = themes/endspace
 	url = https://github.com/cloud-oc/endspace.git
+	branch = theme

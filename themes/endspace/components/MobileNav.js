@@ -8,6 +8,7 @@ import { EndspacePlayer } from './EndspacePlayer'
 import {
   IconMenu2,
   IconX,
+  IconBrandX,
   IconMail,
   IconBrandGithub,
   IconBrandTwitter,
@@ -55,7 +56,7 @@ const IconComponents = {
 // Social icon mapping
 const SocialIconComponents = {
   'CONTACT_GITHUB': GithubFillIcon,
-  'CONTACT_TWITTER': TwitterFillIcon,
+  'CONTACT_TWITTER': IconBrandX,
   'CONTACT_WEIBO': WeiboFillIcon,
   'CONTACT_BILIBILI': BilibiliFillIcon,
   'CONTACT_TELEGRAM': TelegramFillIcon,
@@ -89,7 +90,7 @@ export const MobileNav = (props) => {
   // Social icon config - using contact.config.js settings
   const socialLinks = [
     { key: 'CONTACT_GITHUB', label: 'GitHub' },
-    { key: 'CONTACT_TWITTER', label: 'Twitter' },
+    { key: 'CONTACT_TWITTER', label: 'X' },
     { key: 'CONTACT_WEIBO', label: 'Weibo' },
     { key: 'CONTACT_BILIBILI', label: 'Bilibili' },
     { key: 'CONTACT_TELEGRAM', label: 'Telegram' },
