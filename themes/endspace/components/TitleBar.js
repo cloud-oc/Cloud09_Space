@@ -1,10 +1,12 @@
 import { siteConfig } from '@/lib/config'
+import CONFIG from '../config'
 
 /**
  * TitleBar Component - Endfield Style (Light Industrial)
  */
 export const TitleBar = ({ post }) => {
-  const marqueeText = 'CLOUD09_SPACE'
+  // 从配置中读取水印文字，可在config.js中自定义
+  const marqueeText = siteConfig('ENDSPACE_BANNER_WATERMARK_TEXT', 'CLOUD09_SPACE', CONFIG)
 
   return (
     <div className="relative py-20 md:py-28 border-b-2 border-[var(--endspace-border-base)] overflow-hidden bg-[var(--endspace-bg-base)]">

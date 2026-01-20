@@ -182,9 +182,9 @@ const LayoutSlug = (props) => {
 
              {/* Article Content Frame */}
             <div id="article-wrapper" className="endspace-frame p-8 md:p-12 mb-12">
-               {/* Content Watermark/Background decoration */}
+               {/* Content Watermark/Background decoration - 可在config.js中自定义 */}
                <div className="absolute top-4 right-4 text-[var(--endspace-text-muted)] opacity-10 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-black pointer-events-none select-none z-0">
-                 CLOUD09
+                 {siteConfig('ENDSPACE_ARTICLE_WATERMARK_TEXT', 'CLOUD09', CONFIG)}
                </div>
                
               <div className="relative z-10">
