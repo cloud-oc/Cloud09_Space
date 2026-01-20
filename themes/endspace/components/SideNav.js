@@ -179,7 +179,7 @@ export const SideNav = (props) => {
     >
       {/* Avatar Section - Top of sidebar, clickable to personal page */}
       <div className="flex-shrink-0 py-6 flex flex-col items-center">
-        <SmartLink href="/cloud09" title="Profile">
+        <SmartLink href="/aboutme" title="Profile">
           <div className={`transition-all duration-300 cursor-pointer hover:scale-105 ${isHovered ? 'w-[5rem] h-[5rem]' : 'w-[3rem] h-[3rem]'}`}>
             <img 
               src={avatarUrl}
@@ -190,7 +190,7 @@ export const SideNav = (props) => {
         </SmartLink>
         {/* Author Info - shown when expanded */}
         <div className={`mt-3 text-center transition-all duration-300 overflow-hidden ${isHovered ? 'opacity-100 max-h-24' : 'opacity-0 max-h-0'}`}>
-          <SmartLink href="/cloud09" className="hover:text-[var(--endspace-accent-yellow)] transition-colors">
+          <SmartLink href="/aboutme" className="hover:text-[var(--endspace-accent-yellow)] transition-colors">
             <div className="text-sm font-bold text-[var(--endspace-text-primary)] uppercase tracking-wider">
               {siteConfig('AUTHOR') || 'Cloud'}
             </div>
