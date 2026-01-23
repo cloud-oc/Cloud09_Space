@@ -372,19 +372,13 @@ const LayoutCategoryIndex = (props) => {
               passHref
               legacyBehavior
             >
-              <div className="category-tag-button group">
-                {/* Left indicator - bar transforms to triangle on hover */}
-                <div className="category-tag-indicator" />
-                <div className="flex items-center justify-between flex-1">
-                  <div className="flex items-center gap-2">
-                    <IconFolder size={16} stroke={1.5} className="text-[var(--endspace-text-muted)] group-hover:text-white transition-colors duration-300" />
-                    <span className="text-[var(--endspace-text-primary)] group-hover:text-white transition-colors duration-300 font-bold">
-                      {category.name}
-                    </span>
-                  </div>
-                  <span className="tech-text text-xs text-[var(--endspace-text-muted)] group-hover:text-white/70 font-mono transition-colors duration-300">
-                    [{category.count}]
-                  </span>
+              <div className="ef-category-btn group">
+                <div className="ef-btn-icon-zone">
+                  <IconFolder size={18} stroke={1.5} />
+                </div>
+                <div className="ef-btn-content">
+                  <span className="ef-btn-title">{category.name}</span>
+                  <span className="ef-btn-count">[{category.count}]</span>
                 </div>
               </div>
             </SmartLink>
@@ -416,20 +410,14 @@ const LayoutTagIndex = (props) => {
               passHref
               legacyBehavior
             >
-              <div className="category-tag-button group">
-                {/* Left indicator - bar transforms to triangle on hover */}
-                <div className="category-tag-indicator" />
-                <div className="flex items-center gap-2 flex-1">
-                  <IconTag size={14} stroke={1.5} className="text-[var(--endspace-text-muted)] group-hover:text-white transition-colors duration-300" />
-                  <span className="text-[var(--endspace-text-primary)] group-hover:text-white transition-colors duration-300 font-medium">
-                    {tag.name}
-                  </span>
-                  {tag.count && (
-                    <span className="tech-text text-xs text-[var(--endspace-text-muted)] group-hover:text-white/70 font-mono transition-colors duration-300">
-                      [{tag.count}]
-                    </span>
-                  )}
+              <div className="ef-tag-btn group">
+                <div className="ef-tag-icon">
+                  <IconTag size={14} stroke={1.5} />
                 </div>
+                <span className="ef-tag-name">#{tag.name}</span>
+                {tag.count && (
+                  <span className="ef-tag-count">[{tag.count}]</span>
+                )}
               </div>
             </SmartLink>
           ))}

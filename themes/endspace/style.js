@@ -11,7 +11,7 @@ export const Style = () => {
          ============================================ */
       :root {
         /* Ethereal Whites & Grays */
-        --endspace-bg-base: #ffffff;
+        --endspace-bg-base: #fafafa;
         --endspace-bg-primary: #ffffff;
         --endspace-bg-secondary: #f4f4f5;
         --endspace-bg-tertiary: #e4e4e7;
@@ -809,65 +809,134 @@ export const Style = () => {
       }
 
       /* ============================================
-         Category & Tag Button Styles
-         Yellow bar -> Triangle on hover
+         Endfield Category Button Styles
          ============================================ */
-      #theme-endspace .category-tag-button {
-        display: flex !important;
-        align-items: center !important;
-        gap: 0.75rem !important;
-        padding: 0.75rem 1rem 0.75rem 1.25rem !important;
-        background: #27272a !important; /* Dark background - matches screenshot */
-        border-radius: 4px !important;
-        cursor: pointer !important;
-        position: relative !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      .ef-category-btn {
+        display: flex;
+        align-items: stretch;
+        background: #27272a;
+        border: 1px solid #3f3f46;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        /* Wave/mountain texture background */
+        background-image: 
+          linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.03) 50%, transparent 60%),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 10px,
+            rgba(255,255,255,0.02) 10px,
+            rgba(255,255,255,0.02) 20px
+          );
+      }
+      
+      .ef-category-btn:hover {
+        border-color: var(--endspace-accent-yellow);
+        box-shadow: 0 0 12px rgba(251, 251, 69, 0.2);
+        transform: translateY(-2px);
+      }
+      
+      /* Icon zone on the left */
+      .ef-btn-icon-zone {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        background: rgba(0, 0, 0, 0.3);
+        border-right: 1px solid #3f3f46;
+        color: var(--endspace-accent-yellow);
+        transition: all 0.3s ease;
+      }
+      
+      .ef-category-btn:hover .ef-btn-icon-zone {
+        background: var(--endspace-accent-yellow);
+        color: #000;
+      }
+      
+      /* Content area on the right */
+      .ef-btn-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.875rem 1rem;
+      }
+      
+      .ef-btn-title {
+        color: #e4e4e7;
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 0.02em;
+        transition: color 0.3s ease;
+      }
+      
+      .ef-category-btn:hover .ef-btn-title {
+        color: #fff;
+      }
+      
+      .ef-btn-count {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: #71717a;
+        transition: color 0.3s ease;
+      }
+      
+      .ef-category-btn:hover .ef-btn-count {
+        color: var(--endspace-accent-yellow);
       }
 
-      #theme-endspace .category-tag-button:hover {
-        background: #52525b !important; /* Lighter background on hover */
-        border-radius: 8px !important; /* Increased border radius */
+      /* ============================================
+         Endfield Tag Button Styles
+         ============================================ */
+      .ef-tag-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: #27272a;
+        border: 1px solid #3f3f46;
+        cursor: pointer;
+        transition: all 0.2s ease;
       }
-
-      /* Left indicator - bar that becomes triangle */
-      #theme-endspace .category-tag-indicator {
-        position: relative !important;
-        width: 6px !important;
-        height: 1.25rem !important;
-        background: #FBFB45 !important; /* Yellow bar */
-        border-radius: 1px !important;
-        flex-shrink: 0 !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        /* Initial bar shape */
-        clip-path: inset(0) !important;
+      
+      .ef-tag-btn:hover {
+        border-color: var(--endspace-accent-yellow);
+        background: #3f3f46;
+        transform: translateY(-1px);
       }
-
-      #theme-endspace .category-tag-button:hover .category-tag-indicator {
-        /* Transform to triangle on hover */
-        width: 10px !important;
-        height: 12px !important;
-        clip-path: polygon(0 0, 100% 50%, 0 100%) !important;
-        border-radius: 0 !important;
+      
+      .ef-tag-icon {
+        color: var(--endspace-accent-yellow);
+        display: flex;
+        align-items: center;
+        transition: transform 0.2s ease;
       }
-
-      /* Light mode - dark button on light background */
-      #theme-endspace .category-tag-button {
-        background: #27272a !important;
+      
+      .ef-tag-btn:hover .ef-tag-icon {
+        transform: scale(1.1);
       }
-
-      #theme-endspace .category-tag-button:hover {
-        background: #52525b !important;
+      
+      .ef-tag-name {
+        color: #e4e4e7;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: color 0.2s ease;
       }
-
-      /* Dark mode - same styling */
-      .dark #theme-endspace .category-tag-button,
-      #theme-endspace.dark .category-tag-button {
-        background: #27272a !important;
+      
+      .ef-tag-btn:hover .ef-tag-name {
+        color: #fff;
       }
-
-      .dark #theme-endspace .category-tag-button:hover,
-      #theme-endspace.dark .category-tag-button:hover {
-        background: #52525b !important;
+      
+      .ef-tag-count {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7rem;
+        color: #71717a;
+        margin-left: 0.25rem;
+      }
+      
+      .ef-tag-btn:hover .ef-tag-count {
+        color: var(--endspace-accent-yellow);
       }
     `}</style>
   )
