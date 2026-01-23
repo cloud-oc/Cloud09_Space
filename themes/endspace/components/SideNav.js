@@ -216,10 +216,8 @@ export const SideNav = (props) => {
       </div>
 
       {/* MIDDLE SECTION - Navigation Items */}
-      {/* Fixed height as requested. Overflow handles scrolling if items exceed height. */}
-      {/* 'flex-shrink-0' prevents compression. */}
-      {/* 'h-[28rem]' is the fixed height. Adjust this value to change the middle section's height. */}
-      <div ref={navRef} className="flex-shrink-0 h-[28rem] py-4 flex flex-col gap-2 overflow-y-auto overflow-x-hidden relative border-b border-[var(--endspace-border-base)] border-opacity-20">
+      {/* Reverted to flex-1 as requested to restore original behavior */}
+      <div ref={navRef} className="flex-1 py-4 flex flex-col gap-2 overflow-y-auto overflow-x-hidden relative">
         {/* Animated Active Indicator Bar - Higher z-index */}
         <div 
           className="absolute left-0 w-1.5 h-[3rem] bg-[var(--endspace-text-primary)] transition-all duration-300 ease-out z-10"
@@ -250,9 +248,8 @@ export const SideNav = (props) => {
       </div>
 
       {/* BOTTOM SECTION - Tools & Config */}
-      {/* 'mt-auto' forces this section to the bottom of the container, creating dynamic space above it. */}
-      {/* Configure height here: h-auto (adaptive) or h-[XXrem] (fixed) */}
-      <div className="mt-auto flex-shrink-0 flex flex-col justify-end h-auto pb-4">
+      {/* Music Player, Contact, and Toggle */}
+      <div className="flex-shrink-0 flex flex-col justify-end h-auto pb-4">
         
         {/* Music Player Section */}
         <EndspacePlayer isExpanded={isHovered} />
