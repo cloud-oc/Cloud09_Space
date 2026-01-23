@@ -750,6 +750,9 @@ export const Style = () => {
       /* ============================================
          NieR: Automata Style Navigation Transition
          ============================================ */
+      /* ============================================
+         NieR: Automata Style Navigation Transition
+         ============================================ */
       .nier-nav-item {
         position: relative;
         overflow: hidden;
@@ -757,6 +760,8 @@ export const Style = () => {
         z-index: 1;
         /* Default Text Color */
         color: var(--endspace-text-muted); 
+        border-radius: 1px; /* Rounded corners as seen in screenshot */
+        margin-bottom: 2px; /* Slight spacing between items */
       }
 
       /* Sliding Background Layer */
@@ -767,18 +772,25 @@ export const Style = () => {
         left: 0;
         width: 0%;
         height: 100%;
-        background: #d4d4d8; /* Zinc-300 - Clearly visible grey */
+        background: #E0E0E0; /* Hover: Darker Grey */
         transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         z-index: -1;
       }
       
-      /* Active / Hover State */
+      /* Active / Hover State Text Color */
       .nier-nav-item:hover, .nier-nav-item.active {
-        color: var(--endspace-text-primary) !important; /* Text becomes bg color (Inverse) */
+        color: var(--endspace-text-primary) !important;
       }
       
-      .nier-nav-item:hover::before, .nier-nav-item.active::before {
-        width: 100%; /* Slide fill from left */
+      /* Hover State: Slide to full width */
+      .nier-nav-item:hover::before {
+        width: 100%;
+      }
+
+      /* Active State: Always full width with Distinct Color */
+      .nier-nav-item.active::before {
+        width: 100%;
+        background: #EBEBEB; /* Active: Lighter Grey */
       }
       
       /* Target the icon specifically if needed to ensure color fill */
@@ -787,17 +799,7 @@ export const Style = () => {
         z-index: 2;
       }
       
-      /* Specific override for the accent color on active items if desired to differ from simple hover */
-      .nier-nav-item.active {
-        /* Optional: Active could be Accent color instead of Black */
-        /* background-color: var(--endspace-accent-yellow) works via ::before? */
-      }
       /* Removed specific active override to keep consistent grey background */
-      .nier-nav-item.active::before {
-         /* Ensure it uses the same grey as hover, or slightly darker if preferred.
-            Let's keep it consistent: */
-         background: #d4d4d8; /* Zinc-300 - Clearly visible grey */
-      }
       
       /* Also update the base hover/active shared rule to use this darker grey */
       
