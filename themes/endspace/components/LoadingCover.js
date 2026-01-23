@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
@@ -11,10 +11,12 @@ import CONFIG from '../config'
  */
 export const LoadingCover = () => {
   const [isVisible, setIsVisible] = useState(true)
-  const [progress, setProgress] = useState(0)
+  const [displayProgress, setDisplayProgress] = useState(0)
   const [phase, setPhase] = useState('init') // init -> loading -> complete -> sweeping -> fadeout
   const { onLoading } = useGlobal()
   const hasCompletedRef = useRef(false)
+  const targetProgressRef = useRef(0)
+  const displayProgressRef = useRef(0)
 
   // Configurable texts
   const siteName = siteConfig('ENDSPACE_LOADING_SITE_NAME', null, CONFIG) || siteConfig('TITLE') || 'CLOUD09_SPACE'
@@ -23,10 +25,10 @@ export const LoadingCover = () => {
   const textComplete = siteConfig('ENDSPACE_LOADING_TEXT_COMPLETE', 'READY', CONFIG)
   const textSweeping = siteConfig('ENDSPACE_LOADING_TEXT_SWEEPING', 'LAUNCHING', CONFIG)
   const textFadeout = siteConfig('ENDSPACE_LOADING_TEXT_FADEOUT', 'WELCOME', CONFIG)
-  // New: Custom Loading Image
+  // Custom Loading Image
   const loadingImage = siteConfig('ENDSPACE_LOADING_IMAGE', null, CONFIG)
 
-  // Resource loading tracking
+  // Resource loading tracking and smooth animation
   useEffect(() => {
     // Prevent body scroll during loading
     document.body.style.overflow = 'hidden'
@@ -36,138 +38,115 @@ export const LoadingCover = () => {
       setPhase('loading')
     }, 100)
 
-    // Track all resources using Performance API for accurate progress
+    // Track resources
     let totalResources = 0
     let loadedResources = 0
-    let lastProgress = 0
 
-    const updateProgress = () => {
-      if (totalResources === 0) return
-      const targetProgress = Math.floor((loadedResources / totalResources) * 100)
-      // Smooth interpolation towards target
-      if (targetProgress > lastProgress) {
-        lastProgress = targetProgress
-        setProgress(prev => Math.max(prev, targetProgress))
-      }
-    }
-
-    // Use PerformanceObserver to track resource loading
-    let observer = null
-    if (typeof PerformanceObserver !== 'undefined') {
-      try {
-        observer = new PerformanceObserver((list) => {
-          for (const entry of list.getEntries()) {
-            loadedResources++
-            updateProgress()
-          }
-        })
-        observer.observe({ entryTypes: ['resource'] })
-      } catch (e) {
-        // Fallback if PerformanceObserver not supported
-      }
-    }
-
-    // Count initial resources (images, scripts, stylesheets)
+    // Count initial resources
     const countResources = () => {
       const images = document.images
-      const scripts = document.getElementsByTagName('script')
-      const links = document.querySelectorAll('link[rel="stylesheet"]')
-      totalResources = images.length + scripts.length + links.length
+      totalResources = Math.max(1, images.length)
       
-      if (totalResources === 0) totalResources = 1 // Avoid division by zero
-      
-      // Count already loaded resources
+      // Count already loaded images
       for (let i = 0; i < images.length; i++) {
         if (images[i].complete) loadedResources++
       }
-      updateProgress()
+      
+      // Add event listeners for remaining images
+      for (let i = 0; i < images.length; i++) {
+        if (!images[i].complete) {
+          images[i].addEventListener('load', () => { loadedResources++ })
+          images[i].addEventListener('error', () => { loadedResources++ })
+        }
+      }
     }
     countResources()
 
-    // Smooth progress animation using requestAnimationFrame
-    let animationProgress = 0
-    let targetProgress = 0
+    // Smooth animation loop using requestAnimationFrame
     let rafId = null
-    
-    const animateProgress = () => {
-      if (animationProgress < targetProgress) {
-        // Smooth easing - move 10% of remaining distance each frame
-        animationProgress += (targetProgress - animationProgress) * 0.1
-        if (targetProgress - animationProgress < 0.5) {
-          animationProgress = targetProgress
-        }
-        setProgress(Math.floor(animationProgress))
+    const animate = () => {
+      const target = targetProgressRef.current
+      const current = displayProgressRef.current
+      
+      if (current < target) {
+        // Smooth easing - larger step when further from target
+        const diff = target - current
+        const step = Math.max(0.5, diff * 0.15)
+        displayProgressRef.current = Math.min(target, current + step)
+        setDisplayProgress(Math.floor(displayProgressRef.current))
       }
-      rafId = requestAnimationFrame(animateProgress)
+      
+      rafId = requestAnimationFrame(animate)
     }
-    rafId = requestAnimationFrame(animateProgress)
+    rafId = requestAnimationFrame(animate)
 
-    // Update target progress periodically based on actual loading
+    // Update target progress based on actual loading
     const progressInterval = setInterval(() => {
-      // Calculate real progress from loaded resources
       const realProgress = totalResources > 0 
         ? Math.floor((loadedResources / totalResources) * 100) 
         : 0
       
-      // Check if loading is complete from global state
+      // When onLoading becomes false, go to 100
       if (!onLoading) {
-        targetProgress = 100
+        targetProgressRef.current = 100
       } else {
-        // Use real progress but cap at 95 until fully loaded
-        targetProgress = Math.min(95, Math.max(targetProgress, realProgress))
+        // Use real progress, cap at 90 until fully loaded
+        targetProgressRef.current = Math.min(90, Math.max(targetProgressRef.current, realProgress))
       }
-    }, 50)
+    }, 30)
 
+    // Max wait timer - force complete after timeout
     const maxWaitTimer = setTimeout(() => {
       if (!hasCompletedRef.current) {
-        setProgress(100)
+        targetProgressRef.current = 100
       }
-    }, 5000) // Increased timeout for heavy pages
+    }, 5000)
 
     return () => {
       clearTimeout(initTimer)
       clearInterval(progressInterval)
       clearTimeout(maxWaitTimer)
       if (rafId) cancelAnimationFrame(rafId)
-      if (observer) observer.disconnect()
       document.body.style.overflow = ''
     }
   }, [onLoading])
 
-  // Complete loading sequence when progress reaches 100
+  // Complete loading sequence when display progress reaches 100
   useEffect(() => {
-    if (progress >= 100 && !hasCompletedRef.current) {
+    if (displayProgress >= 100 && !hasCompletedRef.current) {
       hasCompletedRef.current = true
       
-      const completeTimer = setTimeout(() => {
-        setPhase('complete')
-        
+      // Immediately start exit sequence
+      setPhase('complete')
+      
+      const sweepTimer = setTimeout(() => {
+        setPhase('sweeping')
         setTimeout(() => {
-          setPhase('sweeping')
-          setTimeout(() => {
-            setPhase('fadeout')
-            setTimeout(() => setIsVisible(false), 400)
-          }, 500)
-        }, 150)
+          setPhase('fadeout')
+          setTimeout(() => setIsVisible(false), 300)
+        }, 400)
       }, 100)
 
-      return () => clearTimeout(completeTimer)
+      return () => clearTimeout(sweepTimer)
     }
-  }, [progress])
+  }, [displayProgress])
 
   if (!isVisible) return null
 
   return (
-    <div className={`loading-cover ${phase}`} style={{ '--progress': `${progress}%`, '--progress-num': progress }}>
-      {/* Left side - Vertical Progress Bar */}
+    <div className={`loading-cover ${phase}`} style={{ '--progress': `${displayProgress}%`, '--progress-num': displayProgress }}>
+      {/* Left side - Vertical Progress Bar (thicker) */}
       <div className="progress-container">
         <div className="progress-track">
           <div className="progress-fill" />
         </div>
       </div>
 
-      {/* Right side - Vertical Text (rotated 90 degrees) */}
-      <div className="site-name-container">
+      {/* Center - Loading Image and Site Name (horizontal, stacked) */}
+      <div className="center-content">
+        {loadingImage && (
+          <img src={loadingImage} alt="Loading" className="loading-image" />
+        )}
         <div className="site-name">
           {siteName}
         </div>
@@ -176,7 +155,7 @@ export const LoadingCover = () => {
       {/* Progress Info - follows progress bar */}
       <div className="progress-info">
         <div className="progress-percent">
-          {Math.floor(progress)}%
+          {Math.floor(displayProgress)}%
         </div>
         <div className="status-line">
           <span className="status-dot" />
@@ -193,13 +172,6 @@ export const LoadingCover = () => {
       {/* Sweep overlay - full screen cover from left to right */}
       <div className="sweep-overlay" />
 
-      {/* Optional Loading Image */}
-      {loadingImage && (
-        <div className="loading-image-container">
-          <img src={loadingImage} alt="Loading" className="loading-image" />
-        </div>
-      )}
-
       <style jsx>{`
         .loading-cover {
           position: fixed;
@@ -212,31 +184,43 @@ export const LoadingCover = () => {
           overflow: hidden;
         }
 
-        /* Loading Image */
-        .loading-image-container {
+        /* Center Content - Image above, Site Name below */
+        .center-content {
           position: absolute;
           top: 50%;
-          right: 15%; /* Desktop: Right Center */
-          transform: translateY(-50%);
+          left: 50%;
+          transform: translate(-50%, -50%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 24px;
           z-index: 10;
-          pointer-events: none;
-        }
-        
-        .loading-image {
-          max-width: 200px;
-          max-height: 200px;
-          opacity: 0.8;
-          filter: drop-shadow(0 0 10px rgba(251, 251, 70, 0.3));
         }
 
-        /* Progress Bar Container - Left Side */
+        .loading-image {
+          max-width: 180px;
+          max-height: 180px;
+          opacity: 0.9;
+        }
+
+        .site-name {
+          font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+          font-size: clamp(1.2rem, 3vw, 2rem);
+          font-weight: 600;
+          color: #ffffff;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          user-select: none;
+        }
+
+        /* Progress Bar Container - Left Side (thicker) */
         .progress-container {
           position: absolute;
           left: 0;
           top: 0;
-          width: 6px;
+          width: 12px;
           height: 100%;
-          background: rgba(251, 251, 70, 0.15);
+          background: rgba(255, 255, 255, 0.1);
         }
 
         .progress-track {
@@ -252,67 +236,38 @@ export const LoadingCover = () => {
           top: 0;
           left: 0;
           width: 100%;
-          height: var(--progress); /* Vertical growth */
+          height: var(--progress);
           background: #FBFB46;
-          transition: height 0.08s linear;
-          box-shadow: 0 0 10px rgba(251, 251, 70, 0.6);
-        }
-
-        /* Right side - Vertical Text */
-        .site-name-container {
-          position: absolute;
-          right: 0;
-          top: 0;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding-right: 50px;
-        }
-
-        .site-name {
-          font-family: 'Orbitron', 'Rajdhani', 'Share Tech Mono', 'Consolas', monospace;
-          font-size: clamp(2rem, 4vw, 3.5rem);
-          font-weight: 700;
-          color: transparent;
-          letter-spacing: 0.4em;
-          writing-mode: vertical-rl;
-          text-orientation: mixed;
-          background: rgba(251, 251, 70, 0.85);
-          -webkit-background-clip: text;
-          background-clip: text;
-          user-select: none;
-          text-shadow: 0 0 40px rgba(251, 251, 70, 0.3);
+          transition: height 0.05s linear;
         }
 
         /* Progress Info - follows progress bar */
         .progress-info {
           position: absolute;
-          left: 20px;
-          top: var(--progress); /* Follows vertically */
+          left: 24px;
+          top: var(--progress);
           transform: translateY(-100%);
           display: flex;
           flex-direction: column;
           align-items: flex-start;
-          gap: 8px;
-          transition: top 0.08s linear, left 0.08s linear;
-          padding-bottom: 10px;
+          gap: 6px;
+          transition: top 0.05s linear;
+          padding-bottom: 12px;
         }
 
         .progress-percent {
-          font-family: 'Orbitron', 'Rajdhani', 'Share Tech Mono', 'Consolas', monospace;
-          font-size: clamp(36px, 6vw, 56px);
+          font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+          font-size: clamp(32px, 5vw, 48px);
           font-weight: 700;
           color: #FBFB46;
           letter-spacing: 2px;
           line-height: 1;
-          text-shadow: 0 0 30px rgba(251, 251, 70, 0.5);
         }
 
         .status-line {
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 8px;
         }
 
         .status-dot {
@@ -320,15 +275,14 @@ export const LoadingCover = () => {
           height: 6px;
           background: #FBFB46;
           border-radius: 50%;
-          animation: pulse 1s ease-in-out infinite;
-          box-shadow: 0 0 10px #FBFB46;
+          animation: blink 0.8s ease-in-out infinite;
         }
 
         .status-text {
-          font-family: 'Orbitron', 'Rajdhani', 'Share Tech Mono', 'Consolas', monospace;
+          font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
           font-size: 11px;
           font-weight: 500;
-          color: rgba(251, 251, 70, 0.7);
+          color: rgba(251, 251, 70, 0.8);
           letter-spacing: 2px;
           text-transform: uppercase;
         }
@@ -348,12 +302,12 @@ export const LoadingCover = () => {
         }
 
         .loading-cover.sweeping .sweep-overlay {
-          animation: sweepCover 0.5s ease-in-out forwards;
+          animation: sweepCover 0.4s ease-in-out forwards;
         }
 
         .loading-cover.fadeout {
           opacity: 0;
-          transition: opacity 0.4s ease;
+          transition: opacity 0.3s ease;
         }
 
         .loading-cover.fadeout .sweep-overlay {
@@ -366,21 +320,15 @@ export const LoadingCover = () => {
           position: absolute;
           inset: 0;
           background-image: 
-            linear-gradient(rgba(251, 251, 70, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(251, 251, 70, 0.03) 1px, transparent 1px);
+            linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
           background-size: 60px 60px;
           pointer-events: none;
         }
 
-        @keyframes pulse {
-          0%, 100% { 
-            opacity: 1; 
-            box-shadow: 0 0 10px #FBFB46, 0 0 20px rgba(251, 251, 70, 0.4);
-          }
-          50% { 
-            opacity: 0.6; 
-            box-shadow: 0 0 15px #FBFB46, 0 0 30px rgba(251, 251, 70, 0.2);
-          }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.3; }
         }
 
         @keyframes sweepCover {
@@ -396,86 +344,52 @@ export const LoadingCover = () => {
 
         /* Mobile responsive */
         @media (max-width: 768px) {
-          /* Reposition Loading Image */
-          .loading-image-container {
-             top: 100px; /* Mobile: Top Center (below site name roughly) */
-             right: auto;
-             left: 50%;
-             transform: translateX(-50%);
-          }
-          
-          .loading-image {
-             max-width: 120px; /* Smaller on mobile */
-             max-height: 120px;
+          .center-content {
+            gap: 16px;
           }
 
-          /* Reposition Site Name to Top Center */
-          .site-name-container {
-            right: 0;
-            top: 40px;
-            left: 0;
-            width: 100%;
-            height: auto;
-            align-items: flex-start;
-            padding-right: 0;
+          .loading-image {
+            max-width: 120px;
+            max-height: 120px;
           }
 
           .site-name {
-            font-size: 1.5rem;
-            letter-spacing: 0.3em;
-            writing-mode: horizontal-tb; /* Horizontal text */
-            text-orientation: mixed;
-            transform: none;
-            background: rgba(251, 251, 70, 0.85);
-            -webkit-background-clip: text;
-            background-clip: text;
+            font-size: 1rem;
+            letter-spacing: 0.2em;
           }
 
-          /* Reposition Progress Bar to Bottom */
+          /* Progress Bar at bottom on mobile */
           .progress-container {
-            width: calc(100% - 5.5rem); /* Leave space for text (approx 88px) */
-            height: 4px; /* Thin horizontal line */
+            width: calc(100% - 6rem);
+            height: 8px;
             top: auto;
-            bottom: 30px; /* Moved up slightly */
+            bottom: 30px;
             left: 0;
           }
           
           .progress-fill {
-            width: var(--progress); /* Horizontal growth */
+            width: var(--progress);
             height: 100%;
-            background: #FBFB46;
-            transition: width 0.08s linear;
+            transition: width 0.05s linear;
           }
 
           /* Progress Info follows horizontal bar */
           .progress-info {
             top: auto;
-            bottom: 22px; /* Align baseline with bar roughly */
+            bottom: 24px;
             left: 0;
-            /* Calculate position: Percentage of the BAR width, not screen width */
-            transform: translateX(calc( (100vw - 5.5rem) * var(--progress-num) / 100 + 10px ));
-            align-items: flex-start; 
+            transform: translateX(calc((100vw - 6rem) * var(--progress-num) / 100 + 12px));
+            flex-direction: row;
+            gap: 8px;
             padding-bottom: 0;
-            flex-direction: row; /* Horizontal text layout */
-            gap: 6px;
           }
 
           .progress-percent {
-            font-size: 16px; /* Smaller, cleaner font */
-            line-height: 1;
+            font-size: 14px;
           }
 
-          .status-text {
-            display: none; /* Hide status text on mobile to keep it clean, or keep it? User asked for percentage specifically */
-          }
-          
           .status-line {
-             display: none;
-          }
-          
-          /* Adjust corner decoration */
-          .loading-cover::after {
-             display: none; /* Remove corner decoration on mobile to avoid clutter */
+            display: none;
           }
         }
       `}</style>
