@@ -811,132 +811,60 @@ export const Style = () => {
       /* ============================================
          Endfield Category Button Styles
          ============================================ */
-      .ef-category-btn {
-        display: flex;
-        align-items: stretch;
-        background: #27272a;
-        border: 1px solid #3f3f46;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        overflow: hidden;
-        /* Wave/mountain texture background */
-        background-image: 
-          linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.03) 50%, transparent 60%),
-          repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 10px,
-            rgba(255,255,255,0.02) 10px,
-            rgba(255,255,255,0.02) 20px
-          );
-      }
-      
-      .ef-category-btn:hover {
-        border-color: var(--endspace-accent-yellow);
-        box-shadow: 0 0 12px rgba(251, 251, 69, 0.2);
-        transform: translateY(-2px);
-      }
-      
-      /* Icon zone on the left */
-      .ef-btn-icon-zone {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px;
-        background: rgba(0, 0, 0, 0.3);
-        border-right: 1px solid #3f3f46;
-        color: var(--endspace-accent-yellow);
-        transition: all 0.3s ease;
-      }
-      
-      .ef-category-btn:hover .ef-btn-icon-zone {
-        background: var(--endspace-accent-yellow);
-        color: #000;
-      }
-      
-      /* Content area on the right */
-      .ef-btn-content {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.875rem 1rem;
-      }
-      
-      .ef-btn-title {
-        color: #e4e4e7;
-        font-weight: 600;
-        font-size: 0.9rem;
-        letter-spacing: 0.02em;
-        transition: color 0.3s ease;
-      }
-      
-      .ef-category-btn:hover .ef-btn-title {
-        color: #fff;
-      }
-      
-      .ef-btn-count {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.75rem;
-        color: #71717a;
-        transition: color 0.3s ease;
-      }
-      
-      .ef-category-btn:hover .ef-btn-count {
-        color: var(--endspace-accent-yellow);
-      }
-
       /* ============================================
-         Endfield Tag Button Styles
+         Endfield Unified Button Styles
          ============================================ */
-      .ef-tag-btn {
+      .ef-btn {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        background: #27272a;
-        border: 1px solid #3f3f46;
+        gap: 0.875rem; /* Space between indicator and text */
+        padding: 0.5rem 1rem 0.5rem 0.75rem;
+        background-color: #52525B; /* Normal: Lighter Grey */
+        border-radius: 1px;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        width: fit-content;
+        min-width: min-content;
+        border: 1px solid transparent; /* Prevent layout shift if border added later */
       }
       
-      .ef-tag-btn:hover {
-        border-color: var(--endspace-accent-yellow);
-        background: #3f3f46;
-        transform: translateY(-1px);
+      .ef-btn:hover {
+        background-color: #27272A; /* Hover: Darker Grey */
+        border-radius: 3px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       }
       
-      .ef-tag-icon {
-        color: var(--endspace-accent-yellow);
-        display: flex;
-        align-items: center;
-        transition: transform 0.2s ease;
+      /* Indicator Element: Morphs from Rectangle to Triangle */
+      .ef-btn-indicator {
+        display: block;
+        width: 4px;
+        height: 18px;
+        background-color: #FBFB45; /* Yellow */
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Rectangle shape */
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
       }
       
-      .ef-tag-btn:hover .ef-tag-icon {
-        transform: scale(1.1);
+      .ef-btn:hover .ef-btn-indicator {
+        width: 12px;
+        height: 12px;
+        /* Triangle shape (Play icon) */
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+        background-color: #FBFB45; /* Ensure color stays yellow */
       }
       
-      .ef-tag-name {
+      /* Text Styles */
+      .ef-btn-text {
         color: #e4e4e7;
-        font-size: 0.875rem;
-        font-weight: 500;
-        transition: color 0.2s ease;
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+        transition: color 0.3s ease;
       }
       
-      .ef-tag-btn:hover .ef-tag-name {
-        color: #fff;
-      }
-      
-      .ef-tag-count {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.7rem;
-        color: #71717a;
-        margin-left: 0.25rem;
-      }
-      
-      .ef-tag-btn:hover .ef-tag-count {
-        color: var(--endspace-accent-yellow);
+      .ef-btn:hover .ef-btn-text {
+        color: #ffffff;
       }
     `}</style>
   )

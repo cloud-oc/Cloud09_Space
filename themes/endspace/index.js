@@ -363,7 +363,7 @@ const LayoutCategoryIndex = (props) => {
         </h2>
         <div
           id="category-list"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+          className="flex flex-wrap gap-3"
         >
           {categoryOptions?.map((category) => (
             <SmartLink
@@ -372,14 +372,9 @@ const LayoutCategoryIndex = (props) => {
               passHref
               legacyBehavior
             >
-              <div className="ef-category-btn group">
-                <div className="ef-btn-icon-zone">
-                  <IconFolder size={18} stroke={1.5} />
-                </div>
-                <div className="ef-btn-content">
-                  <span className="ef-btn-title">{category.name}</span>
-                  <span className="ef-btn-count">[{category.count}]</span>
-                </div>
+              <div className="ef-btn group">
+                <span className="ef-btn-indicator"></span>
+                <span className="ef-btn-text">{category.name}</span>
               </div>
             </SmartLink>
           ))}
@@ -410,14 +405,9 @@ const LayoutTagIndex = (props) => {
               passHref
               legacyBehavior
             >
-              <div className="ef-tag-btn group">
-                <div className="ef-tag-icon">
-                  <IconTag size={14} stroke={1.5} />
-                </div>
-                <span className="ef-tag-name">#{tag.name}</span>
-                {tag.count && (
-                  <span className="ef-tag-count">[{tag.count}]</span>
-                )}
+              <div className="ef-btn group">
+                <span className="ef-btn-indicator"></span>
+                <span className="ef-btn-text">#{tag.name}</span>
               </div>
             </SmartLink>
           ))}
