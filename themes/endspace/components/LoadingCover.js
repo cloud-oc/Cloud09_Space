@@ -314,21 +314,7 @@ export const LoadingCover = () => {
           transform: scaleX(1);
         }
 
-        /* Diagonal line background pattern */
-        .loading-cover::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background-image: 
-            repeating-linear-gradient(
-              45deg,
-              transparent,
-              transparent 100px,
-              rgba(255, 255, 255, 0.015) 100px,
-              rgba(255, 255, 255, 0.015) 101px
-            );
-          pointer-events: none;
-        }
+
 
         @keyframes blink {
           0%, 100% { opacity: 1; }
