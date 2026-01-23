@@ -215,8 +215,11 @@ export const SideNav = (props) => {
         </div>
       </div>
 
-      {/* Navigation Items */}
-      <div ref={navRef} className="flex-1 py-4 flex flex-col gap-2 overflow-y-auto overflow-x-hidden relative">
+      {/* MIDDLE SECTION - Navigation Items */}
+      {/* Fixed height as requested. Overflow handles scrolling if items exceed height. */}
+      {/* 'flex-shrink-0' prevents compression. */}
+      {/* 'h-[28rem]' is the fixed height. Adjust this value to change the middle section's height. */}
+      <div ref={navRef} className="flex-shrink-0 h-[28rem] py-4 flex flex-col gap-2 overflow-y-auto overflow-x-hidden relative border-b border-[var(--endspace-border-base)] border-opacity-20">
         {/* Animated Active Indicator Bar - Higher z-index */}
         <div 
           className="absolute left-0 w-1.5 h-[3rem] bg-[var(--endspace-text-primary)] transition-all duration-300 ease-out z-10"
@@ -246,70 +249,76 @@ export const SideNav = (props) => {
         })}
       </div>
 
-      {/* Music Player Section - Above Contact Links */}
-      <EndspacePlayer isExpanded={isHovered} />
-
-      {/* Contact Links Section - Above arrow */}
-      <div className="py-3 transition-all duration-300">
+      {/* BOTTOM SECTION - Tools & Config */}
+      {/* 'mt-auto' forces this section to the bottom of the container, creating dynamic space above it. */}
+      {/* Configure height here: h-auto (adaptive) or h-[XXrem] (fixed) */}
+      <div className="mt-auto flex-shrink-0 flex flex-col justify-end h-auto pb-4">
         
-        {/* Collapsed State: Contact Button with light gray background */}
-        <div className={`flex justify-center transition-all duration-300 ${isHovered ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
-          <div className="w-[2.5rem] h-[2.5rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded-full cursor-pointer hover:text-white hover:bg-gray-600 transition-colors">
-             <RadarFillIcon size={18} />
-           </div>
-         </div>
+        {/* Music Player Section */}
+        <EndspacePlayer isExpanded={isHovered} />
 
-         {/* Expanded State: Horizontal Icon Row - Single line */}
-         <div className={`px-3 transition-all duration-300 ${isHovered ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-            {/* Social Icons - Horizontal Layout, single row with light gray background */}
-            <div className="flex items-center justify-center gap-1.5 flex-nowrap">
-              {/* Email Icon */}
-              {email && (
+        {/* Contact Links Section */}
+        <div className="py-3 transition-all duration-300">
+          
+          {/* Collapsed State: Contact Button with light gray background */}
+          <div className={`flex justify-center transition-all duration-300 ${isHovered ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
+            <div className="w-[2.5rem] h-[2.5rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded-full cursor-pointer hover:text-white hover:bg-gray-600 transition-colors">
+              <RadarFillIcon size={18} />
+            </div>
+          </div>
+
+          {/* Expanded State: Horizontal Icon Row - Single line */}
+          <div className={`px-3 transition-all duration-300 ${isHovered ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+              {/* Social Icons - Horizontal Layout, single row with light gray background */}
+              <div className="flex items-center justify-center gap-1.5 flex-nowrap">
+                {/* Email Icon */}
+                {email && (
+                    <a 
+                    href={`mailto:${email}`}
+                    title={email}
+                    className="w-[1.75rem] h-[1.75rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded-full hover:text-white hover:bg-gray-600 transition-colors flex-shrink-0"
+                  >
+                    <MailFillIcon size={14} />
+                </a>
+              )}
+              
+              {/* Social Links */}
+              {socialLinks.map(({ key, svg, label }) => {
+                const url = siteConfig(key)
+                if (!url) return null
+                return (
                   <a 
-                  href={`mailto:${email}`}
-                  title={email}
-                  className="w-[1.75rem] h-[1.75rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded-full hover:text-white hover:bg-gray-600 transition-colors flex-shrink-0"
-                >
-                  <MailFillIcon size={14} />
-               </a>
-             )}
-             
-             {/* Social Links */}
-             {socialLinks.map(({ key, svg, label }) => {
-               const url = siteConfig(key)
-               if (!url) return null
-               return (
-                 <a 
-                   key={key}
-                   href={url} 
-                   target="_blank" 
-                   rel="noreferrer"
-                   title={label}
-                   className="w-[1.75rem] h-[1.75rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded-full hover:text-white hover:bg-gray-600 transition-colors flex-shrink-0"
-                 >
-                   {renderSocialIcon(key, svg, label)}
-                 </a>
-               )
-             })}
-           </div>
+                    key={key}
+                    href={url} 
+                    target="_blank" 
+                    rel="noreferrer"
+                    title={label}
+                    className="w-[1.75rem] h-[1.75rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded-full hover:text-white hover:bg-gray-600 transition-colors flex-shrink-0"
+                  >
+                    {renderSocialIcon(key, svg, label)}
+                  </a>
+                )
+              })}
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* Bottom Toggle Button - Simple Black Triangle */}
-      <div className="py-4">
-        <div className="flex justify-center">
-          <div 
-            className="w-[2rem] h-[2rem] flex items-center justify-center cursor-pointer"
-            title={isHovered ? 'Collapse' : 'Expand'}
-          >
-            {/* Simple Black Triangle */}
+        {/* Bottom Toggle Button - Simple Black Triangle */}
+        <div className="py-4">
+          <div className="flex justify-center">
             <div 
-              className={`w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent transition-transform duration-300 ${
-                isHovered 
-                  ? 'border-r-[10px] border-r-[var(--endspace-text-primary)] border-l-0' 
-                  : 'border-l-[10px] border-l-[var(--endspace-text-primary)] border-r-0'
-              }`}
-            />
+              className="w-[2rem] h-[2rem] flex items-center justify-center cursor-pointer"
+              title={isHovered ? 'Collapse' : 'Expand'}
+            >
+              {/* Simple Black Triangle */}
+              <div 
+                className={`w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent transition-transform duration-300 ${
+                  isHovered 
+                    ? 'border-r-[10px] border-r-[var(--endspace-text-primary)] border-l-0' 
+                    : 'border-l-[10px] border-l-[var(--endspace-text-primary)] border-r-0'
+                }`}
+              />
+            </div>
           </div>
         </div>
       </div>
