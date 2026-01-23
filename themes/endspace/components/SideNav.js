@@ -108,17 +108,21 @@ export const SideNav = (props) => {
   // Email
   const email = siteConfig('CONTACT_EMAIL')
 
-  // Update indicator position
+  // Update indicator position - with validation to prevent stuck indicator
   const updateIndicatorPosition = (tabName) => {
     const itemEl = itemRefs.current[tabName]
     const navEl = navRef.current
     if (itemEl && navEl) {
       const navRect = navEl.getBoundingClientRect()
       const itemRect = itemEl.getBoundingClientRect()
-      setIndicatorStyle({
-        top: itemRect.top - navRect.top,
-        opacity: 1
-      })
+      
+      // Validate that elements have proper dimensions (not zero-height)
+      if (itemRect.height > 0 && navRect.height > 0) {
+        setIndicatorStyle({
+          top: itemRect.top - navRect.top,
+          opacity: 1
+        })
+      }
     }
   }
 
@@ -139,11 +143,20 @@ export const SideNav = (props) => {
 
   // Update indicator position when activeTab changes
   useEffect(() => {
-    // Small delay to ensure refs are set
-    const timer = setTimeout(() => {
+    // Use requestAnimationFrame to ensure DOM is fully rendered
+    const rafId = requestAnimationFrame(() => {
       updateIndicatorPosition(activeTab)
-    }, 50)
-    return () => clearTimeout(timer)
+    })
+    return () => cancelAnimationFrame(rafId)
+  }, [activeTab])
+  
+  // Also update on window resize to prevent stuck indicator
+  useEffect(() => {
+    const handleResize = () => {
+      updateIndicatorPosition(activeTab)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [activeTab])
 
   // Render icon component

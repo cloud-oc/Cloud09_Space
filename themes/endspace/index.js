@@ -157,17 +157,24 @@ const LayoutPostList = (props) => {
 const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
   const router = useRouter()
+  
+  // Use configurable timeout from post.config.js (default 9 seconds)
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
 
   useEffect(() => {
-    // Delay 3 seconds, if loading fails redirect to home
-    setTimeout(() => {
+    // Important: Store timeout ID and clean up on unmount to prevent
+    // 404 redirects when user navigates away quickly
+    const timeoutId = setTimeout(() => {
       const article = isBrowser && document.getElementById('article-wrapper')
       if (!article) {
         router.push('/404').then(() => {
           console.warn('Page not found:', router.asPath)
         })
       }
-    }, 3000)
+    }, waiting404)
+    
+    // Cleanup: cancel timeout when component unmounts or router changes
+    return () => clearTimeout(timeoutId)
   }, [router])
 
   return (
