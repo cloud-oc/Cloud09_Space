@@ -812,60 +812,62 @@ export const Style = () => {
          Category & Tag Button Styles
          Yellow bar -> Triangle on hover
          ============================================ */
-      .category-tag-button {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem 1rem 0.75rem 1.25rem;
-        background: #27272a; /* Dark background - matches screenshot */
-        border-radius: 4px;
-        cursor: pointer;
-        position: relative;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      #theme-endspace .category-tag-button {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+        padding: 0.75rem 1rem 0.75rem 1.25rem !important;
+        background: #27272a !important; /* Dark background - matches screenshot */
+        border-radius: 4px !important;
+        cursor: pointer !important;
+        position: relative !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
       }
 
-      .category-tag-button:hover {
-        background: #52525b; /* Lighter background on hover */
-        border-radius: 8px; /* Increased border radius */
+      #theme-endspace .category-tag-button:hover {
+        background: #52525b !important; /* Lighter background on hover */
+        border-radius: 8px !important; /* Increased border radius */
       }
 
       /* Left indicator - bar that becomes triangle */
-      .category-tag-indicator {
-        position: relative;
-        width: 6px;
-        height: 1.25rem;
-        background: #FBFB45; /* Yellow bar */
-        border-radius: 1px;
-        flex-shrink: 0;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      #theme-endspace .category-tag-indicator {
+        position: relative !important;
+        width: 6px !important;
+        height: 1.25rem !important;
+        background: #FBFB45 !important; /* Yellow bar */
+        border-radius: 1px !important;
+        flex-shrink: 0 !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         /* Initial bar shape */
-        clip-path: inset(0);
+        clip-path: inset(0) !important;
       }
 
-      .category-tag-button:hover .category-tag-indicator {
+      #theme-endspace .category-tag-button:hover .category-tag-indicator {
         /* Transform to triangle on hover */
-        width: 10px;
-        height: 12px;
-        clip-path: polygon(0 0, 100% 50%, 0 100%);
-        border-radius: 0;
+        width: 10px !important;
+        height: 12px !important;
+        clip-path: polygon(0 0, 100% 50%, 0 100%) !important;
+        border-radius: 0 !important;
       }
 
-      /* Light mode overrides */
-      :root .category-tag-button {
-        background: #27272a;
+      /* Light mode - dark button on light background */
+      #theme-endspace .category-tag-button {
+        background: #27272a !important;
       }
 
-      :root .category-tag-button:hover {
-        background: #52525b;
+      #theme-endspace .category-tag-button:hover {
+        background: #52525b !important;
       }
 
-      /* Dark mode - same as default since design is dark-first */
-      .dark .category-tag-button {
-        background: #27272a;
+      /* Dark mode - same styling */
+      .dark #theme-endspace .category-tag-button,
+      #theme-endspace.dark .category-tag-button {
+        background: #27272a !important;
       }
 
-      .dark .category-tag-button:hover {
-        background: #52525b;
+      .dark #theme-endspace .category-tag-button:hover,
+      #theme-endspace.dark .category-tag-button:hover {
+        background: #52525b !important;
       }
     `}</style>
   )
