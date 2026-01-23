@@ -372,15 +372,17 @@ const LayoutCategoryIndex = (props) => {
               passHref
               legacyBehavior
             >
-              <div className="tech-corner p-4 bg-[var(--endspace-bg-secondary)] hover:bg-[#FBFB46] border border-[var(--endspace-border-base)] hover:border-black transition-all cursor-pointer group">
-                <div className="flex items-center justify-between">
+              <div className="category-tag-button group">
+                {/* Left indicator - bar transforms to triangle on hover */}
+                <div className="category-tag-indicator" />
+                <div className="flex items-center justify-between flex-1">
                   <div className="flex items-center gap-2">
-                    <IconFolder size={16} stroke={1.5} className="text-[var(--endspace-accent-cyan)] group-hover:text-black transition-colors" />
-                    <span className="text-[var(--endspace-text-primary)] group-hover:text-black transition-colors font-bold">
+                    <IconFolder size={16} stroke={1.5} className="text-[var(--endspace-text-muted)] group-hover:text-white transition-colors duration-300" />
+                    <span className="text-[var(--endspace-text-primary)] group-hover:text-white transition-colors duration-300 font-bold">
                       {category.name}
                     </span>
                   </div>
-                  <span className="tech-text text-xs text-[var(--endspace-text-muted)] group-hover:text-black font-mono">
+                  <span className="tech-text text-xs text-[var(--endspace-text-muted)] group-hover:text-white/70 font-mono transition-colors duration-300">
                     [{category.count}]
                   </span>
                 </div>
@@ -412,15 +414,22 @@ const LayoutTagIndex = (props) => {
               key={tag.name}
               href={`/tag/${encodeURIComponent(tag.name)}`}
               passHref
-              className="px-4 py-2 bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-secondary)] border border-[var(--endspace-border-base)] tech-text hover:bg-[var(--endspace-text-primary)] hover:text-white hover:border-[var(--endspace-text-primary)] transition-all text-sm rounded-sm"
+              legacyBehavior
             >
-              <div>
-                #{tag.name}
-                {tag.count && (
-                  <span className="ml-2 text-xs opacity-60">
-                    [{tag.count}]
+              <div className="category-tag-button group">
+                {/* Left indicator - bar transforms to triangle on hover */}
+                <div className="category-tag-indicator" />
+                <div className="flex items-center gap-2 flex-1">
+                  <IconTag size={14} stroke={1.5} className="text-[var(--endspace-text-muted)] group-hover:text-white transition-colors duration-300" />
+                  <span className="text-[var(--endspace-text-primary)] group-hover:text-white transition-colors duration-300 font-medium">
+                    {tag.name}
                   </span>
-                )}
+                  {tag.count && (
+                    <span className="tech-text text-xs text-[var(--endspace-text-muted)] group-hover:text-white/70 font-mono transition-colors duration-300">
+                      [{tag.count}]
+                    </span>
+                  )}
+                </div>
               </div>
             </SmartLink>
           ))}

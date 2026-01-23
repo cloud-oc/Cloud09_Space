@@ -11,7 +11,7 @@ export const Style = () => {
          ============================================ */
       :root {
         /* Ethereal Whites & Grays */
-        --endspace-bg-base: #fafafa;
+        --endspace-bg-base: #ffffff;
         --endspace-bg-primary: #ffffff;
         --endspace-bg-secondary: #f4f4f5;
         --endspace-bg-tertiary: #e4e4e7;
@@ -806,6 +806,66 @@ export const Style = () => {
       }
       .dark .nier-nav-item:hover, .dark .nier-nav-item.active {
         color: #fafafa !important; /* Dark text in dark mode */
+      }
+
+      /* ============================================
+         Category & Tag Button Styles
+         Yellow bar -> Triangle on hover
+         ============================================ */
+      .category-tag-button {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem 0.75rem 1.25rem;
+        background: #27272a; /* Dark background - matches screenshot */
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .category-tag-button:hover {
+        background: #52525b; /* Lighter background on hover */
+        border-radius: 8px; /* Increased border radius */
+      }
+
+      /* Left indicator - bar that becomes triangle */
+      .category-tag-indicator {
+        position: relative;
+        width: 6px;
+        height: 1.25rem;
+        background: #FBFB45; /* Yellow bar */
+        border-radius: 1px;
+        flex-shrink: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Initial bar shape */
+        clip-path: inset(0);
+      }
+
+      .category-tag-button:hover .category-tag-indicator {
+        /* Transform to triangle on hover */
+        width: 10px;
+        height: 12px;
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+        border-radius: 0;
+      }
+
+      /* Light mode overrides */
+      :root .category-tag-button {
+        background: #27272a;
+      }
+
+      :root .category-tag-button:hover {
+        background: #52525b;
+      }
+
+      /* Dark mode - same as default since design is dark-first */
+      .dark .category-tag-button {
+        background: #27272a;
+      }
+
+      .dark .category-tag-button:hover {
+        background: #52525b;
       }
     `}</style>
   )
