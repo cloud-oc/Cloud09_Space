@@ -146,6 +146,9 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   } else {
     await processPostData(props, from)
   }
+
+  delete props.allPages
+
   return {
     props,
     revalidate: process.env.EXPORT

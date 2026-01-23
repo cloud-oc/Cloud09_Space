@@ -357,6 +357,7 @@ const LayoutCategoryIndex = (props) => {
   const { categoryOptions } = props
   return (
     <>
+      <Style />
       <div className="endspace-card p-8">
         <h2 className="text-3xl font-black text-[var(--endspace-text-primary)] mb-8 uppercase tracking-wide">
           ALL_CATEGORIES
@@ -393,6 +394,7 @@ const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   return (
     <>
+      <Style />
       <div className="endspace-frame p-8">
         <h2 className="text-3xl font-black text-[var(--endspace-text-primary)] mb-8 uppercase tracking-wide">
           ALL_TAGS
