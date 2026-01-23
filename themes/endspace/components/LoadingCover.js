@@ -184,31 +184,31 @@ export const LoadingCover = () => {
           overflow: hidden;
         }
 
-        /* Center Content - Image above, Site Name below */
+        /* Right side Content - Image above, Site Name below (Desktop) */
         .center-content {
           position: absolute;
           top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
+          right: 12%;
+          transform: translateY(-50%);
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 24px;
+          gap: 20px;
           z-index: 10;
         }
 
         .loading-image {
-          max-width: 180px;
-          max-height: 180px;
+          max-width: 240px;
+          max-height: 240px;
           opacity: 0.9;
         }
 
         .site-name {
           font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
-          font-size: clamp(1.2rem, 3vw, 2rem);
+          font-size: clamp(0.75rem, 1.5vw, 1rem);
           font-weight: 600;
           color: #ffffff;
-          letter-spacing: 0.3em;
+          letter-spacing: 0.25em;
           text-transform: uppercase;
           user-select: none;
         }
@@ -314,15 +314,19 @@ export const LoadingCover = () => {
           transform: scaleX(1);
         }
 
-        /* Grid background pattern */
+        /* Diagonal line background pattern */
         .loading-cover::before {
           content: '';
           position: absolute;
           inset: 0;
           background-image: 
-            linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-          background-size: 60px 60px;
+            repeating-linear-gradient(
+              45deg,
+              transparent,
+              transparent 100px,
+              rgba(255, 255, 255, 0.015) 100px,
+              rgba(255, 255, 255, 0.015) 101px
+            );
           pointer-events: none;
         }
 
@@ -345,17 +349,21 @@ export const LoadingCover = () => {
         /* Mobile responsive */
         @media (max-width: 768px) {
           .center-content {
+            top: 50%;
+            right: auto;
+            left: 50%;
+            transform: translate(-50%, -50%);
             gap: 16px;
           }
 
           .loading-image {
-            max-width: 120px;
-            max-height: 120px;
+            max-width: 160px;
+            max-height: 160px;
           }
 
           .site-name {
-            font-size: 1rem;
-            letter-spacing: 0.2em;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
           }
 
           /* Progress Bar at bottom on mobile */
