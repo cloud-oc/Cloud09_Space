@@ -36,69 +36,87 @@ export const LoadingCover = () => {
       setPhase('loading')
     }, 100)
 
-    const updateLoadingProgress = () => {
-      const images = document.images
-      const total = images.length
-      
-      if (total === 0) {
-        // No images, rely on time-based simulation or waiting for onLoading
-        return
-      }
+    // Track all resources using Performance API for accurate progress
+    let totalResources = 0
+    let loadedResources = 0
+    let lastProgress = 0
 
-      let loaded = 0
-      const trackImage = () => {
-        loaded++
-        const percent = Math.floor((loaded / total) * 100)
-        setProgress(prev => {
-           // Ensure we don't regress if multiple updates fire rapidly
-           return Math.max(prev, percent)
-        })
-      }
-
-      for (let i = 0; i < total; i++) {
-        if (images[i].complete) {
-          loaded++
-        } else {
-          images[i].addEventListener('load', trackImage)
-          images[i].addEventListener('error', trackImage)
-        }
-      }
-      
-      // Initial count update
-      if (loaded > 0) {
-        const percent = Math.floor((loaded / total) * 100)
-        setProgress(prev => Math.max(prev, percent))
+    const updateProgress = () => {
+      if (totalResources === 0) return
+      const targetProgress = Math.floor((loadedResources / totalResources) * 100)
+      // Smooth interpolation towards target
+      if (targetProgress > lastProgress) {
+        lastProgress = targetProgress
+        setProgress(prev => Math.max(prev, targetProgress))
       }
     }
 
-    // Run on mount
-    updateLoadingProgress()
-
-    // Also simulation to keep it alive if resources are stuck or few
-    const progressInterval = setInterval(() => {
-        setProgress(prev => {
-            // Check if loading is complete from global state
-            if (!onLoading) {
-                 return Math.min(100, prev + 10)
-            }
-            
-            // If we have images, we rely mostly on them, but ensure at least some movement
-            const images = document.images
-            if (images.length > 0) {
-                // If we are waiting for images, we might want to crawl slowly up to 90%
-                // But user wanted "accurate", so maybe we shouldn't fake it too much.
-                // However, standard browser behavior is progressive.
-                // Let's cap tracked progress at 99 until onLoading is false
-                return prev >= 99 ? 99 : prev
-            } else {
-                // Fallback simulation for no-image pages
-                if (prev >= 90) return prev
-                const remaining = 90 - prev
-                // Slow movement
-                return prev + Math.max(0.1, remaining * 0.05)
-            }
+    // Use PerformanceObserver to track resource loading
+    let observer = null
+    if (typeof PerformanceObserver !== 'undefined') {
+      try {
+        observer = new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) {
+            loadedResources++
+            updateProgress()
+          }
         })
-    }, 100)
+        observer.observe({ entryTypes: ['resource'] })
+      } catch (e) {
+        // Fallback if PerformanceObserver not supported
+      }
+    }
+
+    // Count initial resources (images, scripts, stylesheets)
+    const countResources = () => {
+      const images = document.images
+      const scripts = document.getElementsByTagName('script')
+      const links = document.querySelectorAll('link[rel="stylesheet"]')
+      totalResources = images.length + scripts.length + links.length
+      
+      if (totalResources === 0) totalResources = 1 // Avoid division by zero
+      
+      // Count already loaded resources
+      for (let i = 0; i < images.length; i++) {
+        if (images[i].complete) loadedResources++
+      }
+      updateProgress()
+    }
+    countResources()
+
+    // Smooth progress animation using requestAnimationFrame
+    let animationProgress = 0
+    let targetProgress = 0
+    let rafId = null
+    
+    const animateProgress = () => {
+      if (animationProgress < targetProgress) {
+        // Smooth easing - move 10% of remaining distance each frame
+        animationProgress += (targetProgress - animationProgress) * 0.1
+        if (targetProgress - animationProgress < 0.5) {
+          animationProgress = targetProgress
+        }
+        setProgress(Math.floor(animationProgress))
+      }
+      rafId = requestAnimationFrame(animateProgress)
+    }
+    rafId = requestAnimationFrame(animateProgress)
+
+    // Update target progress periodically based on actual loading
+    const progressInterval = setInterval(() => {
+      // Calculate real progress from loaded resources
+      const realProgress = totalResources > 0 
+        ? Math.floor((loadedResources / totalResources) * 100) 
+        : 0
+      
+      // Check if loading is complete from global state
+      if (!onLoading) {
+        targetProgress = 100
+      } else {
+        // Use real progress but cap at 95 until fully loaded
+        targetProgress = Math.min(95, Math.max(targetProgress, realProgress))
+      }
+    }, 50)
 
     const maxWaitTimer = setTimeout(() => {
       if (!hasCompletedRef.current) {
@@ -110,6 +128,8 @@ export const LoadingCover = () => {
       clearTimeout(initTimer)
       clearInterval(progressInterval)
       clearTimeout(maxWaitTimer)
+      if (rafId) cancelAnimationFrame(rafId)
+      if (observer) observer.disconnect()
       document.body.style.overflow = ''
     }
   }, [onLoading])
@@ -187,7 +207,7 @@ export const LoadingCover = () => {
           left: 0;
           width: 100vw;
           height: 100vh;
-          background: linear-gradient(135deg, #0f1419 0%, #1a2332 50%, #0f1419 100%);
+          background: #0f1419;
           z-index: 99999;
           overflow: hidden;
         }
@@ -233,9 +253,9 @@ export const LoadingCover = () => {
           left: 0;
           width: 100%;
           height: var(--progress); /* Vertical growth */
-          background: linear-gradient(180deg, #FBFB46 0%, #FBFB46 100%);
-          transition: height 0.15s ease-out;
-          box-shadow: 0 0 15px #FBFB46;
+          background: #FBFB46;
+          transition: height 0.08s linear;
+          box-shadow: 0 0 10px rgba(251, 251, 70, 0.6);
         }
 
         /* Right side - Vertical Text */
@@ -258,7 +278,7 @@ export const LoadingCover = () => {
           letter-spacing: 0.4em;
           writing-mode: vertical-rl;
           text-orientation: mixed;
-          background: linear-gradient(to left, rgba(251, 251, 70, 0.9) 0%, rgba(251, 251, 70, 0.5) 40%, rgba(251, 251, 70, 0.15) 80%, transparent 100%);
+          background: rgba(251, 251, 70, 0.85);
           -webkit-background-clip: text;
           background-clip: text;
           user-select: none;
@@ -275,7 +295,7 @@ export const LoadingCover = () => {
           flex-direction: column;
           align-items: flex-start;
           gap: 8px;
-          transition: top 0.15s ease-out, left 0.15s ease-out; /* Smooth transition for both properties */
+          transition: top 0.08s linear, left 0.08s linear;
           padding-bottom: 10px;
         }
 
@@ -320,7 +340,7 @@ export const LoadingCover = () => {
           left: 0;
           width: 100%;
           height: 100%;
-          background: linear-gradient(90deg, #FBFB46 0%, #FBFB46 50%, #FBFB46 100%);
+          background: #FBFB46;
           transform: scaleX(0);
           transform-origin: left;
           pointer-events: none;
@@ -406,7 +426,7 @@ export const LoadingCover = () => {
             writing-mode: horizontal-tb; /* Horizontal text */
             text-orientation: mixed;
             transform: none;
-            background: linear-gradient(to top, rgba(251, 251, 70, 0.9) 0%, rgba(251, 251, 70, 0.5) 40%, rgba(202, 138, 4, 0.15) 80%, transparent 100%);
+            background: rgba(251, 251, 70, 0.85);
             -webkit-background-clip: text;
             background-clip: text;
           }
@@ -423,8 +443,8 @@ export const LoadingCover = () => {
           .progress-fill {
             width: var(--progress); /* Horizontal growth */
             height: 100%;
-            background: linear-gradient(90deg, #FBFB46 0%, #FBFB46 100%);
-            transition: width 0.15s ease-out;
+            background: #FBFB46;
+            transition: width 0.08s linear;
           }
 
           /* Progress Info follows horizontal bar */
