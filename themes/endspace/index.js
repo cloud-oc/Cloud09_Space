@@ -372,10 +372,10 @@ const LayoutCategoryIndex = (props) => {
               passHref
               legacyBehavior
             >
-              <div className="ef-btn group">
+              <a className="ef-btn group">
                 <span className="ef-btn-indicator"></span>
                 <span className="ef-btn-text">{category.name}</span>
-              </div>
+              </a>
             </SmartLink>
           ))}
         </div>
@@ -405,10 +405,10 @@ const LayoutTagIndex = (props) => {
               passHref
               legacyBehavior
             >
-              <div className="ef-btn group">
+              <a className="ef-btn group">
                 <span className="ef-btn-indicator"></span>
                 <span className="ef-btn-text">#{tag.name}</span>
-              </div>
+              </a>
             </SmartLink>
           ))}
         </div>

@@ -814,57 +814,62 @@ export const Style = () => {
       /* ============================================
          Endfield Unified Button Styles
          ============================================ */
+      /* ============================================
+         Endfield Unified Button Styles (High Priority)
+         ============================================ */
       .ef-btn {
-        display: inline-flex;
+        display: inline-flex !important;
         align-items: center;
-        gap: 0.875rem; /* Space between indicator and text */
+        gap: 0.75rem; /* Space between indicator and text */
         padding: 0.5rem 1rem 0.5rem 0.75rem;
-        background-color: #52525B; /* Normal: Lighter Grey */
+        background-color: #3F3F46 !important; /* Normal: Dark Grey matching screenshot */
         border-radius: 1px;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         width: fit-content;
         min-width: min-content;
-        border: 1px solid transparent; /* Prevent layout shift if border added later */
+        border: 1px solid transparent; 
+        text-decoration: none !important; /* Remove default link underline */
+        position: relative;
+        z-index: 10;
       }
       
       .ef-btn:hover {
-        background-color: #27272A; /* Hover: Darker Grey */
+        background-color: #27272A !important; /* Hover: Darker Grey */
         border-radius: 3px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transform: translateY(-1px);
       }
       
-      /* Indicator Element: Morphs from Rectangle to Triangle */
+      /* Indicator Element */
       .ef-btn-indicator {
         display: block;
         width: 4px;
         height: 18px;
         background-color: #FBFB45; /* Yellow */
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        /* Rectangle shape */
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); /* Rectangle */
       }
       
       .ef-btn:hover .ef-btn-indicator {
         width: 12px;
         height: 12px;
-        /* Triangle shape (Play icon) */
-        clip-path: polygon(0 0, 100% 50%, 0 100%);
-        background-color: #FBFB45; /* Ensure color stays yellow */
+        background-color: #FBFB45;
+        clip-path: polygon(0 0, 100% 50%, 0 100%); /* Triangle */
       }
       
       /* Text Styles */
       .ef-btn-text {
-        color: #e4e4e7;
+        color: #e4e4e7 !important;
         font-weight: 600;
         font-size: 0.95rem;
-        letter-spacing: 0.02em;
+        letter-spacing: 0.05em;
         white-space: nowrap;
         transition: color 0.3s ease;
       }
       
       .ef-btn:hover .ef-btn-text {
-        color: #ffffff;
+        color: #ffffff !important;
       }
     `}</style>
   )
