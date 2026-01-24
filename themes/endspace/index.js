@@ -62,9 +62,24 @@ const LayoutBase = (props) => {
     >
       <Style />
 
-      {/* Nest Animation Support */}
+      {/* Nest Animation Support - Container for nest.js canvas */}
       {siteConfig('NEST') && (
-        <div id="__nest" style={{ position: 'fixed', top: 0, left: 0, width: 0, height: 0, opacity: 0, zIndex: -1 }} />
+        <div 
+          id="__nest" 
+          zindex="-1"
+          opacity="0.5"
+          color="100,100,100"
+          count="99"
+          style={{ 
+            position: 'fixed', 
+            top: 0, 
+            left: 0, 
+            width: '100vw', 
+            height: '100vh', 
+            pointerEvents: 'none',
+            zIndex: 0 
+          }} 
+        />
       )}
 
       {/* Loading animation */}
