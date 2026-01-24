@@ -62,6 +62,11 @@ const LayoutBase = (props) => {
     >
       <Style />
 
+      {/* Nest Animation Support */}
+      {siteConfig('NEST') && (
+        <div id="__nest" style={{ position: 'fixed', top: 0, left: 0, width: 0, height: 0, opacity: 0, zIndex: -1 }} />
+      )}
+
       {/* Loading animation */}
       {LOADING_COVER && <LoadingCover />}
 
