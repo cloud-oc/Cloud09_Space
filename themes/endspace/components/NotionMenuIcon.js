@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 const EMOJI_PATTERN =
   /[\u{1F300}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1F018}-\u{1F270}]/u
 
@@ -34,6 +36,12 @@ const isNotionBuiltinIcon = icon => {
 
 export default function NotionMenuIcon({ icon, className = '' }) {
   const resolvedIcon = resolveIcon(icon)
+  const [imageFailed, setImageFailed] = useState(false)
+
+  useEffect(() => {
+    setImageFailed(false)
+  }, [resolvedIcon])
+
   const fallback = (
     <span
       className={`endspace-notion-menu-dot inline-block h-2.5 w-2.5 rounded-full bg-black ${className}`}
@@ -48,26 +56,19 @@ export default function NotionMenuIcon({ icon, className = '' }) {
   }
 
   if (isUrlIcon(resolvedIcon) && !isEmojiIcon(resolvedIcon)) {
+    if (imageFailed) return fallback
+
     const iconSrc = getIconSrc(resolvedIcon)
     return (
-      <>
-        <img
-          src={iconSrc}
-          alt=""
-          className={`endspace-notion-menu-image ${
-            isNotionBuiltinIcon(resolvedIcon) ? 'endspace-notion-menu-image-monochrome' : ''
-          } ${className}`}
-          aria-hidden="true"
-        onError={event => {
-          event.currentTarget.style.display = 'none'
-          const fallbackNode = event.currentTarget.nextElementSibling
-          if (fallbackNode) fallbackNode.style.display = 'inline-flex'
-          }}
-        />
-        <span className="endspace-notion-menu-fallback">
-          {fallback}
-        </span>
-      </>
+      <img
+        src={iconSrc}
+        alt=""
+        className={`endspace-notion-menu-image ${
+          isNotionBuiltinIcon(resolvedIcon) ? 'endspace-notion-menu-image-monochrome' : ''
+        } ${className}`}
+        aria-hidden="true"
+        onError={() => setImageFailed(true)}
+      />
     )
   }
 

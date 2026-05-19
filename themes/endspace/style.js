@@ -855,13 +855,8 @@ export const Style = () => {
       }
 
       .endspace-notion-menu-image-monochrome {
-        filter: brightness(0) saturate(100%);
-      }
-
-      .endspace-notion-menu-fallback {
-        display: none;
-        align-items: center;
-        justify-content: center;
+        filter: brightness(0) saturate(100%) !important;
+        opacity: 1 !important;
       }
 
       .endspace-notion-menu-dot {
