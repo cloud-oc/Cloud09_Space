@@ -203,26 +203,26 @@ export const SideNav = (props) => {
       {/* BOTTOM SECTION - Tools & Config */}
       {/* Music Player, Contact, and Toggle */}
       <div className="flex-shrink-0 flex flex-col justify-end h-auto pb-4">
-        <div className={`mx-auto transition-all duration-300 ${isHovered ? 'w-[13.5rem]' : 'w-[3rem]'}`}>
-          <div className={`bg-gray-100/95 border border-gray-200 shadow-sm transition-all duration-300 ${isHovered ? 'rounded-[1.25rem] px-3 py-3' : 'rounded-full px-1 py-2'}`}>
+        <div className={`mx-auto transition-[width] duration-300 ease-out ${isHovered ? 'w-[13.5rem]' : 'w-[3rem]'}`}>
+          <div className="h-[6.75rem] overflow-hidden rounded-full border border-gray-200 bg-gray-100/95 px-1 py-2 shadow-sm transition-none">
             {/* Music Player Section */}
-            <div className={isHovered ? 'pb-3' : 'flex justify-center'}>
+            <div className="flex h-10 items-center justify-center overflow-hidden">
               <EndspacePlayer isExpanded={isHovered} embedded />
             </div>
 
-            <div className={`bg-gray-300/80 transition-all duration-300 ${isHovered ? 'h-px w-full' : 'mx-auto my-2 h-px w-5'}`} />
+            <div className={`mx-auto my-2 h-px bg-gray-300/80 transition-[width] duration-300 ease-out ${isHovered ? 'w-[calc(100%-1rem)]' : 'w-5'}`} />
 
             {/* Contact Links Section */}
-            <div className={isHovered ? 'pt-3' : 'flex justify-center'}>
+            <div className="flex h-10 items-center justify-center overflow-hidden">
               {/* Collapsed State: Contact Button */}
-              <div className={`flex justify-center transition-all duration-300 ${isHovered ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
+              <div className={`flex justify-center transition-opacity duration-150 ${isHovered ? 'pointer-events-none absolute opacity-0' : 'opacity-100'}`}>
                 <div className="w-10 h-10 flex items-center justify-center text-gray-500 rounded-full cursor-pointer hover:text-black hover:bg-gray-200 transition-colors">
                   <RadarFillIcon size={18} />
                 </div>
               </div>
 
               {/* Expanded State: Horizontal Icon Row */}
-              <div className={`transition-all duration-300 ${isHovered ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+              <div className={`transition-opacity duration-150 ${isHovered ? 'opacity-100' : 'pointer-events-none absolute opacity-0'}`}>
                 <div className="flex items-center justify-center gap-1.5 flex-nowrap">
                   {CONTACT_EMAIL && (
                     <a

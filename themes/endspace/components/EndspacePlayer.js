@@ -211,6 +211,54 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
   }
 
   // Expanded State: Compact player with album cover as play button
+  if (embedded) {
+    return (
+      <div className="endspace-player-full relative flex h-10 items-center gap-2 overflow-hidden px-1">
+        <button
+          type="button"
+          className={`relative flex h-8 w-8 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-white/70 text-[var(--endspace-text-muted)] transition-colors hover:bg-gray-200 hover:text-black ${isPlaying ? 'endspace-player-glow' : ''}`}
+          onClick={togglePlay}
+          title={isPlaying ? 'Pause' : 'Play'}
+        >
+          {isPlaying ? (
+            <IconPlayerPause size={14} stroke={2} />
+          ) : (
+            <IconPlayerPlay size={14} stroke={2} className="ml-0.5" />
+          )}
+        </button>
+
+        <div className="min-w-0 flex-1">
+          <div className="truncate text-xs font-bold leading-tight text-[var(--endspace-text-primary)]">
+            {currentAudio.name || 'Unknown Track'}
+          </div>
+          <div className="mt-1 h-1 overflow-hidden rounded-full bg-gray-200" onClick={handleProgressClick}>
+            <div
+              className="h-full bg-[var(--endspace-accent-yellow)] transition-all duration-200"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-shrink-0 items-center gap-0.5">
+          <button
+            onClick={playPrev}
+            className="flex h-6 w-6 items-center justify-center rounded-full text-[var(--endspace-text-muted)] transition-colors hover:bg-gray-200 hover:text-black"
+            title="Previous"
+          >
+            <IconPlayerTrackPrev size={11} stroke={1.5} />
+          </button>
+          <button
+            onClick={playNext}
+            className="flex h-6 w-6 items-center justify-center rounded-full text-[var(--endspace-text-muted)] transition-colors hover:bg-gray-200 hover:text-black"
+            title="Next"
+          >
+            <IconPlayerTrackNext size={11} stroke={1.5} />
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="endspace-player-full px-3 py-3 relative">
       {/* Main Content Row */}
