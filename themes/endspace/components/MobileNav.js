@@ -93,14 +93,12 @@ export const MobileNav = (props) => {
 
   // Render icon component
   const renderIcon = (item) => {
-    if (item.pageIcon) {
-      return (
-        <span className="inline-flex items-center justify-center">
-          <NotionMenuIcon icon={item.pageIcon} />
-        </span>
-      )
-    }
-    return <NotionMenuIcon icon={item.customIcon} className="w-6 text-center" />
+    const icon = item.pageIcon || item.customIcon || ''
+    return (
+      <span className="inline-flex h-6 w-6 items-center justify-center">
+        <NotionMenuIcon icon={icon} />
+      </span>
+    )
   }
 
   // Render social icon

@@ -15,6 +15,14 @@ const getIconSrc = icon =>
     ? `https://www.notion.so${icon}`
     : icon
 
+const resolveIcon = icon => {
+  if (!icon || typeof icon !== 'object') return icon
+  if (icon.type === 'emoji') return icon.emoji
+  if (icon.type === 'external') return icon.external?.url || ''
+  if (icon.type === 'file') return icon.file?.url || ''
+  return icon.url || icon.src || icon.emoji || ''
+}
+
 const isNotionBuiltinIcon = icon => {
   if (typeof icon !== 'string') return false
   return (
@@ -25,35 +33,29 @@ const isNotionBuiltinIcon = icon => {
 }
 
 export default function NotionMenuIcon({ icon, className = '' }) {
+  const resolvedIcon = resolveIcon(icon)
   const fallback = (
     <span
-      className="endspace-notion-menu-dot"
+      className={`endspace-notion-menu-dot inline-block h-2.5 w-2.5 rounded-full bg-black ${className}`}
       aria-hidden="true"
     />
   )
 
-  if (!icon) return fallback
+  if (!resolvedIcon) return fallback
 
-  if (isClassIcon(icon)) {
-    return (
-      <span className={`endspace-notion-menu-class ${className}`}>
-        <i className={icon} aria-hidden="true" />
-        <span className="endspace-notion-menu-class-fallback">
-          {fallback}
-        </span>
-      </span>
-    )
+  if (isClassIcon(resolvedIcon)) {
+    return fallback
   }
 
-  if (isUrlIcon(icon) && !isEmojiIcon(icon)) {
-    const iconSrc = getIconSrc(icon)
+  if (isUrlIcon(resolvedIcon) && !isEmojiIcon(resolvedIcon)) {
+    const iconSrc = getIconSrc(resolvedIcon)
     return (
       <>
         <img
           src={iconSrc}
           alt=""
           className={`endspace-notion-menu-image ${
-            isNotionBuiltinIcon(icon) ? 'endspace-notion-menu-image-monochrome' : ''
+            isNotionBuiltinIcon(resolvedIcon) ? 'endspace-notion-menu-image-monochrome' : ''
           } ${className}`}
           aria-hidden="true"
         onError={event => {
@@ -71,7 +73,7 @@ export default function NotionMenuIcon({ icon, className = '' }) {
 
   return (
     <span className={`endspace-notion-menu-emoji ${className}`}>
-      {icon}
+      {resolvedIcon}
     </span>
   )
 }

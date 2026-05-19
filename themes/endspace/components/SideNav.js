@@ -115,20 +115,13 @@ export const SideNav = (props) => {
 
   // Render icon component
   const renderIcon = (item, isActive) => {
-    if (item.pageIcon) {
-      return (
-        <span
-          className={`inline-flex items-center justify-center transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
-        >
-          <NotionMenuIcon icon={item.pageIcon} />
-        </span>
-      )
-    }
+    const icon = item.pageIcon || item.customIcon || ''
     return (
-      <NotionMenuIcon
-        icon={item.customIcon}
-        className={`transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
-      />
+      <span
+        className={`inline-flex h-5 w-5 items-center justify-center transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
+      >
+        <NotionMenuIcon icon={icon} />
+      </span>
     )
   }
 

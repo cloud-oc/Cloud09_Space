@@ -864,28 +864,6 @@ export const Style = () => {
         justify-content: center;
       }
 
-      .endspace-notion-menu-class {
-        display: inline-flex;
-        width: 1.25rem;
-        height: 1.25rem;
-        align-items: center;
-        justify-content: center;
-        color: #000;
-      }
-
-      .endspace-notion-menu-class i {
-        display: none;
-        color: #000;
-        font-size: 1.1rem;
-        line-height: 1;
-      }
-
-      .endspace-notion-menu-class-fallback {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-      }
-
       .endspace-notion-menu-dot {
         display: inline-flex;
         width: 0.55rem;
