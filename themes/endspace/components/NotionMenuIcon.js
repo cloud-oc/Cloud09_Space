@@ -29,24 +29,26 @@ export default function NotionMenuIcon({
 
   if (isUrlIcon(icon) && !isEmojiIcon(icon)) {
     return (
-      <img
-        src={icon}
-        alt=""
-        className={`endspace-notion-menu-image ${
-          isNotionBuiltinIcon(icon) ? 'endspace-notion-menu-image-monochrome' : ''
-        } ${className}`}
-        aria-hidden="true"
-        onError={event => {
-          event.currentTarget.style.display = 'none'
-          const fallbackNode = event.currentTarget.nextElementSibling
-          if (fallbackNode) fallbackNode.style.display = 'inline-flex'
-        }}
-      />
-      {fallback && (
-        <span className="endspace-notion-menu-fallback">
-          {fallback}
-        </span>
-      )}
+      <>
+        <img
+          src={icon}
+          alt=""
+          className={`endspace-notion-menu-image ${
+            isNotionBuiltinIcon(icon) ? 'endspace-notion-menu-image-monochrome' : ''
+          } ${className}`}
+          aria-hidden="true"
+          onError={event => {
+            event.currentTarget.style.display = 'none'
+            const fallbackNode = event.currentTarget.nextElementSibling
+            if (fallbackNode) fallbackNode.style.display = 'inline-flex'
+          }}
+        />
+        {fallback && (
+          <span className="endspace-notion-menu-fallback">
+            {fallback}
+          </span>
+        )}
+      </>
     )
   }
 
