@@ -124,15 +124,9 @@ export const SideNav = (props) => {
         </span>
       )
     }
-    if (item.customIcon) {
-      return (
-        <i
-          className={`${item.customIcon} text-[1.1rem] transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
-        />
-      )
-    }
     return (
       <NotionMenuIcon
+        icon={item.customIcon}
         className={`transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
       />
     )

@@ -377,11 +377,12 @@ const LayoutArchive = (props) => {
         </section>
 
         <section className="archive-section">
-          <div className="endspace-archive-heading tech-text tracking-wider">
-            <span className="endspace-archive-heading-title text-5xl font-black">CATEGORIES</span>
+          <div className="flex items-end gap-3 mb-8 pb-2 border-b border-[var(--endspace-border-base)] relative tech-text tracking-wider">
+            <span className="endspace-archive-heading-title text-5xl font-black z-10 relative">CATEGORIES</span>
             <span className="endspace-section-meta">
               // {categoryOptions.length}_CATEGORY_NODES
             </span>
+            <div className="flex-1" />
           </div>
           <div id="archive-category-list" className="flex flex-wrap gap-3">
             {categoryOptions?.map((category) => (
@@ -404,11 +405,12 @@ const LayoutArchive = (props) => {
         </section>
 
         <section className="archive-section">
-          <div className="endspace-archive-heading tech-text tracking-wider">
-            <span className="endspace-archive-heading-title text-5xl font-black">TAGS</span>
+          <div className="flex items-end gap-3 mb-8 pb-2 border-b border-[var(--endspace-border-base)] relative tech-text tracking-wider">
+            <span className="endspace-archive-heading-title text-5xl font-black z-10 relative">TAGS</span>
             <span className="endspace-section-meta">
               // {tagOptions.length}_TAG_MARKERS
             </span>
+            <div className="flex-1" />
           </div>
           <div id="archive-tags-list" className="flex flex-wrap gap-3">
             {tagOptions.map((tag) => (

@@ -6,6 +6,9 @@ const isUrlIcon = icon =>
   (icon.startsWith('http') || icon.startsWith('data:') || icon.startsWith('/'))
 
 const isEmojiIcon = icon => typeof icon === 'string' && EMOJI_PATTERN.test(icon)
+const isClassIcon = icon =>
+  typeof icon === 'string' &&
+  /(^|\s)(fa[srldb]?|fa-|iconfont|ri-|remixicon)/.test(icon.trim())
 
 const getIconSrc = icon =>
   typeof icon === 'string' && icon.startsWith('/icons/')
@@ -24,12 +27,23 @@ const isNotionBuiltinIcon = icon => {
 export default function NotionMenuIcon({ icon, className = '' }) {
   const fallback = (
     <span
-      className={`endspace-notion-menu-dot ${className}`}
+      className="endspace-notion-menu-dot"
       aria-hidden="true"
     />
   )
 
   if (!icon) return fallback
+
+  if (isClassIcon(icon)) {
+    return (
+      <span className={`endspace-notion-menu-class ${className}`}>
+        <i className={icon} aria-hidden="true" />
+        <span className="endspace-notion-menu-class-fallback">
+          {fallback}
+        </span>
+      </span>
+    )
+  }
 
   if (isUrlIcon(icon) && !isEmojiIcon(icon)) {
     const iconSrc = getIconSrc(icon)

@@ -100,10 +100,7 @@ export const MobileNav = (props) => {
         </span>
       )
     }
-    if (item.customIcon) {
-      return <i className={`${item.customIcon} w-6 text-center`} />
-    }
-    return <NotionMenuIcon className="w-6 text-center" />
+    return <NotionMenuIcon icon={item.customIcon} className="w-6 text-center" />
   }
 
   // Render social icon
