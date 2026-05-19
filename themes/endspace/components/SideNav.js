@@ -136,11 +136,12 @@ export const SideNav = (props) => {
   // Render icon component
   const renderIcon = (item, isActive) => {
     if (item.pageIcon) {
+      const FallbackIcon = IconComponents[item.fallbackIcon] || IconComponents.Default
       return (
         <span
           className={`inline-flex items-center justify-center transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
         >
-          <NotionMenuIcon icon={item.pageIcon} />
+          <NotionMenuIcon icon={item.pageIcon} fallbackIcon={FallbackIcon} />
         </span>
       )
     }

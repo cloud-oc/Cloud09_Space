@@ -146,26 +146,16 @@ export const Style = () => {
         display: flex;
         align-items: flex-end;
         gap: 0.75rem;
-        margin-bottom: 2rem;
+        width: 100%;
+        margin-bottom: 1.5rem;
         padding-bottom: 0.5rem;
-        border-bottom: 1px solid var(--endspace-border-base);
-      }
-
-      .endspace-archive-heading-watermark {
-        color: var(--endspace-text-muted);
-        opacity: 0.2;
-        position: absolute;
-        top: -1rem;
-        left: -0.5rem;
-        z-index: 0;
-        user-select: none;
+        border-bottom: 1px solid var(--endspace-border-base) !important;
       }
 
       .endspace-archive-heading-title {
         color: #E8E8EA !important;
         position: relative;
         z-index: 10;
-        padding-left: 0.5rem;
       }
 
       @media (max-width: 767px) {
@@ -857,27 +847,21 @@ export const Style = () => {
         color: var(--endspace-text-primary) !important;
       }
 
-      .endspace-notion-menu-icon {
-        display: inline-block;
-        width: 1.25rem;
-        height: 1.25rem;
-      }
-
-      .endspace-notion-menu-icon-mask {
-        background-color: currentColor;
-        mask-position: center;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        -webkit-mask-position: center;
-        -webkit-mask-repeat: no-repeat;
-        -webkit-mask-size: contain;
-      }
-
       .endspace-notion-menu-image {
         display: inline-block;
         width: 1.25rem;
         height: 1.25rem;
         object-fit: contain;
+      }
+
+      .endspace-notion-menu-image-monochrome {
+        filter: brightness(0) saturate(100%);
+      }
+
+      .endspace-notion-menu-fallback {
+        display: none;
+        align-items: center;
+        justify-content: center;
       }
 
       .endspace-notion-menu-emoji {
@@ -914,11 +898,6 @@ export const Style = () => {
         stroke: currentColor;
       }
 
-      #theme-endspace .endspace-menu-icon-wrap .endspace-notion-menu-icon-mask {
-        color: #000 !important;
-        background-color: #000 !important;
-      }
-      
       /* Removed specific active override to keep consistent grey background */
       
       /* Also update the base hover/active shared rule to use this darker grey */

@@ -114,9 +114,10 @@ export const MobileNav = (props) => {
   // Render icon component
   const renderIcon = (item) => {
     if (item.pageIcon) {
+      const FallbackIcon = IconComponents[item.fallbackIcon] || IconComponents.Default
       return (
         <span className="inline-flex items-center justify-center">
-          <NotionMenuIcon icon={item.pageIcon} />
+          <NotionMenuIcon icon={item.pageIcon} fallbackIcon={FallbackIcon} />
         </span>
       )
     }

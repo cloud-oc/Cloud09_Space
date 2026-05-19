@@ -16,29 +16,37 @@ const isNotionBuiltinIcon = icon => {
   )
 }
 
-export default function NotionMenuIcon({ icon, className = '' }) {
-  if (!icon) return null
+export default function NotionMenuIcon({
+  icon,
+  fallbackIcon: FallbackIcon,
+  className = ''
+}) {
+  const fallback = FallbackIcon ? (
+    <FallbackIcon size={20} stroke={1.5} className={className} />
+  ) : null
 
-  if (isNotionBuiltinIcon(icon) && !isEmojiIcon(icon)) {
-    return (
-      <span
-        className={`endspace-notion-menu-icon endspace-notion-menu-icon-mask ${className}`}
-        style={{
-          WebkitMaskImage: `url("${icon}")`,
-          maskImage: `url("${icon}")`
-        }}
-      />
-    )
-  }
+  if (!icon) return fallback
 
   if (isUrlIcon(icon) && !isEmojiIcon(icon)) {
     return (
       <img
         src={icon}
         alt=""
-        className={`endspace-notion-menu-image ${className}`}
+        className={`endspace-notion-menu-image ${
+          isNotionBuiltinIcon(icon) ? 'endspace-notion-menu-image-monochrome' : ''
+        } ${className}`}
         aria-hidden="true"
+        onError={event => {
+          event.currentTarget.style.display = 'none'
+          const fallbackNode = event.currentTarget.nextElementSibling
+          if (fallbackNode) fallbackNode.style.display = 'inline-flex'
+        }}
       />
+      {fallback && (
+        <span className="endspace-notion-menu-fallback">
+          {fallback}
+        </span>
+      )}
     )
   }
 
