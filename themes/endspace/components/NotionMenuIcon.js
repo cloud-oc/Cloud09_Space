@@ -34,7 +34,7 @@ const isNotionBuiltinIcon = icon => {
   )
 }
 
-export default function NotionMenuIcon({ icon, className = '' }) {
+export default function NotionMenuIcon({ icon, active = false, className = '' }) {
   const resolvedIcon = resolveIcon(icon)
   const [imageFailed, setImageFailed] = useState(false)
 
@@ -44,7 +44,7 @@ export default function NotionMenuIcon({ icon, className = '' }) {
 
   const fallback = (
     <span
-      className={`endspace-notion-menu-dot inline-block h-2.5 w-2.5 rounded-full bg-black ${className}`}
+      className={`endspace-notion-menu-dot inline-block h-2.5 w-2.5 rounded-full ${active ? 'is-active' : ''} ${className}`}
       aria-hidden="true"
     />
   )
@@ -63,7 +63,7 @@ export default function NotionMenuIcon({ icon, className = '' }) {
       <img
         src={iconSrc}
         alt=""
-        className={`endspace-notion-menu-image ${
+        className={`endspace-notion-menu-image ${active ? 'is-active' : ''} ${
           isNotionBuiltinIcon(resolvedIcon) ? 'endspace-notion-menu-image-monochrome' : ''
         } ${className}`}
         aria-hidden="true"
@@ -73,7 +73,7 @@ export default function NotionMenuIcon({ icon, className = '' }) {
   }
 
   return (
-    <span className={`endspace-notion-menu-emoji ${className}`}>
+    <span className={`endspace-notion-menu-emoji ${active ? 'is-active' : ''} ${className}`}>
       {resolvedIcon}
     </span>
   )

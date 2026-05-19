@@ -120,7 +120,7 @@ export const SideNav = (props) => {
       <span
         className={`inline-flex h-5 w-5 items-center justify-center transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
       >
-        <NotionMenuIcon icon={icon} />
+        <NotionMenuIcon icon={icon} active={isActive} />
       </span>
     )
   }

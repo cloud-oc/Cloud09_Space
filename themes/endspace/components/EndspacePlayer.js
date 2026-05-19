@@ -347,17 +347,24 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
                 key={index}
                 type="button"
                 onClick={() => selectTrack(index)}
-                className={`flex w-full items-center gap-1.5 rounded-lg px-2 py-1.5 text-left text-[10px] transition-colors ${
+                className={`flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left transition-colors ${
                   index === currentTrack
                     ? 'bg-black text-white'
                     : 'text-[var(--endspace-text-secondary)] hover:bg-gray-200 hover:text-black'
                 }`}
               >
-                <span className="w-3 flex-shrink-0 text-center font-mono text-[9px]">
+                <span className="w-3 flex-shrink-0 text-center font-mono text-[9px] leading-none">
                   {index + 1}
                 </span>
-                <span className="truncate">
-                  {audio.name}
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-[10px] font-semibold leading-tight">
+                    {audio.name}
+                  </span>
+                  <span className={`block truncate text-[9px] leading-tight ${
+                    index === currentTrack ? 'text-white/70' : 'text-[var(--endspace-text-muted)]'
+                  }`}>
+                    {audio.artist || 'Unknown Artist'}
+                  </span>
                 </span>
               </button>
             ))}
@@ -367,15 +374,11 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
         <div className="flex min-w-0 flex-1 items-center gap-2">
           <button
             type="button"
-            className={`relative flex h-8 w-8 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-white/70 text-[var(--endspace-text-muted)] transition-colors hover:bg-gray-200 hover:text-black ${isPlaying ? 'endspace-player-glow' : ''}`}
-            onClick={togglePlay}
-            title={isPlaying ? 'Pause' : 'Play'}
+            onClick={(e) => { e.stopPropagation(); setShowPlaylist(!showPlaylist) }}
+            className={`relative flex h-8 w-8 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-white/70 transition-colors hover:bg-gray-200 hover:text-black ${showPlaylist ? 'text-black' : 'text-[var(--endspace-text-muted)]'}`}
+            title="Playlist"
           >
-            {isPlaying ? (
-              <IconPlayerPause size={14} stroke={2} />
-            ) : (
-              <IconPlayerPlay size={14} stroke={2} className="ml-0.5" />
-            )}
+            <IconList size={14} stroke={1.5} />
           </button>
 
           <div className="min-w-0 flex-1">
@@ -393,27 +396,32 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
             </div>
           </div>
 
-          <div className="flex flex-shrink-0 items-center gap-0.5">
-            <button
-              onClick={(e) => { e.stopPropagation(); setShowPlaylist(!showPlaylist) }}
-              className={`flex h-6 w-6 items-center justify-center rounded-full transition-colors ${showPlaylist ? 'bg-black text-white' : 'text-[var(--endspace-text-muted)] hover:bg-gray-200 hover:text-black'}`}
-              title="Playlist"
-            >
-              <IconList size={12} stroke={1.5} />
-            </button>
+          <div className="relative h-9 w-11 flex-shrink-0 rounded-[1rem] bg-white/70 text-[var(--endspace-text-muted)]">
             <button
               onClick={playPrev}
-              className="flex h-6 w-6 items-center justify-center rounded-full text-[var(--endspace-text-muted)] transition-colors hover:bg-gray-200 hover:text-black"
+              className="absolute bottom-1.5 left-1 flex h-5 w-5 items-center justify-center rounded-full transition-colors hover:bg-gray-200 hover:text-black"
               title="Previous"
             >
-              <IconPlayerTrackPrev size={11} stroke={1.5} />
+              <IconPlayerTrackPrev size={10} stroke={1.5} />
+            </button>
+            <button
+              type="button"
+              className={`absolute left-1/2 top-0.5 flex h-5 w-5 -translate-x-1/2 items-center justify-center rounded-full transition-colors hover:bg-gray-200 hover:text-black ${isPlaying ? 'text-black' : ''}`}
+              onClick={togglePlay}
+              title={isPlaying ? 'Pause' : 'Play'}
+            >
+              {isPlaying ? (
+                <IconPlayerPause size={10} stroke={2} />
+              ) : (
+                <IconPlayerPlay size={10} stroke={2} className="ml-0.5" />
+              )}
             </button>
             <button
               onClick={playNext}
-              className="flex h-6 w-6 items-center justify-center rounded-full text-[var(--endspace-text-muted)] transition-colors hover:bg-gray-200 hover:text-black"
+              className="absolute bottom-1.5 right-1 flex h-5 w-5 items-center justify-center rounded-full transition-colors hover:bg-gray-200 hover:text-black"
               title="Next"
             >
-              <IconPlayerTrackNext size={11} stroke={1.5} />
+              <IconPlayerTrackNext size={10} stroke={1.5} />
             </button>
           </div>
         </div>

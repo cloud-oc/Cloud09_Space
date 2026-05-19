@@ -852,9 +852,17 @@ export const Style = () => {
         width: 1.25rem;
         height: 1.25rem;
         object-fit: contain;
+        opacity: 0.68;
+        filter: grayscale(1) brightness(0.45);
+        transition: filter 0.2s ease, opacity 0.2s ease;
       }
 
       .endspace-notion-menu-image-monochrome {
+        filter: grayscale(1) brightness(0.45);
+      }
+
+      .endspace-notion-menu-image.is-active,
+      .nier-nav-item:hover .endspace-notion-menu-image {
         filter: brightness(0) saturate(100%) !important;
         opacity: 1 !important;
       }
@@ -864,8 +872,14 @@ export const Style = () => {
         width: 0.55rem;
         height: 0.55rem;
         border-radius: 9999px;
-        background: #000;
+        background: #666;
         flex: 0 0 auto;
+        transition: background-color 0.2s ease;
+      }
+
+      .endspace-notion-menu-dot.is-active,
+      .nier-nav-item:hover .endspace-notion-menu-dot {
+        background: #000;
       }
 
       .endspace-notion-menu-emoji {
@@ -875,6 +889,15 @@ export const Style = () => {
         width: 1.5rem;
         font-size: 1.15rem;
         line-height: 1;
+        filter: grayscale(1);
+        opacity: 0.68;
+        transition: filter 0.2s ease, opacity 0.2s ease;
+      }
+
+      .endspace-notion-menu-emoji.is-active,
+      .nier-nav-item:hover .endspace-notion-menu-emoji {
+        filter: none;
+        opacity: 1;
       }
       
       /* Hover State: Slide to full width */
@@ -897,9 +920,19 @@ export const Style = () => {
       #theme-endspace .endspace-menu-icon-wrap,
       #theme-endspace .endspace-menu-icon-wrap i,
       #theme-endspace .endspace-menu-icon-wrap svg {
-        color: #000 !important;
+        color: #666;
         fill: currentColor;
         stroke: currentColor;
+        transition: color 0.2s ease;
+      }
+
+      #theme-endspace .nier-nav-item.active .endspace-menu-icon-wrap,
+      #theme-endspace .nier-nav-item:hover .endspace-menu-icon-wrap,
+      #theme-endspace .nier-nav-item.active .endspace-menu-icon-wrap i,
+      #theme-endspace .nier-nav-item:hover .endspace-menu-icon-wrap i,
+      #theme-endspace .nier-nav-item.active .endspace-menu-icon-wrap svg,
+      #theme-endspace .nier-nav-item:hover .endspace-menu-icon-wrap svg {
+        color: #000 !important;
       }
 
       /* Removed specific active override to keep consistent grey background */
