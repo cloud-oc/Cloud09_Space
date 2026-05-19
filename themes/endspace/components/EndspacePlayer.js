@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { siteConfig } from '@/lib/config'
 import {
   IconPlayerPlay,
@@ -10,6 +10,200 @@ import {
   IconVolume,
 } from '@tabler/icons-react'
 
+let sharedAudio = null
+let sharedAudioList = []
+let sharedPlayOrder = 'list'
+let progressTimer = null
+let mediaGuardTimer = null
+let playRequestId = 0
+let sharedState = {
+  isPlaying: false,
+  currentTrack: 0,
+  progress: 0,
+  duration: 0,
+  currentTime: 0
+}
+const subscribers = new Set()
+
+const emitSharedState = (patch = {}) => {
+  sharedState = {
+    ...sharedState,
+    ...patch
+  }
+  subscribers.forEach(listener => listener(sharedState))
+}
+
+const getSharedAudio = () => {
+  if (typeof Audio === 'undefined') return null
+  if (sharedAudio) return sharedAudio
+
+  sharedAudio = new Audio()
+  sharedAudio.volume = 0.7
+  sharedAudio.setAttribute('data-endspace-player', 'true')
+  sharedAudio.addEventListener('ended', () => {
+    playSharedTrack(getNextTrackIndex(), true)
+  })
+  sharedAudio.addEventListener('loadedmetadata', () => {
+    emitSharedState({
+      duration: sharedAudio?.duration || 0
+    })
+  })
+  sharedAudio.addEventListener('play', () => {
+    emitSharedState({ isPlaying: true })
+    startProgressTimer()
+    startMediaGuard()
+  })
+  sharedAudio.addEventListener('pause', () => {
+    if (!sharedAudio?.ended) {
+      emitSharedState({ isPlaying: false })
+      stopProgressTimer()
+      stopMediaGuard()
+    }
+  })
+  sharedAudio.addEventListener('error', event => {
+    console.error('Audio load error:', event)
+  })
+  return sharedAudio
+}
+
+const subscribeSharedPlayer = listener => {
+  subscribers.add(listener)
+  listener(sharedState)
+  return () => {
+    subscribers.delete(listener)
+    if (subscribers.size === 0) {
+      pauseSharedPlayer()
+    }
+  }
+}
+
+const configureSharedPlayer = (audioList, playOrder) => {
+  sharedAudioList = Array.isArray(audioList) ? audioList : []
+  sharedPlayOrder = playOrder || 'list'
+  if (sharedState.currentTrack >= sharedAudioList.length) {
+    emitSharedState({ currentTrack: 0, progress: 0, currentTime: 0 })
+  }
+  getSharedAudio()
+}
+
+const getNextTrackIndex = () => {
+  if (sharedAudioList.length === 0) return 0
+  if (sharedPlayOrder === 'random') {
+    return Math.floor(Math.random() * sharedAudioList.length)
+  }
+  return (sharedState.currentTrack + 1) % sharedAudioList.length
+}
+
+const getPrevTrackIndex = () => {
+  if (sharedAudioList.length === 0) return 0
+  return (sharedState.currentTrack - 1 + sharedAudioList.length) % sharedAudioList.length
+}
+
+const updateProgressFromAudio = () => {
+  if (!sharedAudio) return
+  const current = sharedAudio.currentTime || 0
+  const total = sharedAudio.duration || 1
+  emitSharedState({
+    currentTime: current,
+    duration: sharedAudio.duration || 0,
+    progress: (current / total) * 100
+  })
+}
+
+const startProgressTimer = () => {
+  if (typeof window === 'undefined') return
+  stopProgressTimer()
+  updateProgressFromAudio()
+  progressTimer = window.setInterval(updateProgressFromAudio, 200)
+}
+
+const stopProgressTimer = () => {
+  if (!progressTimer) return
+  if (typeof window !== 'undefined') {
+    window.clearInterval(progressTimer)
+  }
+  progressTimer = null
+}
+
+const pauseOtherMedia = () => {
+  if (typeof document === 'undefined') return
+  document.querySelectorAll('audio, video').forEach(media => {
+    if (media !== sharedAudio && !media.paused) {
+      media.pause()
+    }
+  })
+}
+
+const startMediaGuard = () => {
+  if (typeof window === 'undefined') return
+  stopMediaGuard()
+  pauseOtherMedia()
+  mediaGuardTimer = window.setInterval(pauseOtherMedia, 800)
+}
+
+const stopMediaGuard = () => {
+  if (!mediaGuardTimer) return
+  if (typeof window !== 'undefined') {
+    window.clearInterval(mediaGuardTimer)
+  }
+  mediaGuardTimer = null
+}
+
+const playSharedAudio = async () => {
+  const audio = getSharedAudio()
+  if (!audio) return
+  pauseOtherMedia()
+  audio.muted = false
+  try {
+    await audio.play()
+  } catch (error) {
+    console.log('Play prevented:', error)
+    emitSharedState({ isPlaying: false })
+    stopProgressTimer()
+    stopMediaGuard()
+  }
+}
+
+const pauseSharedPlayer = () => {
+  if (sharedAudio) {
+    sharedAudio.pause()
+  }
+  emitSharedState({ isPlaying: false })
+  stopProgressTimer()
+  stopMediaGuard()
+}
+
+const playSharedTrack = (index, shouldPlay = sharedState.isPlaying) => {
+  if (sharedAudioList.length === 0) return
+  const safeIndex = (index + sharedAudioList.length) % sharedAudioList.length
+  const audioConfig = sharedAudioList[safeIndex]
+  const audio = getSharedAudio()
+  if (!audioConfig?.url || !audio) return
+
+  const requestId = ++playRequestId
+  audio.pause()
+  if (audio.src !== audioConfig.url) {
+    audio.src = audioConfig.url
+  }
+  audio.load()
+  emitSharedState({
+    currentTrack: safeIndex,
+    progress: 0,
+    currentTime: 0,
+    duration: 0,
+    isPlaying: shouldPlay
+  })
+
+  if (shouldPlay) {
+    if (typeof window === 'undefined') return
+    window.setTimeout(() => {
+      if (requestId === playRequestId) {
+        playSharedAudio()
+      }
+    }, 0)
+  }
+}
+
 /**
  * EndspacePlayer Component - Compact Sci-Fi Music Player for Endspace Theme
  * Integrates with widget.config.js settings
@@ -17,92 +211,24 @@ import {
  * Tabler Icons for Futuristic Feel
  */
 export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [currentTrack, setCurrentTrack] = useState(0)
-  const [progress, setProgress] = useState(0)
-  const [duration, setDuration] = useState(0)
-  const [currentTime, setCurrentTime] = useState(0)
+  const [playerState, setPlayerState] = useState(sharedState)
   const [showPlaylist, setShowPlaylist] = useState(false)
-  const audioRef = useRef(null)
-  const progressIntervalRef = useRef(null)
 
   // Get configuration from widget.config.js
   const musicPlayerEnabled = siteConfig('MUSIC_PLAYER')
   const playOrder = siteConfig('MUSIC_PLAYER_ORDER')
   const audioList = siteConfig('MUSIC_PLAYER_AUDIO_LIST') || []
 
-  // Don't render if disabled or no audio
-  if (!musicPlayerEnabled || audioList.length === 0) {
-    return null
-  }
-
+  const { isPlaying, currentTrack, progress, currentTime } = playerState
   const currentAudio = audioList[currentTrack] || {}
 
-  // Initialize audio element
   useEffect(() => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio()
-      audioRef.current.volume = 0.7
-      
-      audioRef.current.addEventListener('ended', handleTrackEnd)
-      audioRef.current.addEventListener('loadedmetadata', () => {
-        setDuration(audioRef.current.duration)
-      })
-      audioRef.current.addEventListener('error', (e) => {
-        console.error('Audio load error:', e)
-      })
+    if (!musicPlayerEnabled || audioList.length === 0) {
+      return undefined
     }
-
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause()
-        audioRef.current.removeEventListener('ended', handleTrackEnd)
-      }
-      if (progressIntervalRef.current) {
-        clearInterval(progressIntervalRef.current)
-      }
-    }
-  }, [])
-
-  // Load track when currentTrack changes
-  useEffect(() => {
-    if (audioRef.current && currentAudio.url) {
-      audioRef.current.src = currentAudio.url
-      audioRef.current.load()
-      setProgress(0)
-      setCurrentTime(0)
-      
-      // Only auto-play on track switch if currently playing
-      if (isPlaying) {
-        audioRef.current.play().catch(e => console.log('Autoplay prevented:', e))
-      }
-    }
-  }, [currentTrack, currentAudio.url, isPlaying])
-
-
-
-  // Progress update
-  useEffect(() => {
-    if (isPlaying) {
-      progressIntervalRef.current = setInterval(() => {
-        if (audioRef.current) {
-          const current = audioRef.current.currentTime
-          const total = audioRef.current.duration || 1
-          setCurrentTime(current)
-          setProgress((current / total) * 100)
-        }
-      }, 200)
-    } else {
-      if (progressIntervalRef.current) {
-        clearInterval(progressIntervalRef.current)
-      }
-    }
-    return () => {
-      if (progressIntervalRef.current) {
-        clearInterval(progressIntervalRef.current)
-      }
-    }
-  }, [isPlaying])
+    configureSharedPlayer(audioList, playOrder)
+    return subscribeSharedPlayer(setPlayerState)
+  }, [audioList, playOrder, musicPlayerEnabled])
 
   // Close playlist when sidebar collapses
   useEffect(() => {
@@ -111,62 +237,49 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
     }
   }, [isExpanded])
 
-  const handleTrackEnd = () => {
-    if (playOrder === 'random') {
-      const randomIndex = Math.floor(Math.random() * audioList.length)
-      setCurrentTrack(randomIndex)
-    } else {
-      setCurrentTrack((prev) => (prev + 1) % audioList.length)
-    }
+  // Don't render if disabled or no audio
+  if (!musicPlayerEnabled || audioList.length === 0) {
+    return null
   }
 
   const togglePlay = (e) => {
     e.stopPropagation()
-    if (!audioRef.current) return
-    
     if (isPlaying) {
-      audioRef.current.pause()
+      pauseSharedPlayer()
     } else {
-      audioRef.current.muted = false
-      audioRef.current.play().catch(e => console.log('Play prevented:', e))
+      const audio = getSharedAudio()
+      if (audio && !audio.src && currentAudio?.url) {
+        playSharedTrack(currentTrack, true)
+      } else {
+        emitSharedState({ isPlaying: true })
+        playSharedAudio()
+      }
     }
-    setIsPlaying(!isPlaying)
   }
 
   const playNext = (e) => {
     e?.stopPropagation()
-    if (playOrder === 'random') {
-      const randomIndex = Math.floor(Math.random() * audioList.length)
-      setCurrentTrack(randomIndex)
-    } else {
-      setCurrentTrack((prev) => (prev + 1) % audioList.length)
-    }
+    playSharedTrack(getNextTrackIndex(), isPlaying)
   }
 
   const playPrev = (e) => {
     e?.stopPropagation()
-    setCurrentTrack((prev) => (prev - 1 + audioList.length) % audioList.length)
+    playSharedTrack(getPrevTrackIndex(), isPlaying)
   }
 
   const selectTrack = (index) => {
-    setCurrentTrack(index)
     setShowPlaylist(false)
-    if (!isPlaying) {
-      setTimeout(() => {
-        if (audioRef.current) audioRef.current.muted = false
-        audioRef.current?.play().catch(e => console.log('Play prevented:', e))
-        setIsPlaying(true)
-      }, 100)
-    }
+    playSharedTrack(index, true)
   }
 
   const handleProgressClick = (e) => {
-    if (!audioRef.current || !audioRef.current.duration) return
+    const audio = getSharedAudio()
+    if (!audio || !audio.duration) return
     const rect = e.currentTarget.getBoundingClientRect()
     const clickX = e.clientX - rect.left
     const percentage = clickX / rect.width
-    audioRef.current.currentTime = percentage * audioRef.current.duration
-    setProgress(percentage * 100)
+    audio.currentTime = percentage * audio.duration
+    updateProgressFromAudio()
   }
 
   const formatTime = (seconds) => {
