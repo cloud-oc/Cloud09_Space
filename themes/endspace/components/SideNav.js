@@ -204,9 +204,9 @@ export const SideNav = (props) => {
       {/* Music Player, Contact, and Toggle */}
       <div className="flex-shrink-0 flex flex-col justify-end h-auto pb-4">
         <div className={`mx-auto transition-[width] duration-300 ease-out ${isHovered ? 'w-[13.5rem]' : 'w-[3rem]'}`}>
-          <div className="h-[6.75rem] overflow-hidden rounded-full border border-gray-200 bg-gray-100/95 px-1 py-2 shadow-sm transition-none">
+          <div className={`overflow-hidden border border-gray-200 bg-gray-100/95 shadow-sm transition-[border-radius] duration-200 ${isHovered ? 'h-[9.5rem] rounded-2xl px-2 py-2' : 'h-[6.75rem] rounded-full px-1 py-2'}`}>
             {/* Music Player Section */}
-            <div className="flex h-10 items-center justify-center overflow-hidden">
+            <div className={`flex items-center justify-center overflow-hidden ${isHovered ? 'h-[5.75rem]' : 'h-10'}`}>
               <EndspacePlayer isExpanded={isHovered} embedded />
             </div>
 
