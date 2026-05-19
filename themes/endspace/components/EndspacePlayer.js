@@ -16,6 +16,7 @@ let sharedPlayOrder = 'list'
 let progressTimer = null
 let mediaGuardTimer = null
 let playRequestId = 0
+let hasTriedAutoPlay = false
 let sharedState = {
   isPlaying: false,
   currentTrack: 0,
@@ -31,6 +32,12 @@ const emitSharedState = (patch = {}) => {
     ...patch
   }
   subscribers.forEach(listener => listener(sharedState))
+}
+
+const parseBoolean = value => {
+  if (typeof value === 'boolean') return value
+  if (typeof value === 'string') return value.toLowerCase() === 'true'
+  return Boolean(value)
 }
 
 const getSharedAudio = () => {
@@ -216,6 +223,7 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
 
   // Get configuration from widget.config.js
   const musicPlayerEnabled = siteConfig('MUSIC_PLAYER')
+  const autoPlay = parseBoolean(siteConfig('MUSIC_PLAYER_AUTO_PLAY'))
   const playOrder = siteConfig('MUSIC_PLAYER_ORDER')
   const audioList = siteConfig('MUSIC_PLAYER_AUDIO_LIST') || []
 
@@ -227,8 +235,12 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
       return undefined
     }
     configureSharedPlayer(audioList, playOrder)
+    if (autoPlay && !hasTriedAutoPlay) {
+      hasTriedAutoPlay = true
+      playSharedTrack(sharedState.currentTrack, true)
+    }
     return subscribeSharedPlayer(setPlayerState)
-  }, [audioList, playOrder, musicPlayerEnabled])
+  }, [audioList, playOrder, musicPlayerEnabled, autoPlay])
 
   // Close playlist when sidebar collapses
   useEffect(() => {
