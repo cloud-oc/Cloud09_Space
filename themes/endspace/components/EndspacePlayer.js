@@ -16,7 +16,7 @@ import {
  * Has two states: expanded (full info) and collapsed (rotating cover when playing)
  * Tabler Icons for Futuristic Feel
  */
-export const EndspacePlayer = ({ isExpanded }) => {
+export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTrack, setCurrentTrack] = useState(0)
   const [progress, setProgress] = useState(0)
@@ -179,7 +179,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
   // Collapsed State: Rotating cover when playing, music icon when not
   if (!isExpanded) {
     return (
-      <div className="endspace-player-mini flex justify-center py-2">
+      <div className={`endspace-player-mini flex justify-center ${embedded ? 'py-0' : 'py-2'}`}>
         <div 
           className={`relative w-10 h-10 cursor-pointer group flex items-center justify-center`}
           onClick={togglePlay}
@@ -201,7 +201,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
             </>
           ) : (
             // Not playing: Show music icon
-            <div className="w-full h-full rounded-lg flex items-center justify-center bg-[var(--endspace-bg-secondary)] text-[var(--endspace-text-muted)] hover:text-gray-600 hover:bg-gray-200 transition-all">
+            <div className={`w-full h-full flex items-center justify-center text-[var(--endspace-text-muted)] hover:text-gray-600 hover:bg-gray-200 transition-all ${embedded ? 'rounded-full bg-transparent' : 'rounded-lg bg-[var(--endspace-bg-secondary)]'}`}>
               <IconMusic size={18} stroke={1.5} />
             </div>
           )}

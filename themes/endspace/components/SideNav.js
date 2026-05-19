@@ -203,54 +203,57 @@ export const SideNav = (props) => {
       {/* BOTTOM SECTION - Tools & Config */}
       {/* Music Player, Contact, and Toggle */}
       <div className="flex-shrink-0 flex flex-col justify-end h-auto pb-4">
-        
-        {/* Music Player Section */}
-        <EndspacePlayer isExpanded={isHovered} />
-
-        {/* Contact Links Section */}
-        <div className="py-3 transition-all duration-300">
-          
-          {/* Collapsed State: Contact Button with light gray background */}
-          <div className={`flex justify-center transition-all duration-300 ${isHovered ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
-            <div className="w-[2.5rem] h-[2.5rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded-full cursor-pointer hover:text-white hover:bg-gray-600 transition-colors">
-              <RadarFillIcon size={18} />
+        <div className={`mx-auto transition-all duration-300 ${isHovered ? 'w-[13.5rem]' : 'w-[3rem]'}`}>
+          <div className={`bg-gray-100/95 border border-gray-200 shadow-sm transition-all duration-300 ${isHovered ? 'rounded-[1.25rem] px-3 py-3' : 'rounded-full px-1 py-2'}`}>
+            {/* Music Player Section */}
+            <div className={isHovered ? 'pb-3' : 'flex justify-center'}>
+              <EndspacePlayer isExpanded={isHovered} embedded />
             </div>
-          </div>
 
-          {/* Expanded State: Horizontal Icon Row - Single line */}
-          <div className={`px-3 transition-all duration-300 ${isHovered ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-              {/* Social Icons - Horizontal Layout, single row with light gray background */}
-              <div className="flex items-center justify-center gap-1.5 flex-nowrap">
-                {/* Email Icon */}
-                {CONTACT_EMAIL && (
-                  <a
-                    onClick={e =>
-                      handleEmailClick(e, emailIcon, CONTACT_EMAIL)
-                    }
-                    title='email'
-                    className='w-[1.75rem] h-[1.75rem] flex cursor-pointer items-center justify-center rounded-full bg-gray-200 text-gray-500 transition-colors hover:bg-gray-600 hover:text-white flex-shrink-0'
-                    ref={emailIcon}>
-                    <MailFillIcon size={14} />
-                  </a>
-                )}
-              
-              {/* Social Links */}
-              {socialLinks.map(({ key, svg, label }) => {
-                const url = siteConfig(key)
-                if (!url) return null
-                return (
-                  <a 
-                    key={key}
-                    href={url} 
-                    target="_blank" 
-                    rel="noreferrer"
-                    title={label}
-                    className="w-[1.75rem] h-[1.75rem] flex items-center justify-center bg-gray-200 text-gray-500 rounded-full hover:text-white hover:bg-gray-600 transition-colors flex-shrink-0"
-                  >
-                    {renderSocialIcon(key, svg, label)}
-                  </a>
-                )
-              })}
+            <div className={`bg-gray-300/80 transition-all duration-300 ${isHovered ? 'h-px w-full' : 'mx-auto my-2 h-px w-5'}`} />
+
+            {/* Contact Links Section */}
+            <div className={isHovered ? 'pt-3' : 'flex justify-center'}>
+              {/* Collapsed State: Contact Button */}
+              <div className={`flex justify-center transition-all duration-300 ${isHovered ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
+                <div className="w-10 h-10 flex items-center justify-center text-gray-500 rounded-full cursor-pointer hover:text-black hover:bg-gray-200 transition-colors">
+                  <RadarFillIcon size={18} />
+                </div>
+              </div>
+
+              {/* Expanded State: Horizontal Icon Row */}
+              <div className={`transition-all duration-300 ${isHovered ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                <div className="flex items-center justify-center gap-1.5 flex-nowrap">
+                  {CONTACT_EMAIL && (
+                    <a
+                      onClick={e =>
+                        handleEmailClick(e, emailIcon, CONTACT_EMAIL)
+                      }
+                      title='email'
+                      className='w-[1.75rem] h-[1.75rem] flex cursor-pointer items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-200 hover:text-black flex-shrink-0'
+                      ref={emailIcon}>
+                      <MailFillIcon size={14} />
+                    </a>
+                  )}
+
+                  {socialLinks.map(({ key, svg, label }) => {
+                    const url = siteConfig(key)
+                    if (!url) return null
+                    return (
+                      <a
+                        key={key}
+                        href={url}
+                        target="_blank"
+                        rel="noreferrer"
+                        title={label}
+                        className="w-[1.75rem] h-[1.75rem] flex items-center justify-center text-gray-500 rounded-full hover:text-black hover:bg-gray-200 transition-colors flex-shrink-0"
+                      >
+                        {renderSocialIcon(key, svg, label)}
+                      </a>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>
