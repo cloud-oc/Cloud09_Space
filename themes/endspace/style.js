@@ -563,6 +563,52 @@ export const Style = () => {
         animation: rotate 8s linear infinite;
       }
 
+      .endspace-player-triangle-controls {
+        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.04));
+      }
+
+      .endspace-player-triangle-controls::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='48' height='40' viewBox='0 0 48 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M24 2C28 2 31.5 4 33.5 7.5L46 29.5C49 34.8 45.2 38 39 38H9C2.8 38 -1 34.8 2 29.5L14.5 7.5C16.5 4 20 2 24 2Z' fill='white' fill-opacity='0.72'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+
+      .endspace-player-triangle-control {
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        width: 1rem;
+        height: 1rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        transition: background-color 0.2s ease, color 0.2s ease;
+      }
+
+      .endspace-player-triangle-control:hover {
+        background: rgba(229, 231, 235, 0.9);
+        color: #000;
+      }
+
+      .endspace-player-triangle-toggle {
+        top: 0.35rem;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .endspace-player-triangle-prev {
+        bottom: 0.45rem;
+        left: 0.55rem;
+      }
+
+      .endspace-player-triangle-next {
+        right: 0.55rem;
+        bottom: 0.45rem;
+      }
+
       /* ============================================
          Scan Line & HUD Animations
          ============================================ */

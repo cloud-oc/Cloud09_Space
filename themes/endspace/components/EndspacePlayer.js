@@ -375,10 +375,17 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); setShowPlaylist(!showPlaylist) }}
-            className={`relative flex h-8 w-8 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-white/70 transition-colors hover:bg-gray-200 hover:text-black ${showPlaylist ? 'text-black' : 'text-[var(--endspace-text-muted)]'}`}
+            className="group/cover relative flex h-10 w-10 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-white/70 text-[var(--endspace-text-muted)] transition-colors hover:text-black"
             title="Playlist"
           >
-            <IconList size={14} stroke={1.5} />
+            <img
+              src={currentAudio.cover || '/default-cover.jpg'}
+              alt="Cover"
+              className={`h-full w-full rounded-full object-cover transition-opacity ${showPlaylist ? 'opacity-20' : 'opacity-100 group-hover/cover:opacity-20'}`}
+            />
+            <span className={`absolute inset-0 flex items-center justify-center transition-opacity ${showPlaylist ? 'opacity-100' : 'opacity-0 group-hover/cover:opacity-100'}`}>
+              <IconList size={14} stroke={1.5} />
+            </span>
           </button>
 
           <div className="min-w-0 flex-1">
@@ -396,32 +403,32 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
             </div>
           </div>
 
-          <div className="relative h-9 w-11 flex-shrink-0 rounded-[1rem] bg-white/70 text-[var(--endspace-text-muted)]">
+          <div className="endspace-player-triangle-controls relative h-10 w-12 flex-shrink-0 text-[var(--endspace-text-muted)]">
             <button
               onClick={playPrev}
-              className="absolute bottom-1.5 left-1 flex h-5 w-5 items-center justify-center rounded-full transition-colors hover:bg-gray-200 hover:text-black"
+              className="endspace-player-triangle-control endspace-player-triangle-prev"
               title="Previous"
             >
-              <IconPlayerTrackPrev size={10} stroke={1.5} />
+              <IconPlayerTrackPrev size={9} stroke={1.5} />
             </button>
             <button
               type="button"
-              className={`absolute left-1/2 top-0.5 flex h-5 w-5 -translate-x-1/2 items-center justify-center rounded-full transition-colors hover:bg-gray-200 hover:text-black ${isPlaying ? 'text-black' : ''}`}
+              className={`endspace-player-triangle-control endspace-player-triangle-toggle ${isPlaying ? 'text-black' : ''}`}
               onClick={togglePlay}
               title={isPlaying ? 'Pause' : 'Play'}
             >
               {isPlaying ? (
-                <IconPlayerPause size={10} stroke={2} />
+                <IconPlayerPause size={9} stroke={2} />
               ) : (
-                <IconPlayerPlay size={10} stroke={2} className="ml-0.5" />
+                <IconPlayerPlay size={9} stroke={2} className="ml-0.5" />
               )}
             </button>
             <button
               onClick={playNext}
-              className="absolute bottom-1.5 right-1 flex h-5 w-5 items-center justify-center rounded-full transition-colors hover:bg-gray-200 hover:text-black"
+              className="endspace-player-triangle-control endspace-player-triangle-next"
               title="Next"
             >
-              <IconPlayerTrackNext size={10} stroke={1.5} />
+              <IconPlayerTrackNext size={9} stroke={1.5} />
             </button>
           </div>
         </div>
