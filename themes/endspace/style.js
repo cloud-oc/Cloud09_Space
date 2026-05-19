@@ -141,6 +141,33 @@ export const Style = () => {
         white-space: nowrap;
       }
 
+      .endspace-archive-heading {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--endspace-border-base);
+      }
+
+      .endspace-archive-heading-watermark {
+        color: var(--endspace-text-muted);
+        opacity: 0.2;
+        position: absolute;
+        top: -1rem;
+        left: -0.5rem;
+        z-index: 0;
+        user-select: none;
+      }
+
+      .endspace-archive-heading-title {
+        color: #E8E8EA !important;
+        position: relative;
+        z-index: 10;
+        padding-left: 0.5rem;
+      }
+
       @media (max-width: 767px) {
         .endspace-section-title {
           align-items: flex-start;
@@ -150,6 +177,12 @@ export const Style = () => {
 
         .endspace-section-meta {
           padding-top: 0;
+        }
+
+        .endspace-archive-heading {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 0.25rem;
         }
       }
 
@@ -828,6 +861,9 @@ export const Style = () => {
         display: inline-block;
         width: 1.25rem;
         height: 1.25rem;
+      }
+
+      .endspace-notion-menu-icon-mask {
         background-color: currentColor;
         mask-position: center;
         mask-repeat: no-repeat;
@@ -835,6 +871,13 @@ export const Style = () => {
         -webkit-mask-position: center;
         -webkit-mask-repeat: no-repeat;
         -webkit-mask-size: contain;
+      }
+
+      .endspace-notion-menu-image {
+        display: inline-block;
+        width: 1.25rem;
+        height: 1.25rem;
+        object-fit: contain;
       }
 
       .endspace-notion-menu-emoji {
@@ -871,7 +914,7 @@ export const Style = () => {
         stroke: currentColor;
       }
 
-      #theme-endspace .endspace-menu-icon-wrap .endspace-notion-menu-icon {
+      #theme-endspace .endspace-menu-icon-wrap .endspace-notion-menu-icon-mask {
         color: #000 !important;
         background-color: #000 !important;
       }

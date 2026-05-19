@@ -151,7 +151,7 @@ export const SideNav = (props) => {
         />
       )
     }
-    const name = item.icon || item.name
+    const name = item.fallbackIcon || item.name
     const IconComponent = IconComponents[name] || IconComponents.Default
     if (!IconComponent) return null
     return (

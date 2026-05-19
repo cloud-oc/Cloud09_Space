@@ -123,7 +123,7 @@ export const MobileNav = (props) => {
     if (item.customIcon) {
       return <i className={`${item.customIcon} w-6 text-center`} />
     }
-    const name = item.icon || item.name
+    const name = item.fallbackIcon || item.name
     const IconComponent = IconComponents[name] || IconComponents.Default
     if (!IconComponent) return null
     return <IconComponent size={20} className="w-6 text-center" />

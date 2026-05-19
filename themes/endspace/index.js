@@ -377,8 +377,11 @@ const LayoutArchive = (props) => {
         </section>
 
         <section className="archive-section">
-          <div className="endspace-section-title flex items-center tech-text tracking-wider">
-            <span className="text-5xl font-black">CATEGORIES</span>
+          <div className="endspace-archive-heading tech-text tracking-wider">
+            <div className="endspace-archive-heading-watermark text-6xl font-black">
+              CLASS_{categoryOptions.length}
+            </div>
+            <span className="endspace-archive-heading-title text-5xl font-black">CATEGORIES</span>
             <span className="endspace-section-meta">
               // {categoryOptions.length}_CATEGORY_NODES
             </span>
@@ -404,8 +407,11 @@ const LayoutArchive = (props) => {
         </section>
 
         <section className="archive-section">
-          <div className="endspace-section-title flex items-center tech-text tracking-wider">
-            <span className="text-5xl font-black">TAGS</span>
+          <div className="endspace-archive-heading tech-text tracking-wider">
+            <div className="endspace-archive-heading-watermark text-6xl font-black">
+              TAG_{tagOptions.length}
+            </div>
+            <span className="endspace-archive-heading-title text-5xl font-black">TAGS</span>
             <span className="endspace-section-meta">
               // {tagOptions.length}_TAG_MARKERS
             </span>

@@ -12,6 +12,25 @@ const IconNames = {
   Portfolio: 'Portfolio'
 }
 
+const isClassIcon = icon =>
+  typeof icon === 'string' &&
+  /(^|\s)(fa[srldb]?|fa-|iconfont|ri-|remixicon)/.test(icon.trim())
+
+const normalizeIcon = link => {
+  const rawIcon =
+    link?.pageIcon ||
+    link?.notionIcon ||
+    link?.iconUrl ||
+    link?.iconURL ||
+    link?.emoji ||
+    ''
+  const iconField = link?.icon || ''
+  return {
+    pageIcon: rawIcon || (!isClassIcon(iconField) ? iconField : ''),
+    customIcon: isClassIcon(iconField) ? iconField : link?.customIcon || null
+  }
+}
+
 const normalizeHref = link => {
   const value = link?.href || link?.path || link?.url || link?.slug || ''
   if (!value) return ''
@@ -26,6 +45,7 @@ const normalizeMenuItem = (link, index) => {
   const name = link.name || link.title || link.label || ''
   const path = normalizeHref(link)
   if (!name || !path) return null
+  const icons = normalizeIcon(link)
 
   return {
     ...link,
@@ -33,9 +53,9 @@ const normalizeMenuItem = (link, index) => {
     name,
     path,
     href: path,
-    icon: IconNames[name] || IconNames[name?.trim?.()] || 'Default',
-    pageIcon: link.pageIcon || '',
-    customIcon: link.icon || null
+    fallbackIcon: IconNames[name] || IconNames[name?.trim?.()] || 'Default',
+    pageIcon: icons.pageIcon,
+    customIcon: icons.customIcon
   }
 }
 
