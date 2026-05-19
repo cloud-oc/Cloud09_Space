@@ -403,32 +403,32 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
             </div>
           </div>
 
-          <div className="endspace-player-triangle-controls relative h-10 w-12 flex-shrink-0 text-[var(--endspace-text-muted)]">
+          <div className="flex h-10 w-5 flex-shrink-0 flex-col items-center justify-between text-[var(--endspace-text-muted)]">
             <button
               onClick={playPrev}
-              className="endspace-player-triangle-control endspace-player-triangle-prev"
+              className="flex h-3.5 w-5 items-center justify-center transition-colors hover:text-black"
               title="Previous"
             >
-              <IconPlayerTrackPrev size={9} stroke={1.5} />
+              <IconPlayerTrackPrev size={10} stroke={2} className="rotate-90" />
             </button>
             <button
               type="button"
-              className={`endspace-player-triangle-control endspace-player-triangle-toggle ${isPlaying ? 'text-black' : ''}`}
+              className={`flex h-3.5 w-5 items-center justify-center transition-colors hover:text-black ${isPlaying ? 'text-black' : ''}`}
               onClick={togglePlay}
               title={isPlaying ? 'Pause' : 'Play'}
             >
               {isPlaying ? (
-                <IconPlayerPause size={9} stroke={2} />
+                <IconPlayerPause size={14} stroke={2.5} />
               ) : (
-                <IconPlayerPlay size={9} stroke={2} className="ml-0.5" />
+                <IconPlayerPlay size={12} stroke={2.5} className="ml-0.5 rotate-90" />
               )}
             </button>
             <button
               onClick={playNext}
-              className="endspace-player-triangle-control endspace-player-triangle-next"
+              className="flex h-3.5 w-5 items-center justify-center transition-colors hover:text-black"
               title="Next"
             >
-              <IconPlayerTrackNext size={9} stroke={1.5} />
+              <IconPlayerTrackNext size={10} stroke={2} className="rotate-90" />
             </button>
           </div>
         </div>
