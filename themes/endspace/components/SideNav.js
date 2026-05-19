@@ -10,14 +10,6 @@ import {
   IconBrandX
 } from '@tabler/icons-react'
 import RadarFillIcon from 'remixicon-react/RadarFillIcon'
-// Conceptual Navigation Icons (Solid, Angular)
-import AppsFillIcon from 'remixicon-react/AppsFillIcon'
-import FolderFillIcon from 'remixicon-react/FolderFillIcon'
-import BarcodeFillIcon from 'remixicon-react/BarcodeFillIcon'
-import StackFillIcon from 'remixicon-react/StackFillIcon'
-import Compass3FillIcon from 'remixicon-react/Compass3FillIcon'
-import EarthFillIcon from 'remixicon-react/EarthFillIcon'
-import ProfileFillIcon from 'remixicon-react/ProfileFillIcon'
 import { getEndspaceActiveMenuName, getEndspaceMenuItems } from './menu'
 
   // Social Icons (Solid)
@@ -31,18 +23,6 @@ import LinkedinBoxFillIcon from 'remixicon-react/LinkedinBoxFillIcon'
 import WechatFillIcon from 'remixicon-react/WechatFillIcon'
 import GlobeFillIcon from 'remixicon-react/GlobeFillIcon'
 import MailFillIcon from 'remixicon-react/MailFillIcon'
-
-// Icon mapping (Conceptual Remix Icons)
-const IconComponents = {
-  'Home': AppsFillIcon,
-  'Category': FolderFillIcon,
-  'Tag': BarcodeFillIcon,
-  'Archive': StackFillIcon,
-  'Search': Compass3FillIcon,
-  'Friends': EarthFillIcon,
-  'Portfolio': ProfileFillIcon,
-  'Default': AppsFillIcon
-}
 
 // Social icon mapping
 const SocialIconComponents = {
@@ -136,12 +116,11 @@ export const SideNav = (props) => {
   // Render icon component
   const renderIcon = (item, isActive) => {
     if (item.pageIcon) {
-      const FallbackIcon = IconComponents[item.fallbackIcon] || IconComponents.Default
       return (
         <span
           className={`inline-flex items-center justify-center transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
         >
-          <NotionMenuIcon icon={item.pageIcon} fallbackIcon={FallbackIcon} />
+          <NotionMenuIcon icon={item.pageIcon} />
         </span>
       )
     }
@@ -152,13 +131,8 @@ export const SideNav = (props) => {
         />
       )
     }
-    const name = item.fallbackIcon || item.name
-    const IconComponent = IconComponents[name] || IconComponents.Default
-    if (!IconComponent) return null
     return (
-      <IconComponent 
-        size={20} 
-        stroke={1.5}
+      <NotionMenuIcon
         className={`transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
       />
     )

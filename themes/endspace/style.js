@@ -864,6 +864,14 @@ export const Style = () => {
         justify-content: center;
       }
 
+      .endspace-notion-menu-dot {
+        display: inline-flex;
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 9999px;
+        background: #000;
+      }
+
       .endspace-notion-menu-emoji {
         display: inline-flex;
         align-items: center;

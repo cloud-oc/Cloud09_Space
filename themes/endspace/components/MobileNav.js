@@ -11,14 +11,6 @@ import {
   IconX,
   IconBrandX
 } from '@tabler/icons-react'
-// Conceptual Navigation Icons (Solid, Angular)
-import AppsFillIcon from 'remixicon-react/AppsFillIcon'
-import BookMarkFillIcon from 'remixicon-react/BookMarkFillIcon'
-import BarcodeFillIcon from 'remixicon-react/BarcodeFillIcon'
-import StackFillIcon from 'remixicon-react/StackFillIcon'
-import Compass3FillIcon from 'remixicon-react/Compass3FillIcon'
-import EarthFillIcon from 'remixicon-react/EarthFillIcon'
-import ProfileFillIcon from 'remixicon-react/ProfileFillIcon'
 import { getEndspaceActiveMenuName, getEndspaceMenuItems } from './menu'
 // Social Icons (Solid)
 import GithubFillIcon from 'remixicon-react/GithubFillIcon'
@@ -31,18 +23,6 @@ import LinkedinBoxFillIcon from 'remixicon-react/LinkedinBoxFillIcon'
 import WechatFillIcon from 'remixicon-react/WechatFillIcon'
 import GlobeFillIcon from 'remixicon-react/GlobeFillIcon'
 import MailFillIcon from 'remixicon-react/MailFillIcon'
-
-// Icon mapping (Conceptual Remix Icons)
-const IconComponents = {
-  'Home': AppsFillIcon,
-  'Category': BookMarkFillIcon,
-  'Tag': BarcodeFillIcon,
-  'Archive': StackFillIcon,
-  'Search': Compass3FillIcon,
-  'Friends': EarthFillIcon,
-  'Portfolio': ProfileFillIcon,
-  'Default': AppsFillIcon
-}
 
 // Social icon mapping
 const SocialIconComponents = {
@@ -114,20 +94,16 @@ export const MobileNav = (props) => {
   // Render icon component
   const renderIcon = (item) => {
     if (item.pageIcon) {
-      const FallbackIcon = IconComponents[item.fallbackIcon] || IconComponents.Default
       return (
         <span className="inline-flex items-center justify-center">
-          <NotionMenuIcon icon={item.pageIcon} fallbackIcon={FallbackIcon} />
+          <NotionMenuIcon icon={item.pageIcon} />
         </span>
       )
     }
     if (item.customIcon) {
       return <i className={`${item.customIcon} w-6 text-center`} />
     }
-    const name = item.fallbackIcon || item.name
-    const IconComponent = IconComponents[name] || IconComponents.Default
-    if (!IconComponent) return null
-    return <IconComponent size={20} className="w-6 text-center" />
+    return <NotionMenuIcon className="w-6 text-center" />
   }
 
   // Render social icon

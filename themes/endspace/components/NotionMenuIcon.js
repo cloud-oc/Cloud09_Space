@@ -7,6 +7,11 @@ const isUrlIcon = icon =>
 
 const isEmojiIcon = icon => typeof icon === 'string' && EMOJI_PATTERN.test(icon)
 
+const getIconSrc = icon =>
+  typeof icon === 'string' && icon.startsWith('/icons/')
+    ? `https://www.notion.so${icon}`
+    : icon
+
 const isNotionBuiltinIcon = icon => {
   if (typeof icon !== 'string') return false
   return (
@@ -16,38 +21,36 @@ const isNotionBuiltinIcon = icon => {
   )
 }
 
-export default function NotionMenuIcon({
-  icon,
-  fallbackIcon: FallbackIcon,
-  className = ''
-}) {
-  const fallback = FallbackIcon ? (
-    <FallbackIcon size={20} stroke={1.5} className={className} />
-  ) : null
+export default function NotionMenuIcon({ icon, className = '' }) {
+  const fallback = (
+    <span
+      className={`endspace-notion-menu-dot ${className}`}
+      aria-hidden="true"
+    />
+  )
 
   if (!icon) return fallback
 
   if (isUrlIcon(icon) && !isEmojiIcon(icon)) {
+    const iconSrc = getIconSrc(icon)
     return (
       <>
         <img
-          src={icon}
+          src={iconSrc}
           alt=""
           className={`endspace-notion-menu-image ${
             isNotionBuiltinIcon(icon) ? 'endspace-notion-menu-image-monochrome' : ''
           } ${className}`}
           aria-hidden="true"
-          onError={event => {
-            event.currentTarget.style.display = 'none'
-            const fallbackNode = event.currentTarget.nextElementSibling
-            if (fallbackNode) fallbackNode.style.display = 'inline-flex'
+        onError={event => {
+          event.currentTarget.style.display = 'none'
+          const fallbackNode = event.currentTarget.nextElementSibling
+          if (fallbackNode) fallbackNode.style.display = 'inline-flex'
           }}
         />
-        {fallback && (
-          <span className="endspace-notion-menu-fallback">
-            {fallback}
-          </span>
-        )}
+        <span className="endspace-notion-menu-fallback">
+          {fallback}
+        </span>
       </>
     )
   }

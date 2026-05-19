@@ -1,33 +1,29 @@
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
 
-const IconNames = {
-  Home: 'Home',
-  Category: 'Category',
-  Tag: 'Tag',
-  Tags: 'Tag',
-  Archive: 'Archive',
-  Search: 'Search',
-  Friends: 'Friends',
-  Portfolio: 'Portfolio'
-}
-
 const isClassIcon = icon =>
   typeof icon === 'string' &&
   /(^|\s)(fa[srldb]?|fa-|iconfont|ri-|remixicon)/.test(icon.trim())
 
 const normalizeIcon = link => {
+  const iconField = link?.icon || ''
   const rawIcon =
+    iconField ||
     link?.pageIcon ||
+    link?.rawPageIcon ||
+    link?.raw_page_icon ||
+    link?.page_icon ||
+    link?.format?.page_icon ||
     link?.notionIcon ||
+    link?.notion_icon ||
     link?.iconUrl ||
     link?.iconURL ||
+    link?.icon_url ||
     link?.emoji ||
     ''
-  const iconField = link?.icon || ''
   return {
-    pageIcon: rawIcon || (!isClassIcon(iconField) ? iconField : ''),
-    customIcon: isClassIcon(iconField) ? iconField : link?.customIcon || null
+    pageIcon: isClassIcon(rawIcon) ? '' : rawIcon,
+    customIcon: isClassIcon(rawIcon) ? rawIcon : link?.customIcon || null
   }
 }
 
@@ -53,7 +49,6 @@ const normalizeMenuItem = (link, index) => {
     name,
     path,
     href: path,
-    fallbackIcon: IconNames[name] || IconNames[name?.trim?.()] || 'Default',
     pageIcon: icons.pageIcon,
     customIcon: icons.customIcon
   }
