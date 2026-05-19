@@ -403,29 +403,31 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
             </div>
           </div>
 
-          <div className="flex h-10 w-5 flex-shrink-0 flex-col items-center justify-between text-[var(--endspace-text-muted)]">
+          <div className="flex h-10 w-5 flex-shrink-0 flex-col items-center justify-between rounded-lg bg-gray-200/70 p-0.5 text-[var(--endspace-text-muted)]">
             <button
               onClick={playPrev}
-              className="flex h-3.5 w-5 items-center justify-center transition-colors hover:text-black"
+              className="flex h-3 w-4 items-center justify-center rounded transition-colors hover:bg-[var(--endspace-accent-yellow)] hover:text-black"
               title="Previous"
             >
               <IconPlayerTrackPrev size={10} stroke={2} className="rotate-90" />
             </button>
             <button
               type="button"
-              className={`flex h-3.5 w-5 items-center justify-center transition-colors hover:text-black ${isPlaying ? 'text-black' : ''}`}
+              className={`flex h-3.5 w-4 items-center justify-center rounded transition-colors hover:bg-[var(--endspace-accent-yellow)] hover:text-black ${
+                isPlaying ? 'bg-[var(--endspace-accent-yellow)] text-black' : ''
+              }`}
               onClick={togglePlay}
               title={isPlaying ? 'Pause' : 'Play'}
             >
               {isPlaying ? (
                 <IconPlayerPause size={14} stroke={2.5} />
               ) : (
-                <IconPlayerPlay size={12} stroke={2.5} className="ml-0.5 rotate-90" />
+                <IconPlayerPlay size={12} stroke={2.5} className="ml-0.5" />
               )}
             </button>
             <button
               onClick={playNext}
-              className="flex h-3.5 w-5 items-center justify-center transition-colors hover:text-black"
+              className="flex h-3 w-4 items-center justify-center rounded transition-colors hover:bg-[var(--endspace-accent-yellow)] hover:text-black"
               title="Next"
             >
               <IconPlayerTrackNext size={10} stroke={2} className="rotate-90" />
