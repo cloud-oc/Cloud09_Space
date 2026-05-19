@@ -235,11 +235,12 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
       return undefined
     }
     configureSharedPlayer(audioList, playOrder)
+    const unsubscribe = subscribeSharedPlayer(setPlayerState)
     if (autoPlay && !hasTriedAutoPlay) {
       hasTriedAutoPlay = true
       playSharedTrack(sharedState.currentTrack, true)
     }
-    return subscribeSharedPlayer(setPlayerState)
+    return unsubscribe
   }, [audioList, playOrder, musicPlayerEnabled, autoPlay])
 
   // Close playlist when sidebar collapses

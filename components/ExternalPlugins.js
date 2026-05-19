@@ -22,8 +22,6 @@ const ExternalPlugin = props => {
   // 读取自Notion的配置
   const { NOTION_CONFIG } = props
   const { lang, theme } = useGlobal()
-  const router = useRouter()
-  const currentTheme = router?.query?.theme || NOTION_CONFIG?.THEME || theme
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN', null, NOTION_CONFIG)
   const THEME_SWITCH = siteConfig('THEME_SWITCH', null, NOTION_CONFIG)
   const DEBUG = siteConfig('DEBUG', null, NOTION_CONFIG)
@@ -45,7 +43,6 @@ const ExternalPlugin = props => {
   const SAKURA = siteConfig('SAKURA', null, NOTION_CONFIG)
   const STARRY_SKY = siteConfig('STARRY_SKY', null, NOTION_CONFIG)
   const MUSIC_PLAYER = siteConfig('MUSIC_PLAYER', null, NOTION_CONFIG)
-  const shouldUseGlobalMusicPlayer = MUSIC_PLAYER && currentTheme !== 'endspace'
   const NEST = siteConfig('NEST', null, NOTION_CONFIG)
   const FLUTTERINGRIBBON = siteConfig('FLUTTERINGRIBBON', null, NOTION_CONFIG)
   const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig(
@@ -167,6 +164,8 @@ const ExternalPlugin = props => {
   }
 
   const router = useRouter()
+  const currentTheme = router?.query?.theme || NOTION_CONFIG?.THEME || theme
+  const shouldUseGlobalMusicPlayer = MUSIC_PLAYER && currentTheme !== 'endspace'
   useEffect(() => {
     // 异步渲染谷歌广告
     if (ADSENSE_GOOGLE_ID) {
