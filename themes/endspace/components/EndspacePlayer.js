@@ -213,8 +213,32 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
   // Expanded State: Compact player with album cover as play button
   if (embedded) {
     return (
-      <div className="endspace-player-full flex h-full w-full flex-col justify-center overflow-hidden px-1">
-        <div className="flex min-h-0 items-center gap-2">
+      <div className="endspace-player-full relative flex h-full w-full items-center px-0.5">
+        {showPlaylist && (
+          <div className="absolute bottom-full left-0 right-0 mb-2 max-h-32 overflow-y-auto rounded-xl border border-gray-200 bg-gray-100/95 p-1 shadow-lg">
+            {audioList.map((audio, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => selectTrack(index)}
+                className={`flex w-full items-center gap-1.5 rounded-lg px-2 py-1.5 text-left text-[10px] transition-colors ${
+                  index === currentTrack
+                    ? 'bg-black text-white'
+                    : 'text-[var(--endspace-text-secondary)] hover:bg-gray-200 hover:text-black'
+                }`}
+              >
+                <span className="w-3 flex-shrink-0 text-center font-mono text-[9px]">
+                  {index + 1}
+                </span>
+                <span className="truncate">
+                  {audio.name}
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="flex min-w-0 flex-1 items-center gap-2">
           <button
             type="button"
             className={`relative flex h-8 w-8 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-white/70 text-[var(--endspace-text-muted)] transition-colors hover:bg-gray-200 hover:text-black ${isPlaying ? 'endspace-player-glow' : ''}`}
@@ -267,30 +291,6 @@ export const EndspacePlayer = ({ isExpanded, embedded = false }) => {
             </button>
           </div>
         </div>
-
-        {showPlaylist && (
-          <div className="mt-1 max-h-12 overflow-y-auto rounded-lg bg-white/70">
-            {audioList.map((audio, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() => selectTrack(index)}
-                className={`flex w-full items-center gap-1.5 px-2 py-1 text-left text-[10px] transition-colors ${
-                  index === currentTrack
-                    ? 'bg-black text-white'
-                    : 'text-[var(--endspace-text-secondary)] hover:bg-gray-200 hover:text-black'
-                }`}
-              >
-                <span className="w-3 flex-shrink-0 text-center font-mono text-[9px]">
-                  {index + 1}
-                </span>
-                <span className="truncate">
-                  {audio.name}
-                </span>
-              </button>
-            ))}
-          </div>
-        )}
       </div>
     )
   }
