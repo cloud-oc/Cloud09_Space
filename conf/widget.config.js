@@ -37,46 +37,10 @@ module.exports = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: 'Touch of the Law',
-      artist: '塞壬唱片-MSR / Alec Justice / Echos',
-      url: 'http://music.163.com/song/media/outer/url?id=2700386309.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      名称 : 'Halo Universalization',
-      artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf',
-      url: 'http://music.163.com/song/media/outer/url?id=2700384134.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      name: 'The Pilgrimage',
-      artist: '塞壬唱片-MSR / BaoUner',
-      url: 'http://music.163.com/song/media/outer/url?id=2700386310.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      name: 'Faith Enlightenment',
-      artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf / David Lin',
-      url: 'http://music.163.com/song/media/outer/url?id=2700386311.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      name: 'The Birth',
-      artist: '塞壬唱片-MSR / BaoUner',
-      url: 'http://music.163.com/song/media/outer/url?id=2700384135.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      name: 'Underneath the Sanctuary',
-      artist: '塞壬唱片-MSR / Adam Gubman',
-      url: 'http://music.163.com/song/media/outer/url?id=2700386312.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      name: 'Somniomancer [null set]',
-      artist: '塞壬唱片-MSR / Crywolf',
-      url: 'http://music.163.com/song/media/outer/url?id=2700386313.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+      name: 'カイネ',
+      artist: 'MONACA',
+      url: 'http://music.163.com/song/media/outer/url?id=468490737.mp3',
+      cover: 'http://p2.music.126.net/D3hadX97Xd-B6WrZX8B7vw==/109951165545674659.jpg'
     },
     {
       name: '夏ノ雪',
@@ -137,13 +101,7 @@ module.exports = {
       artist: 'MONACA / 西村隆文 / 瀬尾祥太郎',  
       url: 'http://music.163.com/song/media/outer/url?id=2002647650.mp3',
       cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951168101799354.jpg'
-    },
-    
-    
-    
-    
-    
-    
+    },    
     {
       name: '最終兵器',
       artist: 'MONACA / 西村隆文 / 帆足圭吾',
@@ -601,6 +559,48 @@ module.exports = {
       cover: 'https://p1.music.126.net/1q8Nsdd7TIp_KG5_mVg4aw==/109951170280932175.jpg'
     },
     {
+      name: 'Touch of the Law',
+      artist: '塞壬唱片-MSR / Alec Justice / Echos',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386309.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      名称 : 'Halo Universalization',
+      artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf',
+      url: 'http://music.163.com/song/media/outer/url?id=2700384134.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      name: 'The Pilgrimage',
+      artist: '塞壬唱片-MSR / BaoUner',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386310.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      name: 'Faith Enlightenment',
+      artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf / David Lin',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386311.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      name: 'The Birth',
+      artist: '塞壬唱片-MSR / BaoUner',
+      url: 'http://music.163.com/song/media/outer/url?id=2700384135.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      name: 'Underneath the Sanctuary',
+      artist: '塞壬唱片-MSR / Adam Gubman',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386312.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      name: 'Somniomancer [null set]',
+      artist: '塞壬唱片-MSR / Crywolf',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386313.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
       name: 'Wake Up, Get Up, Get Out There',
       artist: 'Lyn',
       url: 'http://music.163.com/song/media/outer/url?id=454224827.mp3',
@@ -889,10 +889,16 @@ module.exports = {
       cover: 'https://p2.music.126.net/yPW_EmIsyR7iD6awPiiQUQ==/109951170148303857.jpg'
     },
     {
-    name: "You're Going to Love Tomorrow's Story",
-    artist: "Yokaze",
-    url: "https://cloud-oc.github.io/Audio-Bed/Music/You're Going to Love Tomorrow's Story.m4a",
-    cover: "https://github.com/cloud-oc/picx-images-hosting/raw/master/Blog/Unreal-Life-OST.26lxfpu9eq.png"
+      name: "You're Going to Love Tomorrow's Story",
+      artist: "Yokaze",
+      url: "https://cloud-oc.github.io/Audio-Bed/Music/You're Going to Love Tomorrow's Story.m4a",
+      cover: "https://github.com/cloud-oc/picx-images-hosting/raw/master/Blog/Unreal-Life-OST.26lxfpu9eq.png"
+    },
+    {
+      name: "最後の歌",
+      artist: "岡部啓一 / 石濱翔 / 遠山明孝 / Emi Evans",
+      url: "http://music.163.com/song/media/outer/url?id=28308736.mp3",
+      cover: "http://p2.music.126.net/-lZHEmCevlqOpFgGRfw2cQ==/6038517859880094.jpg"
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
