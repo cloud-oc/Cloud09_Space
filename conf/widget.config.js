@@ -37,6 +37,48 @@ module.exports = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
+      name: 'Touch of the Law',
+      artist: '塞壬唱片-MSR / Alec Justice / Echos',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386309.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      名称 : 'Halo Universalization',
+      artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf',
+      url: 'http://music.163.com/song/media/outer/url?id=2700384134.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      name: 'The Pilgrimage',
+      artist: '塞壬唱片-MSR / BaoUner',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386310.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      name: 'Faith Enlightenment',
+      artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf / David Lin',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386311.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      name: 'The Birth',
+      artist: '塞壬唱片-MSR / BaoUner',
+      url: 'http://music.163.com/song/media/outer/url?id=2700384135.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      name: 'Underneath the Sanctuary',
+      artist: '塞壬唱片-MSR / Adam Gubman',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386312.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
+      name: 'Somniomancer [null set]',
+      artist: '塞壬唱片-MSR / Crywolf',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386313.mp3',
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
+    },
+    {
       name: 'カイネ',
       artist: 'MONACA',
       url: 'http://music.163.com/song/media/outer/url?id=468490737.mp3',
@@ -557,48 +599,6 @@ module.exports = {
       artist: '三Z-STUDIO,HOYO-MiX',
       url: 'http://music.163.com/song/media/outer/url?id=2658093531.mp3',
       cover: 'https://p1.music.126.net/1q8Nsdd7TIp_KG5_mVg4aw==/109951170280932175.jpg'
-    },
-    {
-      name: 'Touch of the Law',
-      artist: '塞壬唱片-MSR / Alec Justice / Echos',
-      url: 'http://music.163.com/song/media/outer/url?id=2700386309.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      名称 : 'Halo Universalization',
-      artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf',
-      url: 'http://music.163.com/song/media/outer/url?id=2700384134.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      name: 'The Pilgrimage',
-      artist: '塞壬唱片-MSR / BaoUner',
-      url: 'http://music.163.com/song/media/outer/url?id=2700386310.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      name: 'Faith Enlightenment',
-      artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf / David Lin',
-      url: 'http://music.163.com/song/media/outer/url?id=2700386311.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      name: 'The Birth',
-      artist: '塞壬唱片-MSR / BaoUner',
-      url: 'http://music.163.com/song/media/outer/url?id=2700384135.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      name: 'Underneath the Sanctuary',
-      artist: '塞壬唱片-MSR / Adam Gubman',
-      url: 'http://music.163.com/song/media/outer/url?id=2700386312.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
-    },
-    {
-      name: 'Somniomancer [null set]',
-      artist: '塞壬唱片-MSR / Crywolf',
-      url: 'http://music.163.com/song/media/outer/url?id=2700386313.mp3',
-      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
     },
     {
       name: 'Wake Up, Get Up, Get Out There',
