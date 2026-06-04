@@ -113,6 +113,46 @@ describe('Notion data format compatibility', () => {
     expect(pageIds).not.toContain('hidden_page')
   })
 
+  it('matches selected view query when collection ids use different uuid formats', () => {
+    const pageIds = getAllPageIds(
+      {
+        'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee': {
+          view_1: { blockIds: ['page_1'] },
+          view_2: { blockIds: ['hidden_page'] }
+        }
+      },
+      'aaaaaaaabbbbccccddddeeeeeeeeeeee',
+      {},
+      ['view_1'],
+      {}
+    )
+
+    expect(pageIds).toEqual(['page_1'])
+    expect(pageIds).not.toContain('hidden_page')
+  })
+
+  it('matches selected view data when view ids use different uuid formats', () => {
+    const pageIds = getAllPageIds(
+      {
+        collection_1: {
+          '11111111-2222-3333-4444-555555555555': {
+            blockIds: ['page_1']
+          },
+          '66666666-7777-8888-9999-000000000000': {
+            blockIds: ['hidden_page']
+          }
+        }
+      },
+      'collection_1',
+      {},
+      ['11111111222233334444555555555555'],
+      {}
+    )
+
+    expect(pageIds).toEqual(['page_1'])
+    expect(pageIds).not.toContain('hidden_page')
+  })
+
   it('falls back to all query blocks when no selected view is available', () => {
     const pageIds = getAllPageIds(
       {
