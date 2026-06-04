@@ -51,13 +51,8 @@ export const MobileNav = (props) => {
   const avatarUrl = props?.siteInfo?.icon || siteInfo?.icon || siteConfig('AVATAR')
 
   const menuItems = useMemo(
-<<<<<<< HEAD
     () => getEndspaceMenuItems(props),
     [props.customMenu, props.customNav]
-=======
-    () => buildMenuItems({ customNav, customMenu }),
-    [customNav, customMenu]
->>>>>>> upstream/main
   )
 
   // Social icon config - using contact.config.js settings
@@ -78,13 +73,7 @@ export const MobileNav = (props) => {
   const CONTACT_EMAIL = siteConfig('CONTACT_EMAIL')
 
   useEffect(() => {
-<<<<<<< HEAD
     setActiveTab(getEndspaceActiveMenuName(menuItems, router.asPath))
-=======
-    const path = router.asPath
-    const activeItem = menuItems.find(item => isMenuItemActive(item, path))
-    setActiveTab(activeItem?.name || 'Home')
->>>>>>> upstream/main
   }, [router.asPath, menuItems])
 
   // Close menu when route changes
@@ -106,19 +95,13 @@ export const MobileNav = (props) => {
   }, [isMenuOpen])
 
   // Render icon component
-<<<<<<< HEAD
   const renderIcon = (item) => {
-    const icon = item.pageIcon || item.customIcon || ''
+    const icon = item.customIcon || item.pageIcon || item.icon || ''
     return (
       <span className="inline-flex h-6 w-6 items-center justify-center">
         <NotionMenuIcon icon={icon} />
       </span>
     )
-=======
-  const renderIcon = (name) => {
-    const IconComponent = IconComponents[name] || BookMarkFillIcon
-    return <IconComponent size={20} className="w-6 text-center" />
->>>>>>> upstream/main
   }
 
   // Render social icon
@@ -180,23 +163,9 @@ export const MobileNav = (props) => {
       >
         {/* Navigation Items */}
         <div className="flex flex-col items-start p-6 space-y-2">
-<<<<<<< HEAD
-          {menuItems.map(item => (
-            <SmartLink
-              key={item.id || item.name}
-              href={item.path}
-              className={`flex items-center gap-4 py-3 w-full transition-all group ${
-                activeTab === item.name
-                  ? 'text-black font-bold'
-                  : 'text-[var(--endspace-text-secondary)] hover:text-black'
-              }`}
-            >
-              <div className="endspace-menu-icon-wrap transition-colors">
-                 {renderIcon(item)}
-=======
           {menuItems.map(item => {
             const hasSubMenu = item.subMenus?.length > 0
-            const itemKey = `${item.name}-${item.path}`
+            const itemKey = item.id || `${item.name}-${item.path}`
             const isOpen = openSubMenu === itemKey
             const itemClassName = `flex items-center gap-4 py-3 w-full transition-all group ${
               activeTab === item.name
@@ -205,8 +174,8 @@ export const MobileNav = (props) => {
             }`
             const itemContent = (
               <>
-                <div className={`transition-colors ${activeTab === item.name ? 'text-black' : 'text-gray-400 group-hover:text-black'}`}>
-                  {item.icon ? <i className={item.icon} /> : renderIcon(item.name)}
+                <div className="endspace-menu-icon-wrap transition-colors">
+                  {renderIcon(item)}
                 </div>
                 <span className="text-xl font-medium">{item.name}</span>
                 {hasSubMenu && (
@@ -246,15 +215,14 @@ export const MobileNav = (props) => {
                         target={subMenu.target || item.target}
                         className='flex items-center gap-3 py-2 text-base text-[var(--endspace-text-secondary)] transition-colors hover:text-black'
                       >
-                        <span className='w-4 text-center text-gray-400'>
-                          {subMenu.icon ? <i className={subMenu.icon} /> : renderIcon(subMenu.name)}
+                        <span className='inline-flex w-4 justify-center text-gray-400'>
+                          {renderIcon(subMenu)}
                         </span>
                         <span>{subMenu.name}</span>
                       </SmartLink>
                     ))}
                   </div>
                 )}
->>>>>>> upstream/main
               </div>
             )
           })}

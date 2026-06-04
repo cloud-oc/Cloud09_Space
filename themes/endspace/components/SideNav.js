@@ -53,13 +53,8 @@ export const SideNav = (props) => {
   const avatarUrl = props?.siteInfo?.icon || siteInfo?.icon || siteConfig('AVATAR')
 
   const menuItems = useMemo(
-<<<<<<< HEAD
     () => getEndspaceMenuItems(props),
     [props.customMenu, props.customNav]
-=======
-    () => buildMenuItems({ customNav, customMenu }),
-    [customNav, customMenu]
->>>>>>> upstream/main
   )
 
   // Social icon config - using contact.config.js settings
@@ -98,16 +93,7 @@ export const SideNav = (props) => {
   }
 
   useEffect(() => {
-<<<<<<< HEAD
     setActiveTab(getEndspaceActiveMenuName(menuItems, router.asPath))
-=======
-    // Set active tab based on path
-    const path = router.asPath
-    const activeItem = menuItems.find(item => isMenuItemActive(item, path))
-    const newTab = activeItem?.name || 'Home'
-    
-    setActiveTab(newTab)
->>>>>>> upstream/main
   }, [router.asPath, menuItems])
 
   // Update indicator position when activeTab changes
@@ -129,13 +115,8 @@ export const SideNav = (props) => {
   }, [activeTab])
 
   // Render icon component
-<<<<<<< HEAD
   const renderIcon = (item, isActive) => {
-    const icon = item.pageIcon || item.customIcon || ''
-=======
-  const renderIcon = (name, isActive) => {
-    const IconComponent = IconComponents[name] || BookMarkFillIcon
->>>>>>> upstream/main
+    const icon = item.customIcon || item.pageIcon || item.icon || ''
     return (
       <span
         className={`inline-flex h-5 w-5 items-center justify-center transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
@@ -201,27 +182,18 @@ export const SideNav = (props) => {
           const hasSubMenu = item.subMenus?.length > 0
           const isActive = activeTab === item.name
           return (
-<<<<<<< HEAD
-            <SmartLink key={item.id || item.name} href={item.path}>
-=======
             <div
-              key={`${item.name}-${item.path}`}
+              key={item.id || `${item.name}-${item.path}`}
               className='group/menu relative'
             >
               <SmartLink href={item.path} target={item.target}>
->>>>>>> upstream/main
               <div 
                 ref={el => itemRefs.current[item.name] = el}
                 className={`nier-nav-item relative h-[3rem] flex items-center cursor-pointer group transition-colors duration-300 hover:bg-[#d4d4d8] ${isActive ? 'active bg-[#d4d4d8]' : ''}`}
               >
                 {/* Icon Container */}
-<<<<<<< HEAD
                 <div className="endspace-menu-icon-wrap w-[5rem] flex-shrink-0 flex items-center justify-center z-10">
                   {renderIcon(item, isActive)}
-=======
-                <div className="w-[5rem] flex-shrink-0 flex items-center justify-center z-10">
-                  {item.icon ? <i className={item.icon} /> : renderIcon(item.name, isActive)}
->>>>>>> upstream/main
                 </div>
 
                 {/* Text Label (Reveal on Hover) */}
@@ -248,7 +220,7 @@ export const SideNav = (props) => {
                         className='flex h-10 items-center text-sm font-medium text-[var(--endspace-text-secondary)] transition-colors hover:bg-[#d4d4d8] hover:text-black'
                       >
                         <span className='flex w-[5rem] flex-shrink-0 items-center justify-center text-xs'>
-                          {subMenu.icon ? <i className={subMenu.icon} /> : renderIcon(subMenu.name, false)}
+                          {renderIcon(subMenu, false)}
                         </span>
                         <span className='min-w-0 flex-1 truncate pr-4 text-xs uppercase tracking-wide'>
                           {subMenu.name}
