@@ -41,16 +41,23 @@ const SocialIconComponents = {
 export const MobileNav = (props) => {
   const router = useRouter()
   const { siteInfo } = useGlobal()
+  const { customNav, customMenu } = props
   const [activeTab, setActiveTab] = useState('Home')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [openSubMenu, setOpenSubMenu] = useState(null)
   const emailIcon = useRef(null)
   
   // Get avatar from props or global context
   const avatarUrl = props?.siteInfo?.icon || siteInfo?.icon || siteConfig('AVATAR')
 
   const menuItems = useMemo(
+<<<<<<< HEAD
     () => getEndspaceMenuItems(props),
     [props.customMenu, props.customNav]
+=======
+    () => buildMenuItems({ customNav, customMenu }),
+    [customNav, customMenu]
+>>>>>>> upstream/main
   )
 
   // Social icon config - using contact.config.js settings
@@ -71,12 +78,19 @@ export const MobileNav = (props) => {
   const CONTACT_EMAIL = siteConfig('CONTACT_EMAIL')
 
   useEffect(() => {
+<<<<<<< HEAD
     setActiveTab(getEndspaceActiveMenuName(menuItems, router.asPath))
+=======
+    const path = router.asPath
+    const activeItem = menuItems.find(item => isMenuItemActive(item, path))
+    setActiveTab(activeItem?.name || 'Home')
+>>>>>>> upstream/main
   }, [router.asPath, menuItems])
 
   // Close menu when route changes
   useEffect(() => {
     setIsMenuOpen(false)
+    setOpenSubMenu(null)
   }, [router.asPath])
 
   // Prevent body scroll when menu is open
@@ -92,6 +106,7 @@ export const MobileNav = (props) => {
   }, [isMenuOpen])
 
   // Render icon component
+<<<<<<< HEAD
   const renderIcon = (item) => {
     const icon = item.pageIcon || item.customIcon || ''
     return (
@@ -99,6 +114,11 @@ export const MobileNav = (props) => {
         <NotionMenuIcon icon={icon} />
       </span>
     )
+=======
+  const renderIcon = (name) => {
+    const IconComponent = IconComponents[name] || BookMarkFillIcon
+    return <IconComponent size={20} className="w-6 text-center" />
+>>>>>>> upstream/main
   }
 
   // Render social icon
@@ -160,6 +180,7 @@ export const MobileNav = (props) => {
       >
         {/* Navigation Items */}
         <div className="flex flex-col items-start p-6 space-y-2">
+<<<<<<< HEAD
           {menuItems.map(item => (
             <SmartLink
               key={item.id || item.name}
@@ -172,10 +193,71 @@ export const MobileNav = (props) => {
             >
               <div className="endspace-menu-icon-wrap transition-colors">
                  {renderIcon(item)}
+=======
+          {menuItems.map(item => {
+            const hasSubMenu = item.subMenus?.length > 0
+            const itemKey = `${item.name}-${item.path}`
+            const isOpen = openSubMenu === itemKey
+            const itemClassName = `flex items-center gap-4 py-3 w-full transition-all group ${
+              activeTab === item.name
+                ? 'text-black font-bold'
+                : 'text-[var(--endspace-text-secondary)] hover:text-black'
+            }`
+            const itemContent = (
+              <>
+                <div className={`transition-colors ${activeTab === item.name ? 'text-black' : 'text-gray-400 group-hover:text-black'}`}>
+                  {item.icon ? <i className={item.icon} /> : renderIcon(item.name)}
+                </div>
+                <span className="text-xl font-medium">{item.name}</span>
+                {hasSubMenu && (
+                  <span className={`ml-auto text-xl transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}>
+                    &rsaquo;
+                  </span>
+                )}
+              </>
+            )
+
+            return (
+              <div key={itemKey} className='w-full'>
+                {hasSubMenu ? (
+                  <button
+                    type='button'
+                    onClick={() => setOpenSubMenu(isOpen ? null : itemKey)}
+                    className={itemClassName}
+                  >
+                    {itemContent}
+                  </button>
+                ) : (
+                  <SmartLink
+                    href={item.path}
+                    target={item.target}
+                    className={itemClassName}
+                  >
+                    {itemContent}
+                  </SmartLink>
+                )}
+
+                {hasSubMenu && isOpen && (
+                  <div className='mb-2 ml-10 flex flex-col border-l border-[var(--endspace-border-base)] pl-4'>
+                    {item.subMenus.map(subMenu => (
+                      <SmartLink
+                        key={`${subMenu.name}-${subMenu.path}`}
+                        href={subMenu.path}
+                        target={subMenu.target || item.target}
+                        className='flex items-center gap-3 py-2 text-base text-[var(--endspace-text-secondary)] transition-colors hover:text-black'
+                      >
+                        <span className='w-4 text-center text-gray-400'>
+                          {subMenu.icon ? <i className={subMenu.icon} /> : renderIcon(subMenu.name)}
+                        </span>
+                        <span>{subMenu.name}</span>
+                      </SmartLink>
+                    ))}
+                  </div>
+                )}
+>>>>>>> upstream/main
               </div>
-              <span className="text-xl font-medium">{item.name}</span>
-            </SmartLink>
-          ))}
+            )
+          })}
         </div>
 
         {/* Music Player (No Label, No Divider) */}

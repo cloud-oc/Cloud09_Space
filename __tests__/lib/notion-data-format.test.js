@@ -213,3 +213,74 @@ describe('Notion data format compatibility', () => {
     ])
   })
 })
+
+describe('normalizeExternalMediaBlock — Apple Music song embeds', () => {
+  const { normalizeExternalMediaBlock, isAppleMusicEmbedUrl } =
+    require('@/lib/db/notion/normalizeExternalMediaBlock')
+
+  describe('isAppleMusicEmbedUrl', () => {
+    it.each([
+      ['https://embed.music.apple.com/us/song/neon-blue/324357768', true],
+      ['https://embed.music.apple.com/cn/song/test-song/123456', true],
+      ['https://embed.music.apple.com/us/album/girls-come-too/324357208?i=324357768', false],
+      ['https://embed.music.apple.com/us/album/test/123456', false],
+      ['https://www.youtube.com/watch?v=abc', false],
+      ['', false]
+    ])('"%s" → %s', (url, expected) => {
+      expect(isAppleMusicEmbedUrl(url)).toBe(expected)
+    })
+  })
+
+  describe('normalizeExternalMediaBlock', () => {
+    it('converts video → embed for Apple Music song URLs', () => {
+      const block = {
+        type: 'video',
+        properties: {
+          source: [['https://embed.music.apple.com/us/song/neon-blue/324357768']]
+        }
+      }
+      normalizeExternalMediaBlock(block)
+      expect(block.type).toBe('embed')
+    })
+
+    it('leaves video type unchanged for Apple Music album URLs', () => {
+      const block = {
+        type: 'video',
+        properties: {
+          source: [['https://embed.music.apple.com/us/album/girls-come-too/324357208?i=324357768']]
+        }
+      }
+      normalizeExternalMediaBlock(block)
+      expect(block.type).toBe('video')
+    })
+
+    it('leaves video type unchanged for non–Apple Music URLs', () => {
+      const block = {
+        type: 'video',
+        properties: {
+          source: [['https://www.youtube.com/watch?v=abc']]
+        }
+      }
+      normalizeExternalMediaBlock(block)
+      expect(block.type).toBe('video')
+    })
+
+    it('does nothing for non-video block types', () => {
+      const block = {
+        type: 'embed',
+        properties: {
+          source: [['https://embed.music.apple.com/us/song/test/123']]
+        }
+      }
+      normalizeExternalMediaBlock(block)
+      expect(block.type).toBe('embed')
+    })
+
+    it('handles null / undefined / missing properties gracefully', () => {
+      expect(() => normalizeExternalMediaBlock(null)).not.toThrow()
+      expect(() => normalizeExternalMediaBlock(undefined)).not.toThrow()
+      expect(() => normalizeExternalMediaBlock({ type: 'video' })).not.toThrow()
+      expect(() => normalizeExternalMediaBlock({ type: 'video', properties: {} })).not.toThrow()
+    })
+  })
+})

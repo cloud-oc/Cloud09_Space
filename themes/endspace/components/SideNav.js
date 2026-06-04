@@ -41,6 +41,7 @@ const SocialIconComponents = {
 export const SideNav = (props) => {
   const router = useRouter()
   const { siteInfo } = useGlobal()
+  const { customNav, customMenu } = props
   const [isHovered, setIsHovered] = useState(false)
   const [activeTab, setActiveTab] = useState('Home')
   const [indicatorStyle, setIndicatorStyle] = useState({ top: 0, opacity: 0 })
@@ -52,8 +53,13 @@ export const SideNav = (props) => {
   const avatarUrl = props?.siteInfo?.icon || siteInfo?.icon || siteConfig('AVATAR')
 
   const menuItems = useMemo(
+<<<<<<< HEAD
     () => getEndspaceMenuItems(props),
     [props.customMenu, props.customNav]
+=======
+    () => buildMenuItems({ customNav, customMenu }),
+    [customNav, customMenu]
+>>>>>>> upstream/main
   )
 
   // Social icon config - using contact.config.js settings
@@ -92,7 +98,16 @@ export const SideNav = (props) => {
   }
 
   useEffect(() => {
+<<<<<<< HEAD
     setActiveTab(getEndspaceActiveMenuName(menuItems, router.asPath))
+=======
+    // Set active tab based on path
+    const path = router.asPath
+    const activeItem = menuItems.find(item => isMenuItemActive(item, path))
+    const newTab = activeItem?.name || 'Home'
+    
+    setActiveTab(newTab)
+>>>>>>> upstream/main
   }, [router.asPath, menuItems])
 
   // Update indicator position when activeTab changes
@@ -114,8 +129,13 @@ export const SideNav = (props) => {
   }, [activeTab])
 
   // Render icon component
+<<<<<<< HEAD
   const renderIcon = (item, isActive) => {
     const icon = item.pageIcon || item.customIcon || ''
+=======
+  const renderIcon = (name, isActive) => {
+    const IconComponent = IconComponents[name] || BookMarkFillIcon
+>>>>>>> upstream/main
     return (
       <span
         className={`inline-flex h-5 w-5 items-center justify-center transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
@@ -178,24 +198,67 @@ export const SideNav = (props) => {
         />
         
         {menuItems.map((item) => {
+          const hasSubMenu = item.subMenus?.length > 0
           const isActive = activeTab === item.name
           return (
+<<<<<<< HEAD
             <SmartLink key={item.id || item.name} href={item.path}>
+=======
+            <div
+              key={`${item.name}-${item.path}`}
+              className='group/menu relative'
+            >
+              <SmartLink href={item.path} target={item.target}>
+>>>>>>> upstream/main
               <div 
                 ref={el => itemRefs.current[item.name] = el}
                 className={`nier-nav-item relative h-[3rem] flex items-center cursor-pointer group transition-colors duration-300 hover:bg-[#d4d4d8] ${isActive ? 'active bg-[#d4d4d8]' : ''}`}
               >
                 {/* Icon Container */}
+<<<<<<< HEAD
                 <div className="endspace-menu-icon-wrap w-[5rem] flex-shrink-0 flex items-center justify-center z-10">
                   {renderIcon(item, isActive)}
+=======
+                <div className="w-[5rem] flex-shrink-0 flex items-center justify-center z-10">
+                  {item.icon ? <i className={item.icon} /> : renderIcon(item.name, isActive)}
+>>>>>>> upstream/main
                 </div>
 
                 {/* Text Label (Reveal on Hover) */}
                 <span className={`text-sm font-medium tracking-wide uppercase whitespace-nowrap transition-opacity duration-300 z-10 ${isHovered ? 'opacity-100 delay-75' : 'opacity-0 w-0'}`}>
                   {item.name.toUpperCase()}
                 </span>
+                {hasSubMenu && (
+                  <span className={`ml-auto pr-4 text-xs transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                    &rsaquo;
+                  </span>
+                )}
               </div>
-            </SmartLink>
+              </SmartLink>
+              {hasSubMenu && (
+                <div
+                  className={`grid overflow-hidden transition-all duration-300 ${isHovered ? 'grid-rows-[0fr] opacity-0 group-hover/menu:grid-rows-[1fr] group-hover/menu:opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+                >
+                  <div className='min-h-0 py-1'>
+                    {item.subMenus.map(subMenu => (
+                      <SmartLink
+                        key={`${subMenu.name}-${subMenu.path}`}
+                        href={subMenu.path}
+                        target={subMenu.target || item.target}
+                        className='flex h-10 items-center text-sm font-medium text-[var(--endspace-text-secondary)] transition-colors hover:bg-[#d4d4d8] hover:text-black'
+                      >
+                        <span className='flex w-[5rem] flex-shrink-0 items-center justify-center text-xs'>
+                          {subMenu.icon ? <i className={subMenu.icon} /> : renderIcon(subMenu.name, false)}
+                        </span>
+                        <span className='min-w-0 flex-1 truncate pr-4 text-xs uppercase tracking-wide'>
+                          {subMenu.name}
+                        </span>
+                      </SmartLink>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           )
         })}
       </div>
