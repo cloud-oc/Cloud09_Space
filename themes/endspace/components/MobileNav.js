@@ -51,8 +51,8 @@ export const MobileNav = (props) => {
   const avatarUrl = props?.siteInfo?.icon || siteInfo?.icon || siteConfig('AVATAR')
 
   const menuItems = useMemo(
-    () => getEndspaceMenuItems(props),
-    [props.customMenu, props.customNav]
+    () => getEndspaceMenuItems({ customNav, customMenu }),
+    [customMenu, customNav]
   )
 
   // Social icon config - using contact.config.js settings
