@@ -22,7 +22,7 @@ import { getPageCanCopy } from '@/lib/utils/copyPermission'
 const ExternalPlugin = props => {
   // 读取自Notion的配置
   const { NOTION_CONFIG } = props
-  const { lang } = useGlobal()
+  const { lang, theme } = useGlobal()
   const [pluginsIdle, setPluginsIdle] = useState(false)
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN', null, NOTION_CONFIG)
   const THEME_SWITCH = siteConfig('THEME_SWITCH', null, NOTION_CONFIG)
