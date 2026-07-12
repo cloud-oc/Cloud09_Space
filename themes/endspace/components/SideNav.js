@@ -116,7 +116,7 @@ export const SideNav = (props) => {
 
   // Render icon component
   const renderIcon = (item, isActive) => {
-    const icon = item.customIcon || item.pageIcon || item.icon || ''
+    const icon = item.pageIcon || item.customIcon || ''
     return (
       <span
         className={`inline-flex h-5 w-5 items-center justify-center transition-all duration-300 ${isActive ? 'scale-110' : ''}`}
@@ -179,14 +179,9 @@ export const SideNav = (props) => {
         />
         
         {menuItems.map((item) => {
-          const hasSubMenu = item.subMenus?.length > 0
           const isActive = activeTab === item.name
           return (
-            <div
-              key={item.id || `${item.name}-${item.path}`}
-              className='group/menu relative'
-            >
-              <SmartLink href={item.path} target={item.target}>
+            <SmartLink key={item.id || item.name} href={item.path}>
               <div 
                 ref={el => itemRefs.current[item.name] = el}
                 className={`nier-nav-item relative h-[3rem] flex items-center cursor-pointer group transition-colors duration-300 hover:bg-[#d4d4d8] ${isActive ? 'active bg-[#d4d4d8]' : ''}`}
@@ -200,37 +195,8 @@ export const SideNav = (props) => {
                 <span className={`text-sm font-medium tracking-wide uppercase whitespace-nowrap transition-opacity duration-300 z-10 ${isHovered ? 'opacity-100 delay-75' : 'opacity-0 w-0'}`}>
                   {item.name.toUpperCase()}
                 </span>
-                {hasSubMenu && (
-                  <span className={`ml-auto pr-4 text-xs transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-                    &rsaquo;
-                  </span>
-                )}
               </div>
-              </SmartLink>
-              {hasSubMenu && (
-                <div
-                  className={`grid overflow-hidden transition-all duration-300 ${isHovered ? 'grid-rows-[0fr] opacity-0 group-hover/menu:grid-rows-[1fr] group-hover/menu:opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
-                >
-                  <div className='min-h-0 py-1'>
-                    {item.subMenus.map(subMenu => (
-                      <SmartLink
-                        key={`${subMenu.name}-${subMenu.path}`}
-                        href={subMenu.path}
-                        target={subMenu.target || item.target}
-                        className='flex h-10 items-center text-sm font-medium text-[var(--endspace-text-secondary)] transition-colors hover:bg-[#d4d4d8] hover:text-black'
-                      >
-                        <span className='flex w-[5rem] flex-shrink-0 items-center justify-center text-xs'>
-                          {renderIcon(subMenu, false)}
-                        </span>
-                        <span className='min-w-0 flex-1 truncate pr-4 text-xs uppercase tracking-wide'>
-                          {subMenu.name}
-                        </span>
-                      </SmartLink>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            </SmartLink>
           )
         })}
       </div>

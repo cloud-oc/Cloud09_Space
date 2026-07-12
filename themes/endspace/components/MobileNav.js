@@ -44,7 +44,6 @@ export const MobileNav = (props) => {
   const { customNav, customMenu } = props
   const [activeTab, setActiveTab] = useState('Home')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [openSubMenu, setOpenSubMenu] = useState(null)
   const emailIcon = useRef(null)
   
   // Get avatar from props or global context
@@ -79,7 +78,6 @@ export const MobileNav = (props) => {
   // Close menu when route changes
   useEffect(() => {
     setIsMenuOpen(false)
-    setOpenSubMenu(null)
   }, [router.asPath])
 
   // Prevent body scroll when menu is open
@@ -96,7 +94,7 @@ export const MobileNav = (props) => {
 
   // Render icon component
   const renderIcon = (item) => {
-    const icon = item.customIcon || item.pageIcon || item.icon || ''
+    const icon = item.pageIcon || item.customIcon || ''
     return (
       <span className="inline-flex h-6 w-6 items-center justify-center">
         <NotionMenuIcon icon={icon} />
@@ -163,69 +161,22 @@ export const MobileNav = (props) => {
       >
         {/* Navigation Items */}
         <div className="flex flex-col items-start p-6 space-y-2">
-          {menuItems.map(item => {
-            const hasSubMenu = item.subMenus?.length > 0
-            const itemKey = item.id || `${item.name}-${item.path}`
-            const isOpen = openSubMenu === itemKey
-            const itemClassName = `flex items-center gap-4 py-3 w-full transition-all group ${
-              activeTab === item.name
-                ? 'text-black font-bold'
-                : 'text-[var(--endspace-text-secondary)] hover:text-black'
-            }`
-            const itemContent = (
-              <>
-                <div className="endspace-menu-icon-wrap transition-colors">
-                  {renderIcon(item)}
-                </div>
-                <span className="text-xl font-medium">{item.name}</span>
-                {hasSubMenu && (
-                  <span className={`ml-auto text-xl transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}>
-                    &rsaquo;
-                  </span>
-                )}
-              </>
-            )
-
-            return (
-              <div key={itemKey} className='w-full'>
-                {hasSubMenu ? (
-                  <button
-                    type='button'
-                    onClick={() => setOpenSubMenu(isOpen ? null : itemKey)}
-                    className={itemClassName}
-                  >
-                    {itemContent}
-                  </button>
-                ) : (
-                  <SmartLink
-                    href={item.path}
-                    target={item.target}
-                    className={itemClassName}
-                  >
-                    {itemContent}
-                  </SmartLink>
-                )}
-
-                {hasSubMenu && isOpen && (
-                  <div className='mb-2 ml-10 flex flex-col border-l border-[var(--endspace-border-base)] pl-4'>
-                    {item.subMenus.map(subMenu => (
-                      <SmartLink
-                        key={`${subMenu.name}-${subMenu.path}`}
-                        href={subMenu.path}
-                        target={subMenu.target || item.target}
-                        className='flex items-center gap-3 py-2 text-base text-[var(--endspace-text-secondary)] transition-colors hover:text-black'
-                      >
-                        <span className='inline-flex w-4 justify-center text-gray-400'>
-                          {renderIcon(subMenu)}
-                        </span>
-                        <span>{subMenu.name}</span>
-                      </SmartLink>
-                    ))}
-                  </div>
-                )}
+          {menuItems.map(item => (
+            <SmartLink
+              key={item.id || item.name}
+              href={item.path}
+              className={`flex items-center gap-4 py-3 w-full transition-all group ${
+                activeTab === item.name
+                  ? 'text-black font-bold'
+                  : 'text-[var(--endspace-text-secondary)] hover:text-black'
+              }`}
+            >
+              <div className="endspace-menu-icon-wrap transition-colors">
+                 {renderIcon(item)}
               </div>
-            )
-          })}
+              <span className="text-xl font-medium">{item.name}</span>
+            </SmartLink>
+          ))}
         </div>
 
         {/* Music Player (No Label, No Divider) */}

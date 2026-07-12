@@ -28,7 +28,7 @@ const normalizeIcon = link => {
 }
 
 const normalizeHref = link => {
-  const value = link?.href || link?.path || link?.url || link?.to || link?.slug || ''
+  const value = link?.href || link?.path || link?.url || link?.slug || ''
   if (!value) return ''
   if (value.startsWith('/') || value.startsWith('http') || value.startsWith('#')) {
     return value
@@ -42,7 +42,6 @@ const normalizeMenuItem = (link, index) => {
   const path = normalizeHref(link)
   if (!name || !path) return null
   const icons = normalizeIcon(link)
-  const subMenus = normalizeMenu(link.subMenus)
 
   return {
     ...link,
@@ -50,10 +49,8 @@ const normalizeMenuItem = (link, index) => {
     name,
     path,
     href: path,
-    target: link.target,
     pageIcon: icons.pageIcon,
-    customIcon: icons.customIcon,
-    subMenus
+    customIcon: icons.customIcon
   }
 }
 
@@ -108,23 +105,10 @@ export const getEndspaceActiveMenuName = (menuItems, asPath = '/') => {
   const cleanPath = asPath.split(/[?#]/)[0] || '/'
   const activeItem = menuItems
     .filter(item => item.path && !item.path.startsWith('http') && !item.path.startsWith('#'))
-    .find(item => isEndspaceMenuItemActive(item, cleanPath))
+    .find(item => {
+      if (item.path === '/') return cleanPath === '/'
+      return cleanPath === item.path || cleanPath.startsWith(`${item.path}/`)
+    })
 
   return activeItem?.name || menuItems[0]?.name || ''
-}
-
-export const isEndspaceMenuItemActive = (item, asPath = '/') => {
-  if (!item?.path) return false
-
-  const cleanPath = asPath.split(/[?#]/)[0] || '/'
-  const selfActive =
-    item.path === '/'
-      ? cleanPath === '/'
-      : !item.path.startsWith('http') &&
-        !item.path.startsWith('#') &&
-        (cleanPath === item.path || cleanPath.startsWith(`${item.path}/`))
-
-  if (selfActive) return true
-
-  return item.subMenus?.some(subMenu => isEndspaceMenuItemActive(subMenu, cleanPath)) || false
 }
