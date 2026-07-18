@@ -1,4 +1,6 @@
 /* eslint-disable react/no-unknown-property */
+import CONFIG from './config'
+import { themeConsoleStyle } from '@/lib/themeConsoleStyle'
 /**
  * 此处样式只对当前主题生效
  * 此处不支持tailwindCSS的 @apply 语法
@@ -24,7 +26,9 @@ const Style = () => {
       html::-webkit-scrollbar-thumb {
         background: #4e4e4e;
       }
-    `}</style>
+
+      ${themeConsoleStyle('magzine', CONFIG)}
+  `}</style>
   )
 }
 

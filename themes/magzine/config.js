@@ -1,4 +1,7 @@
 const CONFIG = {
+  MAGZINE_COLOR_BG: '#f6f6f1',
+  MAGZINE_COLOR_SCROLLBAR: '#4e4e4e',
+
   // 首屏信息栏按钮文字
   MAGZINE_HOME_BANNER_ENABLE: true, // 首屏右上角的宣传位
   MAGZINE_HOME_BUTTON: true,
