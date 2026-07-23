@@ -4,7 +4,7 @@ import { useGlobal } from '@/lib/global'
 import { getQueryParam } from '@/lib/utils'
 import { THEMES } from '@/themes/theme'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Draggable } from './Draggable'
 import { Moon, Sun } from './HeroIcons'
 import LazyImage from './LazyImage'
@@ -87,6 +87,7 @@ function PaletteField ({ item, value, copyValue, isHexColor, updateItem, resetIt
 
 function ThemeConsole ({ meta, onClose }) {
   const { updateRuntimeConfigOverride, THEME_CONFIG } = useGlobal()
+  const noticeTimerRef = useRef(null)
   const [values, setValues] = useState({})
   const [palette, setPalette] = useState([])
   const [settingValues, setSettingValues] = useState({})
@@ -100,9 +101,11 @@ function ThemeConsole ({ meta, onClose }) {
   const rootId = meta.rootId || `theme-${meta.id}`
 
   const formatConfigValue = value => {
-    const text = String(value).trim()
     if (typeof value === 'boolean') return value ? 'true' : 'false'
-    return /^-?\d+(\.\d+)?$/.test(text) ? text : `'${text}'`
+    const text = String(value).trim()
+    return /^-?\d+(\.\d+)?$/.test(text)
+      ? text
+      : `'${text.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`
   }
 
   const readSettingValue = item => siteConfig(item.key, item.defaultValue, THEME_CONFIG || {})
@@ -145,8 +148,21 @@ function ThemeConsole ({ meta, onClose }) {
     return value
   }
 
+  const getConsoleAlias = useCallback(item => {
+    const prefix = `${String(meta.id).toUpperCase()}_COLOR_`
+    if (item.key.startsWith(prefix)) {
+      return item.key.slice(prefix.length).toLowerCase().replace(/_/g, '-')
+    }
+    return String(item.cssVar || '').replace(/^--/, '').replace(`${meta.id}-`, '')
+  }, [meta.id])
+
+  const writePreviewColor = useCallback((root, item, value) => {
+    root.style.setProperty(item.cssVar, value)
+    root.style.setProperty(`--${meta.id}-console-${getConsoleAlias(item)}`, value)
+  }, [getConsoleAlias, meta.id])
+
   const getExportValue = item => {
-    const value = values[item.key] || item.defaultValue
+    const value = values[item.key] ?? item.defaultValue
     if (item.key === 'FUWARI_THEME_COLOR_HUE') return hexToHue(value)
     return value
   }
@@ -167,10 +183,13 @@ function ThemeConsole ({ meta, onClose }) {
     declaredPalette.forEach(item => {
       nextValues[item.key] =
         styles.getPropertyValue(item.cssVar).trim() || item.defaultValue
+      writePreviewColor(root, item, nextValues[item.key])
     })
     setPalette(declaredPalette)
     setValues(nextValues)
-  }, [meta.id, meta.rootId, declaredPalette])
+  }, [meta.id, meta.rootId, declaredPalette, writePreviewColor])
+
+  useEffect(() => () => window.clearTimeout(noticeTimerRef.current), [])
 
   if (!declaredPalette.length && !settings.length) return null
 
@@ -184,7 +203,7 @@ function ThemeConsole ({ meta, onClose }) {
     const previewValue = getPreviewValue(item, value)
     setValues(prev => ({ ...prev, [item.key]: previewValue }))
     const root = getRoot()
-    root.style.setProperty(item.cssVar, previewValue)
+    writePreviewColor(root, item, previewValue)
     if (meta.id === 'fuwari' && item.cssVar === '--fuwari-primary') {
       root.style.setProperty('--fuwari-primary-soft', `color-mix(in oklab, ${previewValue} 14%, transparent)`)
       root.style.setProperty('--fuwari-gradient', `linear-gradient(135deg, ${previewValue} 0%, color-mix(in oklab, ${previewValue} 70%, #ffffff) 100%)`)
@@ -221,8 +240,8 @@ function ThemeConsole ({ meta, onClose }) {
 
   const showNotice = text => {
     setNotice(text)
-    window.clearTimeout(showNotice.timer)
-    showNotice.timer = window.setTimeout(() => setNotice(''), 1800)
+    window.clearTimeout(noticeTimerRef.current)
+    noticeTimerRef.current = window.setTimeout(() => setNotice(''), 1800)
   }
 
   const copyText = async (text, message = '配置已复制到剪贴板') => {
