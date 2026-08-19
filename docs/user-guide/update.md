@@ -42,6 +42,40 @@
 
 NotionNext教程
 
+## 4.10.10 升级提示
+
+`4.10.10` 是一次小版本维护发布。普通站点同步最新 `main` 后重新部署即可，不需要新增必填环境变量。
+
+如果你希望 Notion 文章中的未收录内嵌子页面 URL 跟随父级文章路径，推荐在 Notion Config 配置中心添加：
+
+```txt
+Key:   INNER_PAGE_URL_PARENT_PATH
+Value: true
+```
+
+该方式不需要修改代码。也可以在部署平台添加环境变量：
+
+```bash
+NEXT_PUBLIC_INNER_PAGE_URL_PARENT_PATH=true
+```
+
+开启后，文章 `/article/fpga-studying-notes` 中未收录的子页面链接会显示为 `/article/fpga-studying-notes/{pageId}`。已收录到数据库并配置了 `slug` 的页面仍优先使用自己的正式地址。
+
+使用说明见 [URL 自定义：内嵌子页面跟随父路径](./config/url-customize.md#内嵌子页面跟随父路径)，完整发布说明见 [最新版本更新日志](./changelog/latest.md)。
+
+## 4.10.9 升级提示
+
+`4.10.9` 是一次小版本维护发布。普通站点同步最新 `main` 后重新部署即可，不需要新增必填环境变量。
+
+建议升级后重点检查：
+
+- 首页和菜单是否仍能正确读取 Notion Config；新版已兼容 Notion 的 `collection_view_page` 配置库块。
+- 含有数据库视图、HTML 块、Tabs 块或同步块的文章是否可以正常构建和打开。
+- 自定义菜单如果指向隐藏页面，目标页面可以设为 `Invisible`，菜单会跳转到该页面真实生成的地址。
+- 使用 Matery、Claude、Typography、Game、Nobelium、Plog 等主题时，检查移动端标签、分享栏、菜单图标和加密文章提交按钮。
+
+如果你的 fork 很久没有同步，仍然推荐先备份 `blog.config.js`、主题配置和自定义代码，再执行 `Sync fork`。
+
 
 ## 关于代码备份
 
